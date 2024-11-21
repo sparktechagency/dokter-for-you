@@ -1,0 +1,17 @@
+.background-container {
+    background-image: url('/Banner.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 78vh;
+  }
+  
+  @media (max-width: 768px) {
+    .background-container {
+      background-position: right 28% bottom 45% !important;  
+      /* background-size: 150% !important;   */
+      width: 100%;
+      min-height: 70vh;
+    }
+  }
