@@ -5,8 +5,9 @@ import Image from "next/image";
 import Title from "@/components/shared/Title";
 import { TfiMapAlt } from "react-icons/tfi";
 import { MdOutlineHeadsetMic } from "react-icons/md";
-import { Button, Form, Input, Select } from "antd";
+import { Form, Input, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
+import CommonBtn from "@/components/shared/CommonBtn";
 
 const Support = () => {
   return (
@@ -77,10 +78,10 @@ const Support = () => {
       <div className="mx-auto container py-[94px] px-8  flex lg:flex-row flex-col w-full items-center gap-10  "> 
 
         <div className=" w-1/2"> 
-        <Title className=" mb-6">
+        <Title className=" mb-6 font-[500] text-[48px] tracking-wide">
             SEND US A MESSAGE
           </Title>
-          <p className="text-[#6B6B6B] text-[24px] mb-8 ">
+          <p className="text-[#6B6B6B] text-[24px] mb-8 tracking-wide ">
             JUST LEAVE US YOUR DETAILS HERE AND WE WILL GET BACK TO YOU WITHIN A
             FEW HOURS
           </p>
@@ -100,7 +101,7 @@ const Support = () => {
           label="Type of Inquiry"
           rules={[{ required: true, message: "Please select an inquiry type" }]}
         >
-          <Select placeholder="Please select">
+          <Select placeholder="Please select" style={{height:"48px"}}>
             <Select.Option value="general">General Inquiry</Select.Option>
             <Select.Option value="technical">Technical Support</Select.Option>
             <Select.Option value="billing">Billing Question</Select.Option>
@@ -110,20 +111,20 @@ const Support = () => {
           </Select>
         </Form.Item>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-x-4 md:grid-cols-2">
           <Form.Item
             name="name"
             label="Name"
             rules={[{ required: true, message: "Please enter your name" }]}
           >
-            <Input placeholder="Type name" />
+            <Input placeholder="Type name" className="h-[48px]" />
           </Form.Item>
           <Form.Item
             name="phone"
             label="Phone"
             rules={[{ required: true, message: "Please enter your phone number" }]}
           >
-            <Input placeholder="Type your phone number" />
+            <Input placeholder="Type your phone number"  className="h-[48px]"  />
           </Form.Item>
         </div>
 
@@ -135,7 +136,7 @@ const Support = () => {
             { type: "email", message: "Please enter a valid email" },
           ]}
         >
-          <Input placeholder="Type your email" />
+          <Input placeholder="Type your email" className="h-[48px]"   />
         </Form.Item>
 
         <Form.Item
@@ -143,14 +144,14 @@ const Support = () => {
           label="Message"
           rules={[{ required: true, message: "Please enter your message" }]}
         >
-          <TextArea placeholder="Type description" rows={4} />
+          <TextArea placeholder="Type description" rows={6} />
         </Form.Item>
       </div>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" block>
+        <CommonBtn className=" h-[48px] w-full" >
           Submit
-        </Button>
+        </CommonBtn>
       </Form.Item>
     </Form>
         </div>

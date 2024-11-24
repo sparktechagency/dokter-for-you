@@ -123,15 +123,19 @@ const Navbar: React.FC = () => {
 
           {/* Right Section */}
           <div className="flex items-center space-x-4">
-            {/* Search Icon */}
-            <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
+            {/* Search Icon */} 
+            <Link href="/search"> 
+            <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center" >
               <LuSearch size={24} color="#4E4E4E" />
-            </div>
+            </div> 
+            </Link>
 
-            {/* Notification Icon */}
+            {/* Notification Icon */} 
+            <Link href="/notifications"> 
             <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
               <IoNotificationsOutline size={24} color="#4E4E4E" />
-            </div>
+            </div> 
+            </Link>
 
             {/* User Dropdown */}
             <div className="relative group">
