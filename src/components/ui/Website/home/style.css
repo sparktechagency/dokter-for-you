@@ -9,9 +9,9 @@
   
   @media (max-width: 768px) {
     .background-container {
-      background-position: right 28% bottom 45% !important;  
+      background-position: right 24% bottom 45% !important;  
       /* background-size: 150% !important;   */
       width: 100%;
-      min-height: 70vh;
+      min-height: 60vh;
     }
   }

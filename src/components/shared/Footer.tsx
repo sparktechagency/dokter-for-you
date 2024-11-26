@@ -12,13 +12,13 @@ const Footer = () => {
     <footer className="mt-auto">
       <div className="container mx-auto  py-[49px]">  
 
-      <div className="flex items-center gap-2 mb-4">
-              <img src="/logo.svg" alt="Dokter For You" className="h-[69px]" />
+      <Link href="/home" className="flex items-center gap-2 mb-4">
+              <img src="/logo.png" alt="Dokter For You" className="h-[69px]" />
             
-            </div>
-        <div className=" flex lg:flex-row flex-col  items-center  w-full ">
+            </Link>
+        <div className=" flex lg:flex-row flex-col  items-center gap-3  w-full ">
         
-          <div className="w-1/4">
+          <div className="lg:w-1/4 w-full">
           
             <p className="text-[#999999] w-[295px]">
               When your health is concerned, we believe you have the right to decide what to do with your body. That is why we offer you the opportunity to consult a licensed and registered tu
@@ -27,7 +27,7 @@ const Footer = () => {
           </div>
 
       
-          <div className="w-1/4 ms-48 flex flex-col gap-[30px]">
+          <div className="lg:w-1/4 w-full lg:ms-48 flex flex-col lg:gap-[30px] gap-3">
   <Link href="#" className="text-[#6B6B6B] text-[16px] hover:underline">
     About
   </Link>
@@ -41,7 +41,7 @@ const Footer = () => {
 
          
          
-<div className="w-1/4 flex flex-col gap-[30px]">
+<div className="lg:w-1/4 w-full flex flex-col lg:gap-[30px] gap-3">
   <Link href="/terms" className="text-[#6B6B6B] text-[16px] hover:underline">
     Terms & Conditions
   </Link>
@@ -54,7 +54,7 @@ const Footer = () => {
 </div>
 
           
-          <div className="w-1/4">
+          <div className="lg:w-1/4 w-full">
             <p className="mb-4 text-[#6B6B6B] text-[16px] font-semibold">Follow Us</p>
             <div className="flex gap-4">
   <a href="#" className="text-blue-600 hover:text-blue-700">

@@ -36,7 +36,7 @@ const layout = ({children}: {children: React.ReactNode}) => {
                 background: '#ffffff',
                 padding: 30,
                 borderRadius: 10,
-                width: 510,
+                width: 570,
                 position: 'relative',
                 zIndex: 2,
             }} 

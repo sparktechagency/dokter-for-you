@@ -43,7 +43,7 @@ const Blogs = () => {
                         {articles.map((article, index) => (
                             <div
                                 key={index}
-                                className="bg-white p-3 shadow-md rounded-lg hover:shadow-lg" 
+                                className="bg-white p-3 shadow-md rounded-lg hover:shadow-lg cursor-pointer" 
                                 onClick={()=>router.push(`/blogs/1`)}
                             > 
                                 <Image

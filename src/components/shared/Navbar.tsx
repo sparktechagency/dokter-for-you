@@ -1,19 +1,27 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState } from "react";
-import { DownOutlined } from "@ant-design/icons";
+import { DownOutlined, MenuOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import Image from "next/image";
 import { LuSearch } from "react-icons/lu";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
+import { Drawer } from "antd";
 
 const Navbar: React.FC = () => {
   const [activeLink, setActiveLink] = useState("");
-  const [openDropdown, setOpenDropdown] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
   const handleDropdown = (index: any) => {
     setOpenDropdown(openDropdown === index ? null : index);
+  };
+
+  const toggleDrawer = () => {
+    setIsDrawerVisible(!isDrawerVisible);
   };
 
   const navLinks = [
@@ -21,26 +29,11 @@ const Navbar: React.FC = () => {
     {
       label: "All Consultation",
       subOptions: [
-        {
-          label: "For Men",
-          value: "/for-men",
-        },
-        {
-          label: "For Women",
-          value: "/for-women",
-        },
-        {
-          label: "STDs",
-          value: "/stds",
-        },
-        {
-          label: "Pain",
-          value: "/pain",
-        },
-        {
-          label: "Sleep",
-          value: "/sleep",
-        },
+        { label: "For Men", value: "/for-men" },
+        { label: "For Women", value: "/for-women" },
+        { label: "STDs", value: "/stds" },
+        { label: "Pain", value: "/pain" },
+        { label: "Sleep", value: "/sleep" },
       ],
     },
     { label: "About", link: "/about" },
@@ -51,27 +44,72 @@ const Navbar: React.FC = () => {
   return (
     <>
       {/* Navbar */}
-      <div className="fixed top-0 w-full bg-white/80 shadow z-50">
-        <div className="container mx-auto flex items-center justify-between h-[96px]">
+      <div className="fixed top-0 w-full bg-white/100 shadow z-50">
+        <div className="container mx-auto flex items-center justify-between h-[96px] px-4 lg:px-0"> 
+
           {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/home">
-              <Image
-                src="/logo.svg"
-                alt="Logo"
-                height={100}
-                width={200}
-                className="mr-2"
-              />
-            </Link>
+          <div className=" flex items-center justify-between w-full lg:w-auto  ">  
+
+          <div className="lg:hidden flex items-center space-x-4">
+            <MenuOutlined
+              className="text-2xl cursor-pointer"
+              onClick={toggleDrawer}
+            />
           </div>
 
-          {/* Navigation Links */}
-          <div className="flex items-center space-x-12">
+         
+         <div className=" flex-shrink-0"> 
+            <Link href="/home">
+              <img
+                src="/logo.png"
+                alt="Logo"
+             
+                className="mr-2  lg:h-[70px] h-[60px] lg:w-[200px] w-[190px]"
+              />
+            </Link>  
+            </div>
+
+
+            {/* profile  */}
+            <div className="relative lg:hidden">
+              <div
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={() =>
+                  setIsProfileDropdownOpen(!isProfileDropdownOpen)
+                }
+              >
+                <Image src="/person.png" alt="" height={45} width={45} />
+               
+              </div>
+
+              {isProfileDropdownOpen && (
+                <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[170px] z-50">
+                  <div className="p-4 flex flex-col gap-3 items-center">
+                    <Image src="/person.png" alt="" height={55} width={55} />
+                    <div className="font-bold">MD.Asadujjaman</div>
+                    <Link href="/profile">
+                      <button className="text-white bg-primary w-full lg:px-6 px-3 py-2 rounded-lg text-[14px]">
+                        Visit Your Profile
+                      </button>
+                    </Link>
+                  </div>
+                  <div className="border-t">
+                    <div className="px-4 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2">
+                      <IoIosLogOut size={24} />
+                      <p>Log Out</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div> 
+          
+          </div>
+
+          {/* Large Device Navigation */}
+          <div className="hidden lg:flex items-center space-x-12">
             <div className="flex space-x-10">
               {navLinks.map((navItem, index) => (
                 <div key={index} className="relative group">
-                  {/* Main Nav Item */}
                   <div
                     className={`flex items-center cursor-pointer text-[#4E4E4E] hover:text-primary font-[400px] ${
                       activeLink === navItem.label
@@ -83,11 +121,11 @@ const Navbar: React.FC = () => {
                       if (navItem.subOptions) handleDropdown(index);
                     }}
                   >
-                   {navItem.link ? (
-        <Link href={navItem.link}>{navItem.label}</Link>
-      ) : (
-        navItem.label
-      )}
+                    {navItem.link ? (
+                      <Link href={navItem.link}>{navItem.label}</Link>
+                    ) : (
+                      navItem.label
+                    )}
                     {navItem.subOptions && (
                       <DownOutlined
                         className={`ml-2 text-sm transition-transform ${
@@ -97,7 +135,6 @@ const Navbar: React.FC = () => {
                     )}
                   </div>
 
-                  {/* Dropdown Submenu */}
                   {navItem.subOptions && openDropdown === index && (
                     <div className="absolute left-0 mt-2 w-[200px] bg-white shadow-lg border rounded-md z-10">
                       {navItem.subOptions.map((option, subIndex) => (
@@ -122,58 +159,114 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center space-x-4">
-            {/* Search Icon */} 
-            <Link href="/search"> 
-            <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center" >
-              <LuSearch size={24} color="#4E4E4E" />
-            </div> 
+          <div className="hidden lg:flex items-center space-x-4">
+            <Link href="/search">
+              <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
+                <LuSearch size={24} color="#4E4E4E" />
+              </div>
             </Link>
-
-            {/* Notification Icon */} 
-            <Link href="/notifications"> 
-            <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
-              <IoNotificationsOutline size={24} color="#4E4E4E" />
-            </div> 
+            <Link href="/notifications">
+              <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
+                <IoNotificationsOutline size={24} color="#4E4E4E" />
+              </div>
             </Link>
-
-            {/* User Dropdown */}
-            <div className="relative group">
-              <div className="flex items-center space-x-2 cursor-pointer">
+            {/* Profile Dropdown */}
+            <div className="relative">
+              <div
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={() =>
+                  setIsProfileDropdownOpen(!isProfileDropdownOpen)
+                }
+              >
                 <Image src="/person.png" alt="" height={45} width={45} />
                 <span className="text-[#4E4E4E] font-medium">Asadujjaman</span>
-                <DownOutlined className="text-gray-500" />
+                <DownOutlined
+                  className={`transition-transform ${
+                    isProfileDropdownOpen ? "rotate-180" : "rotate-0"
+                  }`}
+                />
               </div>
 
-              {/* Dropdown Menu */}
-              <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg hidden group-hover:block w-[200px]">
-                <div className="p-4 flex flex-col gap-3 items-center space-x-3">
-                  <Image src="/person.png" alt="" height={55} width={55} />
-                  <div className="font-bold">MD.Asadujjaman</div>
-                  <Link href="/profile">
-                    <button className=" text-white bg-primary w-full px-6 py-2 rounded-lg text-[14px]">
-                      Visit Your Profile
-                    </button>
-                  </Link>
-                </div>
-                <div className="border-t">
-                  <div className="px-4 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center justify-center gap-2">
-                    <p>
+              {isProfileDropdownOpen && (
+                <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[200px] z-50">
+                  <div className="p-4 flex flex-col gap-3 items-center">
+                    <Image src="/person.png" alt="" height={55} width={55} />
+                    <div className="font-bold">MD.Asadujjaman</div>
+                    <Link href="/profile">
+                      <button className="text-white bg-primary w-full px-6 py-2 rounded-lg text-[14px]">
+                        Visit Your Profile
+                      </button>
+                    </Link>
+                  </div>
+                  <div className="border-t">
+                    <div className="px-4 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2">
                       <IoIosLogOut size={24} />
-                    </p>
-                    <p>Log Out</p>
+                      <p>Log Out</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
+
+          {/* Mobile Hamburger Menu */}
+     
         </div>
       </div>
 
-      {/* Content Padding */}
-      <div className="pt-[96px]">
-        {/* Page content here */}
-      </div>
+      {/* Mobile Drawer */}
+      <Drawer
+        placement="right"
+        closable={false}
+        onClose={toggleDrawer}
+        open={isDrawerVisible}
+      >
+        <div className="flex flex-col space-y-4">
+          {navLinks.map((navItem, index) => (
+            <div key={index}>
+              {navItem.link ? (
+                <Link href={navItem.link}>
+                  <p className="text-[#4E4E4E] hover:text-primary font-medium text-[20px]">
+                    {navItem.label}
+                  </p>
+                </Link>
+              ) : (
+                <p className="text-[#4E4E4E] hover:text-primary font-medium text-[20px]">
+                  {navItem.label}
+                </p>
+              )}
+              {navItem.subOptions && (
+                <div className="pl-2 pt-3">
+                  {navItem.subOptions.map((option, subIndex) => (
+                    <Link key={subIndex} href={option.value || "#"}>
+                      <p className=" text-[#4E4E4E] hover:text-primary pb-2 text-[18px] font-[400]">
+                        {option.label} 
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}  
+
+          <div className=" flex items-center gap-3">
+          <Link href="/search">
+              <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
+                <LuSearch size={24} color="#4E4E4E" />
+              </div>
+            </Link>
+            <Link href="/notifications">
+              <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
+                <IoNotificationsOutline size={24} color="#4E4E4E" />
+              </div>
+            </Link>
+          </div>
+
+        </div> 
+
+      </Drawer>
+
+      <div className="pt-[96px]">{/* Page content here */}</div>
     </>
   );
 };

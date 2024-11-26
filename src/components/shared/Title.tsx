@@ -9,7 +9,7 @@ interface IButtonProps {
 }
 
 const Title: React.FC<IButtonProps> = ({ children, className }) => {
-  return <div  className={` text-primary  font-[500px] lg:text-[32px] text-[24px] ${poppins.className} ${className}`} >
+  return <div  className={` text-primary  font-[500] lg:text-[32px] text-[24px] ${poppins.className} ${className}`} >
     {children}
   </div>
 
