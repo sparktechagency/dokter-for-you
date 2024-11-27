@@ -8,7 +8,7 @@ const MedicalQuestion2 = () => {
     const [height, setHeight] = useState<number | null>(60)
     return (
         <div>
-            <h1 className=' text-[24px] font-medium pb-4'>
+            <h1 className='lg:text-[24px] text-[20px] font-medium pb-4'>
                 What is your Height?
             </h1>
 

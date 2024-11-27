@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import Title from "@/components/shared/Title";
-import { Button, Form, Typography } from "antd";
+import {  Form, Typography } from "antd";
 import React, { useState } from "react"
 import OTPInput from "react-otp-input";
 
@@ -45,14 +45,14 @@ const VerifyChangePass = ({  onClose }: ConsultationDetailsProps) => {
     <OTPInput
       value={otp}
       onChange={setOtp}
-      numInputs={4}
+      numInputs={5}
       inputStyle={{
         height: 50,
         width: 50,
-        borderRadius: "8px",
+        borderRadius: "0",
         margin: "16px",
         fontSize: "20px",
-        border: "1px solid #007BA5",
+        border: "1px solid #0A2369",
         color: "#2B2A2A",
         outline: "none",
         marginBottom: 10
@@ -75,8 +75,8 @@ const VerifyChangePass = ({  onClose }: ConsultationDetailsProps) => {
   </div>
 
   <Form.Item style={{marginBottom: 0}}>
-    <Button
-      htmlType="submit"
+    <button
+      type="submit"
       style={{
         width: "100%",
         height: 48,
@@ -86,9 +86,10 @@ const VerifyChangePass = ({  onClose }: ConsultationDetailsProps) => {
         background: "#0A2369",
         color: "white"
       }}
-    >
+className=" rounded-none"
+> 
     Verify
-    </Button>
+    </button>
   </Form.Item>
 </Form>
 </div>

@@ -8,7 +8,7 @@ const MedicalQuestion1 = () => {
     const [weight, setWeight] = useState<number | null>(60) 
     return (
         <div>
-                  <h1  className=' text-[24px] font-medium pb-4'>
+                  <h1  className=' lg:text-[24px] text-[20px] font-medium pb-4'>
        What is your weight?
       </h1>  
 
@@ -17,11 +17,17 @@ const MedicalQuestion1 = () => {
       <div className="flex gap-2">  
       <ConfigProvider
                 theme={{
-                    token: {
-                        borderRadius: 0 , 
-                    }, 
-              
-                }}
+                  components: {
+                      Select: {
+                          activeBorderColor: "#BABABA",
+                          hoverBorderColor: "#BABABA"
+                      },
+                  },
+                  token: {
+                      borderRadius: 0,
+                  },
+
+              }}
             >
         <InputNumber
           className="w-24 h-[40px]"
@@ -29,7 +35,7 @@ const MedicalQuestion1 = () => {
           onChange={setWeight}
           min={0}
           placeholder="60"
-        />
+        /> 
         <Select
           value={unit}
           onChange={setUnit}

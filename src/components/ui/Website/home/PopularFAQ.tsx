@@ -47,6 +47,12 @@ const getItems: (panelStyle: CSSProperties) => CollapseProps['items'] = (panelSt
     children: <p style={{ color: '#4E4E4E', fontSize: '16px' }}>{text}</p>,
     style: panelStyle,
   },
+  {
+    key: '6',
+    label: <p style={{ color: '#4E4E4E', fontSize: '19px' }}> This is panel header 6</p> ,
+    children: <p style={{ color: '#4E4E4E', fontSize: '16px' }}>{text}</p>,
+    style: panelStyle,
+  },
 
 
 ]; 
@@ -68,23 +74,22 @@ const PopularFAQ = () => {
         <span className="text-[#11D279]  font-medium">
           GET YOUR ANSWER
         </span>
-        <Title className="">
+        <Title className=" pb-[64px]">
           POPULAR FREQUENTLY ASKED QUESTIONS
         </Title>
       </div>
 
       <div className=" flex lg:flex-row flex-col justify-center items-center w-full">
-        <div className="relative  w-1/2">
+        <div className="relative  lg:w-1/2 w-full">
           <Image
             src="/faq.svg"
             alt="Doctor with clipboard"
-            className="object-cover rounded-3xl"
-             height={400} 
-             width={500}
+      
+             height={450}  width={550}  className=' object-cover '
           />
         </div>
 
-        <div className=" w-1/2 mt-20">
+        <div className=" lg:w-1/2 w-full lg:mt-3 mt-5 ">
         <Collapse
       bordered={false}
       expandIcon={({ isActive }) => <Plus  size={22} style={{ 

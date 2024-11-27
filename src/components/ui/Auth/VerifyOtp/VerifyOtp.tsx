@@ -2,7 +2,7 @@
 "use client"
 import { Button, Form, Typography } from "antd";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import OTPInput from "react-otp-input";
 
 const { Text } = Typography;
@@ -10,10 +10,14 @@ const { Text } = Typography;
 const VerifyOtp = () => { 
  const router = useRouter()
     const [otp, setOtp] = useState<string>("");
-    const email = new URLSearchParams(location.search).get("email") 
+    const [email, setEmail] = useState<string | null>(null);
+
+    useEffect(() => {
+      const emailFromQuery = new URLSearchParams(window.location.search).get('email');
+      setEmail(emailFromQuery);
+    }, []); 
+
     console.log(email);
-  
-  
   
     const onFinish = async(values:any) => { 
         console.log(values);

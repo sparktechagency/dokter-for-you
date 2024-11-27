@@ -23,7 +23,7 @@ const PrescriptionOrder = ({ consultationId , onClose }: ConsultationDetailsProp
 
       <div className='bg-white p-4 '>
  
- <p className=' font-medium text-[32px] pb-[24px]'>Your Medication Details</p>
+ <p className=' font-medium lg:text-[32px] text-[22px] pb-[24px]'>Your Medication Details</p>
 
   {/* Tracking Info */}
   <div className="bg-[#E7FBF2] p-4 rounded-none mb-6">
@@ -39,13 +39,13 @@ const PrescriptionOrder = ({ consultationId , onClose }: ConsultationDetailsProp
   <div className=" pb-4 mb-4 ">
     <div className="flex justify-between items-center mb-2">
       <div>
-        <p className="text-[16px] text-[#4E4E4E]">Consultation for man&apos;s weigh problem</p>
-        <p className="text-sm text-[#999999]">Medical questions/view, doctor&apos;s advice and prescription</p>
+        <p className="lg:text-[16px] text-[14px] text-[#4E4E4E]">Consultation for man&apos;s weigh problem</p>
+        <p className="lg:text-sm text-[12px] text-[#999999]">Medical questions/view, doctor&apos;s advice and prescription</p>
       </div>
       <p className="text-right text-primary">$25.00</p>
     </div>
-    <div className="flex items-center justify-end gap-[200px]">
-      <span className='text-[#6B6B6B]'>discount -</span>
+    <div className="flex items-center justify-end gap-[200px] text-[14px]">
+      <span className='text-[#6B6B6B]'>discount - </span>
       <span className='text-[#6B6B6B]'>$00.00</span>
     </div>
     <div className="flex justify-end items-center font-medium mt-3 gap-[200px] border-t pt-2">
@@ -71,7 +71,7 @@ const PrescriptionOrder = ({ consultationId , onClose }: ConsultationDetailsProp
  </div>
 
   {/* Address Information */}
-  <div className="bg-[#E8EEFE] p-4 mt-6  grid grid-cols-5 gap-4 mb-6">
+  <div className="bg-[#E8EEFE] p-4 mt-6  grid lg:grid-cols-5 grid-cols-1 gap-4 mb-6">
     <div>
       <p className="text-sm font-medium mb-2">Address:</p>
       <p className="text-sm text-[#6B6B6B]">
@@ -119,7 +119,7 @@ const PrescriptionOrder = ({ consultationId , onClose }: ConsultationDetailsProp
 
   {/* Medication List */}
   <div className="mb-6  bg-[#F7F7F7] px-4 py-5">
-    <div className="flex items-center justify-between gap-4 p-4 "> 
+    <div className="flex lg:flex-row flex-wrap items-center justify-between gap-4 p-4 "> 
 
         <div className=' flex items-center gap-5'>
       <Image
@@ -148,7 +148,7 @@ const PrescriptionOrder = ({ consultationId , onClose }: ConsultationDetailsProp
       </div>
     </div>
 
-    <div className="flex items-center justify-between gap-4 p-4 border-b"> 
+    <div className="flex lg:flex-row flex-wrap items-center justify-between gap-4 p-4 border-b"> 
 
         <div className=' flex items-center gap-5'>
       <Image
@@ -181,19 +181,19 @@ const PrescriptionOrder = ({ consultationId , onClose }: ConsultationDetailsProp
 
     {/* Total Calculation */}
     <div className="mt-4 space-y-2">
-      <div className="flex justify-end items-center gap-[200px] text-sm pb-2">
+      <div className="flex  lg:justify-end justify-between items-center lg:gap-[200px] text-sm pb-2">
         <span className='text-[#6B6B6B] font-medium'>Subtotal -</span>
         <span>$31.00</span>
       </div>
-      <div className="flex justify-end items-center gap-[200px] text-sm pb-2">
+      <div className="flex lg:justify-end justify-between items-center lg:gap-[200px] text-sm pb-2">
         <span className='text-[#6B6B6B] font-medium'>discount -</span>
         <span>$00.00</span>
       </div>
-      <div className="flex justify-end items-center gap-[200px] text-sm pb-2">
+      <div className="flex lg:justify-end justify-between items-center lg:gap-[200px] text-sm pb-2">
         <span className='text-[#6B6B6B] font-medium'>Shipping Cost -</span>
         <span>$2.00</span>
       </div>
-      <div className="flex justify-end items-center gap-[200px] font-medium pt-2 border-t ">
+      <div className="flex lg:justify-end justify-between items-center lg:gap-[200px] font-medium pt-2 border-t ">
         <span className='text-primary font-medium'>Total -</span>
         <span className='text-primary font-medium'>$33.00</span>
       </div>

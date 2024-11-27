@@ -96,7 +96,7 @@ const DigitalPrescriptionDetails = () => {
 
     return (
         <div>
-            <div className="container "> 
+            <div className=" "> 
 
             {selectedConsultation ? (
         <PrescriptionDetails
@@ -120,7 +120,8 @@ const DigitalPrescriptionDetails = () => {
                     <Table
                         columns={columns}
                         dataSource={data}
-                        pagination={false}
+                        pagination={false} 
+                        scroll={{ x: 'max-content' }}
                         className="consultation-table"
 
                     />

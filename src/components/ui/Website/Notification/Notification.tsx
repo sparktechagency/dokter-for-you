@@ -21,12 +21,12 @@ const Notifications = () => {
                 {
                     [...Array(8).keys()].map((notification, index)=>{
                         return(
-                            <div key={index} className='flex items-center justify-between h-[66px] bg-white px-[24px]'>
+                            <div key={index} className='flex  items-center justify-between lg:h-[66px] bg-white lg:px-[24px] px-2 py-2'>
                           
                               
-                                    <p className=' text-[#5C5C5C] text-[16px]'> start a new trip at 5pm. Trip No.56. Trip started from Mexico city</p> 
+                                    <p className=' text-[#5C5C5C] lg:text-[16px] text-[14px]'> start a new trip at 5pm. Trip No.56. Trip started from Mexico city</p> 
 
-                                    <p className='text-[14px]' style={{color:"#A1A1A1",marginTop:"4px"}}>1hr ago</p>
+                                    <p className='text-[14px]  ' style={{color:"#A1A1A1",marginTop:"4px"}}>1hr ago</p>
                              
                             </div>
                         )

@@ -20,7 +20,7 @@ const Delivery = ()=>{
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Forward Prescription Option */}
         <label
-          className={`relative flex flex-col p-4 border                                                       cursor-pointer transition-all duration-200 ${
+          className={`relative flex flex-col p-4 py-7 border cursor-pointer transition-all duration-200 ${
             selectedOption === 'forward'
               ? 'border-emerald-500 bg-emerald-50'
               : 'border-gray-200 hover:border-gray-300'
@@ -56,7 +56,7 @@ const Delivery = ()=>{
 
         {/* Digital Prescription Option */}
         <label
-          className={`relative flex flex-col p-4 border                                                       cursor-pointer transition-all duration-200 ${
+          className={`relative flex flex-col p-4 border py-7 cursor-pointer transition-all duration-200 ${
             selectedOption === 'digital'
               ? 'border-emerald-500 bg-emerald-50'
               : 'border-gray-200 hover:border-gray-300'
@@ -89,7 +89,7 @@ const Delivery = ()=>{
       <div className="border-t border-gray-200 pt-4"> 
 
       <h3 className="font-medium text-gray-900 text-[16px]">Overview</h3>
-        <div className="flex justify-between items-center text-[16px]">
+        <div className="flex lg:flex-row flex-col gap-3 justify-between items-center text-[16px]">
           <div> 
             <p className="text-gray-500 pt-4 ">Consultation for man / weigh problem - $25.00</p>
           </div>

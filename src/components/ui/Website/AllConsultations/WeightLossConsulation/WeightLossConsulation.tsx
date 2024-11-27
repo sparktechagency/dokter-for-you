@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */ 
 
 import React, { useState } from 'react';
-import { Input, Select } from 'antd';
+import { ConfigProvider, Input, Select } from 'antd';
 import MadicationDetailsModal from './MadicationDetailsModal';
 
 const medications = [
@@ -42,32 +42,48 @@ const WeightLossConsulation = () => {
   return (
     <div className="">
       {/* Header Section */}
-      <h1 className="text-2xl font-semibold">Select your preferred medication for your Weight Loss Consultation - Weight Problem</h1>
+      <h1 className="lg:text-2xl text-[20px] font-semibold">Select your preferred medication for your Weight Loss Consultation - Weight Problem</h1>
       <p className="text-gray-600 mt-1">
         The doctor ultimately decides whether to issue you a prescription and whether to prescribe your preferred medication.
       </p>
 
       {/* Search and Filter */}
-      <div className="flex items-center gap-4 mt-4">
+      <div className="flex lg:flex-row flex-col items-center gap-4 mt-4">
         <Input
           placeholder="Type your medication"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full h-[48px]"
-        />
+        /> 
+
+<ConfigProvider
+                        theme={{
+                            components: {
+                                Select: {
+                                    activeBorderColor: "#BABABA",
+                                    hoverBorderColor: "#BABABA"
+                                },
+                            },
+                            token: {
+                                borderRadius: 0,
+                            },
+
+                        }}
+                    > 
         <Select 
         style={{height:"48px"}}
           value={filter}
           onChange={(value) => setFilter(value)}
-          className="min-w-[200px]"
+          className="lg:min-w-[200px] w-full"
         >
           <Select.Option value="Weight Problem">Weight Problem</Select.Option>
           <Select.Option value="General Health">General Health</Select.Option>
-        </Select>
+        </Select> 
+        </ConfigProvider>
       </div>
 
       {/* Medication List */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
         {filteredMeds.map((med) => (
           <div
             key={med.id}
@@ -85,7 +101,7 @@ const WeightLossConsulation = () => {
       {/* Selected Medications */}
       <div className="mt-8">
         <h2 className="text-lg font-semibold">Selected medication</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
           {selectedMeds.map((med:any) => (
             <div key={med.id} className="border rounded-lg p-4 relative bg-[#E7FBF2]">
               <button

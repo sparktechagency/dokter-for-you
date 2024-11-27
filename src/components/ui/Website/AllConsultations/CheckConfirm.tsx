@@ -1,4 +1,4 @@
-import { Checkbox, Select } from 'antd';
+import { Checkbox, ConfigProvider, Select } from 'antd';
 import Image from 'next/image';
 import React from 'react';
 
@@ -6,7 +6,7 @@ const CheckConfirm = () => {
     return (
         <div>
             <div className="">
-                <h1 className="text-2xl font-semibold mb-6 text-gray-800">Check and Confirm</h1>
+                <h1 className="lg:text-2xl text-[20px] font-semibold mb-6 text-gray-800">Check and Confirm</h1>
 
                 <div className="bg-[#F3F6FF] p-4  shadow-sm mb-4">
                     <h2 className="font-semibold pb-2 text-[16px]">Consultation for man&apos;s weigh problem</h2>
@@ -20,7 +20,7 @@ const CheckConfirm = () => {
 
 
                 <div className="bg-[#F3F6FF]  shadow-sm mb-4">
-                    <div className="flex items-center justify-between p-4 border-b"> 
+                    <div className=" grid lg:grid-cols-4 grid-cols-2 justify-items-stretch gap-4 p-4 border-b"> 
                         <div className='flex items-center gap-2'>
                         <Image src="/cevit.png" alt="Ceevit" width={80} height={80} className="mr-4" />
                         <div className="flex-grow">
@@ -41,7 +41,7 @@ const CheckConfirm = () => {
                             <p className="text-sm">30 Pieces</p>
                         </div>
                     </div>
-                    <div className="flex items-center justify-between p-4"> 
+                    <div className="grid lg:grid-cols-4 grid-cols-2 justify-items-stretch gap-4 p-4 "> 
                         <div className=' flex items-center gap-2'>
                         <Image src="/ace.png" alt="Ace" width={80} height={80} className="mr-4" />
                         <div className="flex-grow">
@@ -64,7 +64,7 @@ const CheckConfirm = () => {
                     </div>
                 </div>
 
-                <div className="bg-[#F3F6FF] p-4  shadow-sm mb-4 grid grid-cols-4 gap-4">
+                <div className="bg-[#F3F6FF] p-4  shadow-sm mb-4 grid lg:grid-cols-4 grid-cols-1 lg:gap-4 gap-6">
                     <div>
                         <h3 className="font-semibold mb-2">Address:</h3>
                         <p className='text-[#6B6B6B]'>john david</p>
@@ -93,19 +93,36 @@ const CheckConfirm = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-8 mb-4">
+                <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 mb-4">
                     <div className="bg-green-50 py-7 px-[24px] ">
                         <h3 className="font-semibold mb-2">What happens after confirming this request?</h3>
                         <p className="text-sm">
                             The doctor checks your request and writes a prescription Your prescription is forwarded to the Blueclinic pharmacy network You pay for your medication to Blueclinic The pharmacy delivers your treatment or you receive your paper prescription
                         </p>
                     </div>
-                    <div className="bg-[#E8EEFE] p-4  px-8 shadow-sm">
+                    <div className="bg-[#E8EEFE] p-4  px-8 shadow-sm">  
+                        
+                    <ConfigProvider
+                        theme={{
+                            components: {
+                                Select: {
+                                    activeBorderColor: "#BABABA",
+                                    hoverBorderColor: "#BABABA"
+                                },
+                            },
+                            token: {
+                                borderRadius: 0,
+                            },
+
+                        }}
+                    >
                         <Select 
                         style={{height:"48px"}}
                             className="w-full mb-4"
                             placeholder="Use discount code"
-                        />
+                        /> 
+                        </ConfigProvider> 
+
                         <div className="flex justify-between my-4 text-xl text-[#6B6B6B]">
                             <span>Subtotal -</span>
                             <span className="font-semibold">$25.00</span>

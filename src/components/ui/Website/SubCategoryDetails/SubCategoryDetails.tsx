@@ -2,7 +2,7 @@
 "use client"
 import { useSearchParams } from 'next/navigation';
 import React from 'react'; 
-import details from "@/assests/details.png"
+import details from "@/assests/details.svg"
 import Link from 'next/link';
 import Image from 'next/image';
 import CommonBtn from '@/components/shared/CommonBtn';
@@ -13,8 +13,6 @@ const SubCategoryDetails = () => {
     const category = searchParams.get('category');  
     const SubCategory = searchParams.get('subcategory');   
 
-    console.log(category); 
-    console.log(SubCategory);
     return (
         <div className=' bg-[#F7F7F7] pb-[64px]'>
             <div className=" container ">
@@ -23,7 +21,7 @@ const SubCategoryDetails = () => {
         <span className="mx-2 text-emerald-500 ">›</span>
         <Link href="/consultation-category" className="text-emerald-500 hover:text-emerald-600">Start Your Consultation</Link>
         <span className="mx-2 text-emerald-500 ">›</span>
-        <Link href={`/subcategory?category=${category}`} className="text-emerald-500 hover:text-emerald-600">For Men</Link>
+        <Link href={`/subcategory?category=${category}`} className="text-emerald-500 hover:text-emerald-600">For {category}</Link>
         <span className="mx-2 text-emerald-500">›</span>
         <span className="text-emerald-500">{SubCategory}</span>
       </nav>

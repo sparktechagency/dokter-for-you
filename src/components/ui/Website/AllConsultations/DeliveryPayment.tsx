@@ -7,7 +7,7 @@ const DeliveryPayment = () => {
         <div>
             
       <div className="">
-        <h1 className="text-2xl font-semibold mb-4 text-gray-800">Delivery</h1>
+        <h1 className="lg:text-2xl text-[20px] font-semibold mb-4 text-gray-800">Delivery</h1>
         <p className="text-gray-600 mb-8">Please make your choice below to receive your Consultation.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -37,7 +37,7 @@ const DeliveryPayment = () => {
 
           {/* Apple Pay Option */}
           <Card className="p-6 bg-[#F8F8F8] hover:shadow-lg transition-shadow">
-            <div className="flex items-start space-x-4">
+            <div className="flex   items-start space-x-4">
               <Checkbox className="" />
               <div className="flex-1 gap-2">
                 <div className="flex items-center space-x-2 ">
@@ -57,13 +57,19 @@ const DeliveryPayment = () => {
                 </p> 
 
                 <ConfigProvider
-                theme={{
-                    token: {
-                        borderRadius: 0 , 
-                    }, 
-              
-                }}
-            > 
+                        theme={{
+                            components: {
+                                Select: {
+                                    activeBorderColor: "#BABABA",
+                                    hoverBorderColor: "#BABABA"
+                                },
+                            },
+                            token: {
+                                borderRadius: 0,
+                            },
+
+                        }}
+                    >
           <Select
             placeholder="Choose your bank" 
             style={{height:"48px"}}

@@ -37,13 +37,19 @@ const Register = () => {
            
            <Form.Item name="gender" label={<p className='text-[#4E4E4E] text-[16px]'>Gender</p>}>  
            <ConfigProvider
-                theme={{
-                    token: {
-                        borderRadius: 0 , 
-                    }, 
-              
-                }}
-            >
+                        theme={{
+                            components: {
+                                Select: {
+                                    activeBorderColor: "#BABABA",
+                                    hoverBorderColor: "#BABABA"
+                                },
+                            },
+                            token: {
+                                borderRadius: 0,
+                            },
+
+                        }}
+                    >
            <Select
       defaultValue="Male"
       style={{ width: "100%" , height:"48px" }}

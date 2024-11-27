@@ -21,7 +21,7 @@ const PrescriptionDetails = ({ consultationId , onClose }: ConsultationDetailsPr
 
       <div className='bg-white p-4 '>
  
- <p className=' font-medium text-[32px] pb-[24px]'>Your Digital Prescription Details</p>
+ <p className=' font-medium lg:text-[32px] text-[22px] pb-[24px]'>Your Digital Prescription Details</p>
 
   {/* Tracking Info */}
   <div className="bg-[#E7FBF2] p-4 rounded-none mb-6">

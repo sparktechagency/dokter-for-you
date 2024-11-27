@@ -17,7 +17,7 @@ const SingleChoiceQuestion: React.FC<QuestionProps> = ({ title, options }) => {
 
   return (
     <div >
-      <h1  className=' text-[24px] font-medium pb-6'>
+      <h1  className=' lg:text-[24px] text-[20px] font-medium pb-6'>
         {title}
       </h1>
       <Form.Item>

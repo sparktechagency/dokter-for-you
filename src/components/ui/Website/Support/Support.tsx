@@ -5,7 +5,7 @@ import Image from "next/image";
 import Title from "@/components/shared/Title";
 import { TfiMapAlt } from "react-icons/tfi";
 import { MdOutlineHeadsetMic } from "react-icons/md";
-import { Form, Input, Select } from "antd";
+import { ConfigProvider, Form, Input, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import CommonBtn from "@/components/shared/CommonBtn";
 
@@ -77,17 +77,17 @@ const Support = () => {
       {/* Contact Form Section */}
       <div className="mx-auto container py-[94px] px-8  flex lg:flex-row flex-col w-full items-center gap-10  "> 
 
-        <div className=" w-1/2"> 
-        <Title className=" mb-6 font-[500] text-[48px] tracking-wide">
+        <div className=" lg:w-1/2 w-full"> 
+        <Title className=" mb-6 font-[500] lg:text-[48px] text-[32px] tracking-wide">
             SEND US A MESSAGE
           </Title>
-          <p className="text-[#6B6B6B] text-[24px] mb-8 tracking-wide ">
+          <p className="text-[#6B6B6B] lg:text-[24px] text-[20px] lg:mb-8 mb-4 lg:tracking-wide ">
             JUST LEAVE US YOUR DETAILS HERE AND WE WILL GET BACK TO YOU WITHIN A
             FEW HOURS
           </p>
         </div> 
 
-        <div className="rounded-lg bg-white p-8 shadow-lg w-1/2">
+        <div className="rounded-lg bg-white p-8 shadow-lg lg:w-1/2 w-full">
   
         <Form
     
@@ -100,7 +100,21 @@ const Support = () => {
           name="inquiry"
           label="Type of Inquiry"
           rules={[{ required: true, message: "Please select an inquiry type" }]}
-        >
+        > 
+               <ConfigProvider
+                        theme={{
+                            components: {
+                                Select: {
+                                    activeBorderColor: "#BABABA",
+                                    hoverBorderColor: "#BABABA"
+                                },
+                            },
+                            token: {
+                                borderRadius: 0,
+                            },
+
+                        }}
+                    >
           <Select placeholder="Please select" style={{height:"48px"}}>
             <Select.Option value="general">General Inquiry</Select.Option>
             <Select.Option value="technical">Technical Support</Select.Option>
@@ -108,7 +122,8 @@ const Support = () => {
             <Select.Option value="partnership">
               Partnership Opportunity
             </Select.Option>
-          </Select>
+          </Select> 
+          </ConfigProvider>
         </Form.Item>
 
         <div className="grid gap-x-4 md:grid-cols-2">

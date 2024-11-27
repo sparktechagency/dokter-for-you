@@ -1,10 +1,12 @@
 import SubCategoryDetails from '@/components/ui/Website/SubCategoryDetails/SubCategoryDetails';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 const SubCategoryDetailsPage = () => {
     return (
-        <div>
+        <div> 
+              <Suspense fallback={<div>Loading...</div>}>
             <SubCategoryDetails />
+    </Suspense>
         </div>
     );
 };

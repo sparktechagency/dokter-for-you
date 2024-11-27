@@ -72,7 +72,7 @@ const  MadicationDetailsModal = ({ open, setopen }: MedicationModalProps) => {
       <div className="text-gray-600 mb-3 text-sm font-medium">Contents of the Box</div>
 
       {/* Controls */}
-      <div className="flex items-center gap-4">
+      <div className="flex lg:flex-row flex-col items-center gap-4">
         {/* Quantity controls */}
         <div className="flex items-center gap-2">
           <Button
@@ -94,7 +94,7 @@ const  MadicationDetailsModal = ({ open, setopen }: MedicationModalProps) => {
         </div>
 
         {/* Pack size selection using buttons */}
-        <div className="flex gap-2">
+        <div className="flex  gap-2">
           {['10', '50', '100'].map((size) => (
             <button
               key={size}

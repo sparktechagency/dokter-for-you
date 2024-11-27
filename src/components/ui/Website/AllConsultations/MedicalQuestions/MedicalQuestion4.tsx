@@ -4,7 +4,7 @@ import React from 'react';
 const MedicalQuestion4 = () => {
     return (
         <div>
-                <h1 className=' text-[24px] font-medium pb-4'>
+                <h1 className='lg:text-[24px] text-[20px] font-medium pb-4'>
                 Why, and for which Diagnosis do you want treatment?
             </h1> 
 

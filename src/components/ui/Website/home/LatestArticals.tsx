@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Title from '@/components/shared/Title';
+import Link from 'next/link';
 import React from 'react';
 
 const LatestArticals = () => { 
@@ -13,7 +14,7 @@ const LatestArticals = () => {
         <div className="bg-gradient-to-r from-[#F2FFF9] to-[#D2DEFF] py-10"> 
         <div className=' container'>
         <Title className=" text-center pb-[64px]">Latest Articles</Title>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-7 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-7 lg:gap-y-0 gap-y-5 ">
         {articles.map((article, index) => (
           <div
             key={index}
@@ -26,11 +27,11 @@ const LatestArticals = () => {
         ))}
       </div> 
  
- <div className=' flex items-center justify-center'>
-      <button className="mt-10 px-6 py-2    border border-primary text-primary hover:text-white  hover:bg-primary">
+ <Link href="/blogs" className=' flex items-center justify-center'>
+      <button className="mt-10 px-6 py-2    border  border-primary text-primary hover:text-white  hover:bg-primary">
       View all blog articles 
         </button> 
- </div>
+ </Link>
 
         </div>
     </div>

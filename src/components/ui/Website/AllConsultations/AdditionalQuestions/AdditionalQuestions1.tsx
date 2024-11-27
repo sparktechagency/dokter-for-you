@@ -14,7 +14,7 @@ const questions = [
 
 const AdditionalQuestions1 = () => {
     return (
-        <Form className='w-3/4'>
+        <Form className='lg:w-3/4 w-full'>
         {questions.map((question, index) => (
           <SingleChoiceQuestion
             key={index}

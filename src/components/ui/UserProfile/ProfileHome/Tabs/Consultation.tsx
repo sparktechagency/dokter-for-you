@@ -112,7 +112,7 @@ const Consultation = () => {
       
     return (
         <div>
-           <div className="container "> 
+           <div className=" "> 
 
            {selectedConsultation ? (
         <ConsultationDetails
@@ -136,7 +136,8 @@ const Consultation = () => {
       <Table
         columns={columns} 
         dataSource={data} 
-        pagination={false}
+        pagination={false} 
+        scroll={{ x: '100vh' }}
         className="consultation-table"
         
       /> 

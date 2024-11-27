@@ -11,16 +11,9 @@ import { useRouter } from "next/navigation";
 const europeGeoUrl = "/geo/europe.json";
 
 const countries = [
-    { label: "Russia", value: "Russia" },
-    { label: "United Kingdom", value: "United Kingdom" },
-    { label: "Italy", value: "Italy" },
-    { label: "Ukraine", value: "Ukraine" },
-    { label: "Switzerland", value: "Switzerland" },
+ 
     { label: "Netherlands", value: "Netherlands" },
-    { label: "Germany", value: "Germany" },
-    { label: "France", value: "France" },
-    { label: "Spain", value: "Spain" },
-    { label: "Poland", value: "Poland" },
+   
 ];
 
 const HomeMap = () => {
@@ -51,18 +44,18 @@ const HomeMap = () => {
                 </div>
                 <div className="pb-6 w-full  flex items-center justify-center">
                     <ConfigProvider
-                        theme={{
-                            components: {
-                                Select: {
-                                    activeBorderColor: "#BABABA",
-                                    hoverBorderColor: "#BABABA"
-                                },
+                       theme={{
+                        components: {
+                            Select: {
+                                activeBorderColor: "#BABABA",
+                                hoverBorderColor: "#BABABA"
                             },
-                            token: {
-                                borderRadius: 0,
-                            },
-
-                        }}
+                        },
+                        token: {
+                            borderRadius: 0,
+                        },
+    
+                    }}
                     >
                         <Select
                             placeholder="Select your country"

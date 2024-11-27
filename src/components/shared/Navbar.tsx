@@ -29,11 +29,11 @@ const Navbar: React.FC = () => {
     {
       label: "All Consultation",
       subOptions: [
-        { label: "For Men", value: "/for-men" },
-        { label: "For Women", value: "/for-women" },
-        { label: "STDs", value: "/stds" },
-        { label: "Pain", value: "/pain" },
-        { label: "Sleep", value: "/sleep" },
+        { label: "For Man", value: "Man" },
+        { label: "For Women", value: "Women" },
+        { label: "STDs", value: "STDs" },
+        { label: "Pain", value: "Pain" },
+        { label: "Sleep", value: "Sleep" },
       ],
     },
     { label: "About", link: "/about" },
@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
                   setIsProfileDropdownOpen(!isProfileDropdownOpen)
                 }
               >
-                <Image src="/person.png" alt="" height={45} width={45} />
+                <Image src="/person.png" alt="" height={45} width={45} className="object-cover" />
                
               </div>
 
@@ -94,10 +94,10 @@ const Navbar: React.FC = () => {
                     </Link>
                   </div>
                   <div className="border-t">
-                    <div className="px-4 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2">
+                    <Link href="/login" className="px-4 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2">
                       <IoIosLogOut size={24} />
                       <p>Log Out</p>
-                    </div>
+                    </Link>
                   </div>
                 </div>
               )}
@@ -138,7 +138,7 @@ const Navbar: React.FC = () => {
                   {navItem.subOptions && openDropdown === index && (
                     <div className="absolute left-0 mt-2 w-[200px] bg-white shadow-lg border rounded-md z-10">
                       {navItem.subOptions.map((option, subIndex) => (
-                        <Link key={subIndex} href={option.value || "#"}>
+                        <Link key={subIndex} href={`/subcategory?category=${option.value}`}>
                           <p
                             className={`py-2 px-4 text-sm text-[#4E4E4E] cursor-pointer hover:bg-primary hover:text-white rounded ${
                               activeLink === option.value
@@ -199,10 +199,10 @@ const Navbar: React.FC = () => {
                     </Link>
                   </div>
                   <div className="border-t">
-                    <div className="px-4 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2">
+                    <Link href="/login" className="px-4 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2">
                       <IoIosLogOut size={24} />
                       <p>Log Out</p>
-                    </div>
+                    </Link>
                   </div>
                 </div>
               )}
@@ -217,7 +217,7 @@ const Navbar: React.FC = () => {
       {/* Mobile Drawer */}
       <Drawer
         placement="right"
-        closable={false}
+        closable={true}
         onClose={toggleDrawer}
         open={isDrawerVisible}
       >
@@ -238,7 +238,7 @@ const Navbar: React.FC = () => {
               {navItem.subOptions && (
                 <div className="pl-2 pt-3">
                   {navItem.subOptions.map((option, subIndex) => (
-                    <Link key={subIndex} href={option.value || "#"}>
+                    <Link key={subIndex}  href={`/subcategory?category=${option.value}`}>
                       <p className=" text-[#4E4E4E] hover:text-primary pb-2 text-[18px] font-[400]">
                         {option.label} 
                       </p>

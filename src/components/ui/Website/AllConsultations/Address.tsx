@@ -29,36 +29,42 @@ const Address = () => {
 
             <Form form={form} layout="vertical">
       {/* First Name and Last Name */}
-      <div className="grid grid-cols-2 gap-x-4 mb-6">
+      <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-6">
         <InputField name="FirstName" label="First Name" />
 
         <InputField name="LastName" label="Last Name"/>
       </div>
 
       {/* Street and House Number */} 
-      <div className="grid grid-cols-1  mb-8">
+      <div className="grid grid-cols-1  lg:mb-8">
       <InputField name="Street and house number" label="Street and house number"/>
 </div>
       {/* Postal Code and Place */}
-      <div className="grid grid-cols-2 gap-x-4 mb-8">
+      <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-8">
         <InputField name="Postal code" label="Postal code"/>
 
         <InputField name="Place" label="Place" />
       </div>
 
       {/* Second Postal Code and Country */}
-      <div className="grid grid-cols-2 gap-x-4 mb-6">
+      <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-6">
         <InputField name="postalCode2" label="Postal code" /> 
 
         <Form.Item name="country" label="Country"> 
         <ConfigProvider
-                theme={{
-                    token: {
-                        borderRadius: 0 , 
-                    }, 
-              
-                }}
-            > 
+                        theme={{
+                            components: {
+                                Select: {
+                                    activeBorderColor: "#BABABA",
+                                    hoverBorderColor: "#BABABA"
+                                },
+                            },
+                            token: {
+                                borderRadius: 0,
+                            },
+
+                        }}
+                    >
           <Select
             placeholder="Select country" 
             style={{height:"48px"}}
@@ -77,7 +83,7 @@ const Address = () => {
  
  <div className="bg-[#E8EEFE] p-4 mt-5">
         <h3 className="font-medium text-gray-900 text-[16px]">Overview</h3>
-        <div className="flex justify-between items-center text-[16px]">
+        <div className="flex lg:flex-row flex-col justify-between items-center lg:text-[16px] text-[14px] gap-3">
           <div> 
             <p className="text-gray-500 pt-4 ">Consultation for man / weigh problem - $25.00</p>
           </div>
@@ -91,7 +97,7 @@ const Address = () => {
         <div className="mt-6 flex items-center justify-between">
           <Form.Item className="mb-0">
             <Checkbox>
-              <span className="text-sm text-red-500">
+              <span className="lg:text-sm text-[12px] text-red-500">
                 Each person is responsible for the data they enter, and we are not responsible for any errors in data registration
               </span>
             </Checkbox>

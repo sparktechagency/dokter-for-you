@@ -73,12 +73,12 @@ const ProfileHome = () => {
                 </div>
 
                 
-          <div className="flex gap-4">
+          <div className="flex lg:flex-row flex-wrap lg:gap-4 gap-2">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => handleTabClick(tab.id)}
-                className={`px-4  h-[40px] rounded-full font-medium text-sm ${
+                className={`lg:px-4 px-2 h-[40px] rounded-full font-medium lg:text-sm text-[11px] ${
                   activeTab === tab.id
                     ? "bg-primary text-white"
                     : "bg-[#E6F7FA] text-[#6B6B6B] hover:bg-primary hover:text-white"
@@ -97,7 +97,7 @@ const ProfileHome = () => {
            <div>
 
            </div>
-           <div className="pt-6 p-4 pb-[72px] container  ">
+           <div className="pt-6 lg:p-4 pb-[72px] container  ">
             {tabs.find((tab) => tab.id === activeTab)?.component}
           </div> 
 

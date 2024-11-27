@@ -10,7 +10,7 @@ const ProfileDetails = () => {
         <Title className='' >Personal Information </Title>
             <Form layout='vertical' className='w-full' >  
 
-                <div className=' grid grid-cols-2 gap-x-7 py-[24px]' > 
+                <div className=' grid lg:grid-cols-2 grid-cols-1 gap-x-7 py-[24px]' > 
                     <InputField name='first-name' label='First Name' />
                     <InputField name='last-name' label='Last Name' />
                     <InputField name='bod' label='Date of Birth' />
@@ -25,7 +25,7 @@ const ProfileDetails = () => {
 <InputField name='Address' label='Address' />
     </div> 
 
-    <div className='grid grid-cols-2 gap-x-7 pb-[24px]'>
+    <div className='grid lg:grid-cols-2 grid-cols-1 gap-x-7 pb-[24px]'>
 <InputField name='Postcode' label='Postcode' />
     
 <InputField name='City/town' label='City/Town' />
