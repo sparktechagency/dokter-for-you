@@ -3,25 +3,29 @@
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 
-type DeliveryOption = 'forward' | 'digital';
+type DeliveryOption = 'regular' | 'video'; 
 
-const Delivery = ()=>{
-  const [selectedOption, setSelectedOption] = useState<DeliveryOption | null>(null);
+interface consultationTypeInterface {
+    setConsultationType:(value:DeliveryOption | null)=>void
+}
 
-  return (
-    <div className="space-y-6">
+const ConsultationType = ({setConsultationType}:consultationTypeInterface) => { 
+    const [selectedOption, setSelectedOption] = useState<DeliveryOption | null>(null);  
+    setConsultationType(selectedOption);
+    return (
+        <div className="space-y-6">
       <div className="space-y-1">
-        <h2 className="text-[24px] font-medium text-[#222222]">Delivery</h2>
+        <h2 className="text-[24px] font-medium text-[#222222]">Consultation Type</h2>
         <p className="text-[16px] text-[#6B6B6B]">
-          Please make your choice below to receive your Consultation
+        Please choose your consultation type as you wish.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Forward Prescription Option */}
+        {/* regular Prescription Option */}
         <label
           className={`relative flex flex-col p-4 py-7 border cursor-pointer transition-all duration-200 ${
-            selectedOption === 'forward'
+            selectedOption === 'regular'
               ? 'border-emerald-500 bg-emerald-50'
               : 'border-gray-200 hover:border-gray-300'
           }`}
@@ -31,15 +35,15 @@ const Delivery = ()=>{
               type="radio"
               name="delivery"
               className="mt-1 h-4 w-4 text-emerald-500 border-gray-300 focus:ring-emerald-500"
-              checked={selectedOption === 'forward'}
-              onChange={() => setSelectedOption('forward')}
+              checked={selectedOption === 'regular'}
+              onChange={() => setSelectedOption('regular')}
             />
             <div className="flex-1">
               <span className="block font-medium text-gray-900 text-[16px]">
-                Forward Prescription to our Partner
+              Regular
               </span>
               <span className="mt-1 block text-[16px] text-[#999999] font-[400]">
-                We will send your medication and your prescription is delivered to your home by a partner pharmacy
+              Blueclinic ensures that your medication is delivered to your home by a partner pharmacy.
               </span>
               <button className="mt-3 inline-flex items-center text-sm font-medium text-[#1854F9]">
                 More Information
@@ -54,10 +58,10 @@ const Delivery = ()=>{
        
         </label>
 
-        {/* Digital Prescription Option */}
+        {/* video Prescription Option */}
         <label
           className={`relative flex flex-col p-4 border py-7 cursor-pointer transition-all duration-200 ${
-            selectedOption === 'digital'
+            selectedOption === 'video'
               ? 'border-emerald-500 bg-emerald-50'
               : 'border-gray-200 hover:border-gray-300'
           }`}
@@ -67,15 +71,15 @@ const Delivery = ()=>{
               type="radio"
               name="delivery"
               className="mt-1 h-4 w-4 text-emerald-500 border-gray-300 focus:ring-emerald-500"
-              checked={selectedOption === 'digital'}
-              onChange={() => setSelectedOption('digital')}
+              checked={selectedOption === 'video'}
+              onChange={() => setSelectedOption('video')}
             />
             <div className="flex-1">
               <span className="block font-medium text-gray-900 text-[16px]">
-                Receive Digital Prescription
+              Video Consultation
               </span>
               <span className="mt-1 block  text-[16px] text-[#999999]">
-                We will send you a prescription and buy your medication at your own pharmacy
+              With  digital prescription, you buy your medication at your own pharmacy prescription, you buy your medication at your own pharmacy
               </span>
               <button className="mt-3 inline-flex items-center text-sm font-medium text-[#1854F9]">
                 More Information
@@ -99,7 +103,7 @@ const Delivery = ()=>{
         </div>
       </div>
     </div>
-  );
-} 
+    );
+};
 
-export default Delivery;
+export default ConsultationType;

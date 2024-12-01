@@ -28,12 +28,17 @@ import Delivery from './Delivery';
 import Address from './Address';
 import DeliveryPayment from './DeliveryPayment';
 import CheckConfirm from './CheckConfirm';
+import ConsultationType from './ConsultationType';
 
 const poppins = Poppins({ weight: ['400', '500', '600', '700'], subsets: ['latin'] });
 
 
 const AllConsultations = () => {
     const [current, setCurrent] = useState(0);
+    const [hasPreference, setHasPreference] = useState<string | null>()
+    const [consultationType , setConsultationType] = useState<string | null>() 
+    console.log(consultationType);
+
 
     const steps = [
         {
@@ -98,24 +103,37 @@ const AllConsultations = () => {
         },
         {
             title: "",
-            content: <MedicationPreference />
+            content: <MedicationPreference setHasPreference={setHasPreference} />
         },
-        {
-            title: "",
-            content: <WeightLossConsulation />
-        },
-        {
-            title: "",
-            content: <div>
-                <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                    Questions about your medication preference
-                </h2>
+        ...(hasPreference === "has_preference"
+            ? [
+                {
+                    title: "",
+                    content: <WeightLossConsulation />
+                },
+                {
+                    title: "",
+                    content: <div>
+                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                            Questions about your medication preference
+                        </h2>
 
-                <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
-                    We have some additional questions about the product you sellected
-                </h2>
-            </div>
-        }, 
+                        <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
+                            We have some additional questions about the product you sellected
+                        </h2>
+                    </div>
+                },
+            ]
+            : [
+                {
+                    title: "",
+                    content: <ConsultationType setConsultationType={setConsultationType} />
+                },
+            ]), 
+
+            ...(consultationType !== "video"
+                ? [
+
         {
             title: "Additional Questions 1/4",
             content: <AdditionalQuestions1 />
@@ -131,15 +149,25 @@ const AllConsultations = () => {
         {
             title: "Additional Questions 4/4",
             content: <AdditionalQuestions4 />
-        },
-        {
-            title: "",
-            content: <Delivery />
-        },
-        {
-            title: "",
-            content: <Address />
-        },
+        }] : []),
+        ...(hasPreference === "has_preference"
+            ? [
+                {
+                    title: "",
+                    content: <Delivery />
+                },
+                {
+                    title: "",
+                    content: <Address />
+                }]
+            :
+            [
+                {
+                    title: "",
+                    content: <Address />
+                } 
+            ]),
+
         {
             title: "",
             content: <DeliveryPayment />
@@ -169,8 +197,8 @@ const AllConsultations = () => {
 
                 <div className="steps-content  flex items-center justify-start" style={{ margin: '20px 0' }} >
                     <Form className='w-full' >
-                        <div className={`lg:text-[32px] text-[28px] text-primary font-medium lg:tracking-wide py-3 ${poppins.className}`}>{steps[current].title} </div>
-                        <div className=' bg-white p-6 mt-6 min-h-[350px]'>  {steps[current].content} </div>
+                        <div className={`lg:text-[32px] text-[28px] text-primary font-medium lg:tracking-wide py-3 ${poppins.className}`}>{steps[current]?.title} </div>
+                        <div className=' bg-white p-6 mt-6 min-h-[350px]'>  {steps[current]?.content} </div>
                     </Form>
                 </div>
 

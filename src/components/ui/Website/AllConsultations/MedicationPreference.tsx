@@ -2,15 +2,20 @@
 
 import { useState } from 'react';
 import { Radio } from 'antd';
-import type { RadioChangeEvent } from 'antd';
+import type { RadioChangeEvent } from 'antd'; 
 
-const MedicationPreference = () => {
+interface preferenceType{
+  setHasPreference:(value:string|null)=>void
+}
+
+const MedicationPreference = ({setHasPreference}:preferenceType) => {
   const [preference, setPreference] = useState<string | null>(null);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(false); 
 
   const handlePreferenceChange = (e: RadioChangeEvent) => {
     setPreference(e.target.value);
-    setError(false);
+    setError(false); 
+    setHasPreference(e.target.value)
   };
 
 
@@ -37,15 +42,13 @@ const MedicationPreference = () => {
             className={`
               w-full  transition-all duration-200  `}
           >
-            <div className="ml-2">
-              <div className="font-medium text-gray-800">
+              <div className="font-medium text-gray-800 ">
                 Yes, I have a preference for certain medication
               </div>
-              <div className="text-sm text-gray-500 mt-1">
+          </Radio> 
+          <div className="text-sm text-gray-500 my-3 ms-5">
                 Select your preferred medication in the next step
               </div>
-            </div>
-          </Radio>
         </div>
 
         <div className={` p-4 pb-6    ${preference === 'no_preference' ? ' bg-[#B5F1D5]' : 'bg-[#EEEEEE] '}
@@ -56,15 +59,13 @@ const MedicationPreference = () => {
             className={`
               w-full  transition-all duration-200`}
           >
-            <div className="ml-2">
               <div className="font-medium text-gray-800">
                 No, I let the doctor decide
               </div>
-              <div className="text-sm text-gray-500 mt-1">
+          </Radio> 
+          <div className="text-sm text-gray-500 my-3 ms-5">
                 The doctor will prescribe medication based on the medical questionnaire you completed
-              </div>
-            </div>
-          </Radio>
+              </div> 
               </div>
         </Radio.Group>
 
