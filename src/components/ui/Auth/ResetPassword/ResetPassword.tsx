@@ -1,16 +1,48 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
+import { useResetPasswordMutation } from "@/redux/features/auth/authApi";
 import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const ResetPassword = () => {
   const router = useRouter()
+  const [resetPassword , {isError ,isLoading , isSuccess , error ,data}] = useResetPasswordMutation()  
 
-  const onFinish = async(values:any) => { 
-    console.log(values);
-    router.push(`/login`);
-  };
+
+
+  useEffect(() => {
+    if (isSuccess) {
+      if (data) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: data?.message,
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => {
+          router.push("/login")
+        
+        });
+      }
+    }
+    if (isError) {
+      Swal.fire({
+       //@ts-ignore
+        text: error?.data?.message,  
+        icon: "error",
+      });
+    }
+  }, [isSuccess, isError, error, data, router]);  
+
+
+  const onFinish = async(values:{ newPassword: string , confirmPassword: string}) => {   
+    await resetPassword(values).then((res) => {
+      console.log(res);
+    })
+  }  
 
   return (
     <div>
@@ -117,7 +149,7 @@ const ResetPassword = () => {
                 marginTop: 20
               }}
             >
-             Update
+         {isLoading ? "Loading..." : "Update"} 
             </Button>
           </Form.Item>
 

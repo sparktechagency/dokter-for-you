@@ -1,23 +1,56 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import InputField from "@/components/shared/InputField";
+import { useLoginUserMutation } from "@/redux/features/auth/authApi";
+import { SetLocalStorage } from "@/util/LocalStroage";
 import {  Checkbox, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
+import Swal from "sweetalert2";
 
 
 const Login = () => {
- const router = useRouter()
+ const router = useRouter() 
+ const [loginUser, { isSuccess, isError, data, error, isLoading }] = useLoginUserMutation()
+
+ useEffect(() => {
+   if (isSuccess) {
+     if (data) {
+       Swal.fire({
+         title: "Login Successful",
+         text: "Welcome to Dokter For You",
+         icon: "success",
+         timer: 1500,
+         showConfirmButton: false
+       }).then(() => {
+
+         if (data) {
+           SetLocalStorage("DokterToken", data?.data);
+         }
+         router.push("/");
+
+       });
+     }
+
+   }
+   if (isError) {
+     Swal.fire({
+       title: "Failed to Login",
+       //@ts-ignore
+       text: error?.data?.message,
+       icon: "error",
+     });
+   }
+ }, [isSuccess, isError, error, data, router]);
 
 
-  const onFinish = async(values:any) => { 
-    console.log(values);
-
-          router.push("/")
-        
-   
-  };
+ const onFinish = async (values:{email:string , password:string}) => {
+   await loginUser(values).then((res) => {
+     console.log(res);
+   })
+ };
 
   return (
     <div 
@@ -82,7 +115,7 @@ const Login = () => {
               }}
               className="flex items-center justify-center bg-primary rounded-lg"
             >
-              {/* {isLoading? < Spinner/> : "Sign in"} */} Sign in
+              {isLoading? "Loading..." : "Sign in"} 
             </button>
           </Form.Item>
 

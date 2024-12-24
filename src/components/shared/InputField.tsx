@@ -1,46 +1,41 @@
-"use client"
-import { ConfigProvider, Form, Input } from 'antd';
-import React, { useEffect } from 'react'
+"use client";
 
-const InputField = ({ name, label }: { name: string, label: string }) => {
-    const form = Form.useFormInstance();
+import {  Form, Input } from "antd";
+import React from "react";
 
-    useEffect(() => {
-        form.setFieldsValue({ name: '' });
-    }, [form]);
+const InputField: React.FC<{ name: string; label: string }> = ({ name, label }) => {
+  return (
+    <Form.Item
+      name={name} 
+      
+      label={<p className="text-[#4E4E4E] text-[16px]">{label}</p>}
+      rules={[
+        {
+          required: true,
+          message: `Please enter your ${label.toLowerCase()}`,
+        },
+      ]}
+    > 
+         {/* <ConfigProvider
+        theme={{
+          token: {
+            borderRadius: 0,
+          },
+        }}
+      >   */}
+      <Input
+        placeholder={`Enter your ${label.toLowerCase()}`}
+        style={{
+            height: 48,
+            border: "1px solid #d9d9d9",
+            outline: "none",
+            boxShadow: "none",
+            backgroundColor: "white",
+          }}
+      /> 
+      {/* </ConfigProvider>  */}
+    </Form.Item>
+  );
+};
 
-    return (
-        <Form.Item
-            name={name}
-            label={<p className='text-[#4E4E4E] text-[16px]'>{label}</p>}
-            rules={[
-                {
-                    required: true,
-                    message: `Please Enter your ${name}`,
-                }
-            ]}
-        >
-            <ConfigProvider
-                theme={{
-                    token: {
-                        borderRadius: 0 , 
-                    }, 
-              
-                }}
-            >
-                <Input
-                    placeholder={`Enter Your ${label}`}
-                    style={{
-                        height: 48,
-                        border: "1px solid #d9d9d9",
-                        outline: "none",
-                        boxShadow: "none" ,
-                        backgroundColor: "white"
-                    }}
-                />
-            </ConfigProvider>
-        </Form.Item>
-    );
-}
-
-export default InputField
+export default InputField;
