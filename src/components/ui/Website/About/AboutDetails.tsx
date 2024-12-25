@@ -1,8 +1,15 @@
+"use client"
 import Title from '@/components/shared/Title';
+import { imageUrl } from '@/redux/base/baseApi';
+import { useGetAboutByIdQuery } from '@/redux/features/website/footerSlice';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 import React from 'react';
 
-const AboutDetails = () => {
+const AboutDetails = () => { 
+  const {id} = useParams()  
+  const {data} = useGetAboutByIdQuery(id)  
+  const item = data?.data
     return (
         <div className=' pt-[60px] bg-[#f7f7f7]'> 
 
@@ -10,25 +17,19 @@ const AboutDetails = () => {
 
 <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-8"> 
   <div className="lg:w-1/2 w-full">
-    <Title className="pb-[24px]">Our Story</Title>
+    <Title className="pb-[24px]">{item?.title}</Title>
     <p className="text-gray-600">
-      id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien est. ex id porta volutpat ipsum id Vestibulum odio lacus sed facilisis lacus felis, dui lacus, Ut placerat. dui volutpat dui. Quisque Praesent at, enim. ex In tincidunt Ut quis vitae dui. urna. tincidunt elit placerat elit lacus, Vestibulum Donec Morbi vel tortor. efficitur. Donec leo. nisi tincidunt convallis. eget id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien est. ex id porta volutpat 
+    {item?.description?.slice(0, 250)}
     </p>
   </div>
 
   <div className="lg:w-1/2 w-full">
-    <Image src="/whenTo.svg" height={400} width={400} className=" w-auto" alt="" />
+    <Image src={item?.image?.startsWith("http") ? item?.image : `${imageUrl}${item?.image}`} height={400} width={400} className=" w-auto" alt="" />
   </div>
 </div>
 
         <div className=' pb-[94px] text-gray-600 mt-3'>
-        id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien  est. ex id porta volutpat ipsum id Vestibulum odio lacus sed facilisis lacus felis, dui lacus, Ut placerat. dui volutpat dui. Quisque Praesent at, enim. ex In  tincidunt Ut quis vitae dui. urna. tincidunt elit placerat elit lacus, Vestibulum Donec Morbi vel tortor. efficitur. Donec leo. nisi tincidunt convallis. eget id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien  est. ex id porta volutpat id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien  est. ex id porta volutpat ipsum id Vestibulum odio lacus sed facilisis lacus felis, dui lacus, Ut placerat. dui volutpat dui. Quisque Praesent at, enim. ex In  <br />
-
-tincidunt Ut quis vitae dui. urna. tincidunt elit placerat elit lacus, Vestibulum Donec Morbi vel tortor. efficitur. Donec leo. nisi tincidunt convallis. eget id venenatis elementum Cras Lorem lobortis, Quisque id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien  est. ex id porta volutpat ipsum id Vestibulum odio lacus sed facilisis lacus felis, dui lacus, Ut placerat. dui volutpat dui. Quisque Praesent at, enim. ex In  tincidunt Ut quis vitae dui. urna. tincidunt elit placerat elit lacus, Vestibulum Donec Morbi vel tortor. efficitur. Donec leo. nisi tincidunt convallis. eget id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien  est. ex id porta volutpat id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien  est. ex id porta volutpat ipsum id Vestibulum odio lacus sed facilisis lacus felis, dui lacus, Ut placerat. dui volutpat dui. Quisque Praesent at, enim. ex In   <br />
-
-id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien  est. ex id porta volutpat ipsum id Vestibulum odio lacus sed facilisis lacus felis, dui lacus, Ut placerat. dui volutpat dui. Quisque Praesent at, enim. ex In  tincidunt Ut quis vitae dui. urna. tincidunt elit placerat elit lacus, Vestibulum Donec Morbi vel tortor. efficitur. Donec leo. nisi tincidunt convallis. eget id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien  est. ex id porta volutpat id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien  est. ex id porta volutpat ipsum id Vestibulum odio lacus sed facilisis lacus felis, dui lacus, Ut placerat. dui volutpat dui. Quisque Praesent at, enim. ex In  <br />
-
-tincidunt Ut quis vitae dui. urna. tincidunt elit placerat elit lacus, Vestibulum Donec Morbi vel tortor. efficitur. Donec leo. nisi tincidunt convallis. eget id venenatis elementum Cras Lorem lobortis, Quisque id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien  est. ex id porta volutpat ipsum id Vestibulum odio lacus sed facilisis lacus felis, dui lacus, Ut placerat. dui volutpat dui. Quisque Praesent at, enim. ex In  tincidunt Ut quis vitae dui. urna. tincidunt elit placerat elit lacus, Vestibulum Donec Morbi vel tortor. efficitur. Donec leo. nisi tincidunt convallis. eget id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien  est. ex id porta volutpat id venenatis elementum Cras Lorem lobortis, Quisque tincidunt massa dignissim, Morbi at Lorem vel elementum non at tincidunt Donec tincidunt Praesent sapien  est. ex id porta volutpat ipsum id Vestibulum odio lacus sed facilisis lacus felis, dui lacus, Ut placerat. dui volutpat dui. Quisque Praesent at, enim. ex In 
+        {item?.description}
         </div>
 </div>
             

@@ -2,8 +2,7 @@
 import { GetLocalStorage } from "@/util/LocalStroage";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
- 
-const token  = GetLocalStorage("DokterToken")
+const token  = GetLocalStorage("DokterToken") 
 
 export const baseApi = createApi({
     reducerPath: "api",

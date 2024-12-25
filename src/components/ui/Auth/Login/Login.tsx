@@ -29,7 +29,7 @@ const Login = () => {
          if (data) {
            SetLocalStorage("DokterToken", data?.data);
          }
-         router.push("/");
+         router.push("/home");
 
        });
      }

@@ -5,11 +5,41 @@ import Image from "next/image";
 import Title from "@/components/shared/Title";
 import { TfiMapAlt } from "react-icons/tfi";
 import { MdOutlineHeadsetMic } from "react-icons/md";
-import { ConfigProvider, Form, Input, Select } from "antd";
+import { Form, Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import CommonBtn from "@/components/shared/CommonBtn";
+import { useCreateSupportMutation } from "@/redux/features/website/footerSlice";
+import Swal from "sweetalert2";
 
-const Support = () => {
+const Support = () => { 
+
+  const [createSupport] = useCreateSupportMutation()
+  const [form] = Form.useForm(); 
+
+  const onFinish = async(values:{ email: string , description: string , subject: string , phone: string , name: string}) => {  
+    await createSupport(values).then((res) => {
+            if (res?.data?.success) {
+                        Swal.fire({
+                          text: res?.data?.message,
+                          icon: "success",
+                          showConfirmButton: false,
+                          timer: 1500,
+                        }).then(()=>{
+                          form.resetFields()
+                        })
+                      } else {
+                        Swal.fire({
+                          title: "Oops",
+                          text: res?.data?.message,
+                          icon: "error",
+                          timer: 1500,
+                          showConfirmButton: false,
+                        });
+                      }
+    })
+    
+  }
+
   return (
     <main className="bg-gray-50 ">
       {/* Hero Section with Image */}
@@ -45,7 +75,7 @@ const Support = () => {
 
             {/* Help Line Card */}
             <div className="rounded-lg bg-[#E7FBF2] shadow-md transition-transform hover:scale-105 p-6">
-            <div className="flex justify-center -mt-16">
+              <div className="flex justify-center -mt-16">
                 <div className="rounded-full bg-white p-4 h-[100px] w-[95px] flex items-center justify-center shadow-md">
                   <MdOutlineHeadsetMic className="h-10 w-10 text-[#4E4E4E]" />
                 </div>
@@ -59,7 +89,7 @@ const Support = () => {
 
             {/* Address Card */}
             <div className="rounded-lg bg-[#E6F7FA] shadow-md transition-transform hover:scale-105 p-6">
-            <div className="flex justify-center -mt-16">
+              <div className="flex justify-center -mt-16">
                 <div className="rounded-full bg-white p-4 h-[100px] w-[95px] flex items-center justify-center shadow-md">
                   <TfiMapAlt className="h-10 w-10 text-[#4E4E4E]" />
                 </div>
@@ -75,100 +105,84 @@ const Support = () => {
       </div>
 
       {/* Contact Form Section */}
-      <div className="mx-auto container py-[94px] px-8  flex lg:flex-row flex-col w-full items-center gap-10  "> 
+      <div className="mx-auto container py-[94px] px-8  flex lg:flex-row flex-col w-full items-center gap-10  ">
 
-        <div className=" lg:w-1/2 w-full"> 
-        <Title className=" mb-6 font-[500] lg:text-[48px] text-[32px] tracking-wide">
+        <div className=" lg:w-1/2 w-full">
+          <Title className=" mb-6 font-[500] lg:text-[48px] text-[32px] tracking-wide">
             SEND US A MESSAGE
           </Title>
           <p className="text-[#6B6B6B] lg:text-[24px] text-[20px] lg:mb-8 mb-4 lg:tracking-wide ">
             JUST LEAVE US YOUR DETAILS HERE AND WE WILL GET BACK TO YOU WITHIN A
             FEW HOURS
           </p>
-        </div> 
-
-        <div className="rounded-lg bg-white p-8 shadow-lg lg:w-1/2 w-full">
-  
-        <Form
-    
-      layout="vertical"
-      className="space-y-6"
-
-    >
-      <div className="space-y-4">
-        <Form.Item
-          name="inquiry"
-          label="Type of Inquiry"
-          rules={[{ required: true, message: "Please select an inquiry type" }]}
-        > 
-               <ConfigProvider
-                        theme={{
-                            components: {
-                                Select: {
-                                    activeBorderColor: "#BABABA",
-                                    hoverBorderColor: "#BABABA"
-                                },
-                            },
-                            token: {
-                                borderRadius: 0,
-                            },
-
-                        }}
-                    >
-          <Select placeholder="Please select" style={{height:"48px"}}>
-            <Select.Option value="general">General Inquiry</Select.Option>
-            <Select.Option value="technical">Technical Support</Select.Option>
-            <Select.Option value="billing">Billing Question</Select.Option>
-            <Select.Option value="partnership">
-              Partnership Opportunity
-            </Select.Option>
-          </Select> 
-          </ConfigProvider>
-        </Form.Item>
-
-        <div className="grid gap-x-4 md:grid-cols-2">
-          <Form.Item
-            name="name"
-            label="Name"
-            rules={[{ required: true, message: "Please enter your name" }]}
-          >
-            <Input placeholder="Type name" className="h-[48px]" />
-          </Form.Item>
-          <Form.Item
-            name="phone"
-            label="Phone"
-            rules={[{ required: true, message: "Please enter your phone number" }]}
-          >
-            <Input placeholder="Type your phone number"  className="h-[48px]"  />
-          </Form.Item>
         </div>
 
-        <Form.Item
-          name="email"
-          label="Email"
-          rules={[
-            { required: true, message: "Please enter your email" },
-            { type: "email", message: "Please enter a valid email" },
-          ]}
-        >
-          <Input placeholder="Type your email" className="h-[48px]"   />
-        </Form.Item>
+        <div className="rounded-lg bg-white p-8 shadow-lg lg:w-1/2 w-full">
 
-        <Form.Item
-          name="message"
-          label="Message"
-          rules={[{ required: true, message: "Please enter your message" }]}
-        >
-          <TextArea placeholder="Type description" rows={6} />
-        </Form.Item>
-      </div>
+          <Form
 
-      <Form.Item>
-        <CommonBtn className=" h-[48px] w-full" >
-          Submit
-        </CommonBtn>
-      </Form.Item>
-    </Form>
+            layout="vertical"
+            className="space-y-6"
+            onFinish={onFinish}
+ form={form}
+          >
+            <div className="">
+           
+
+              <div className="grid gap-x-4 md:grid-cols-2">
+                <Form.Item
+                  name="name"
+                  label="Name"
+                  rules={[{ required: true, message: "Please enter your name" }]}
+                >
+                  <Input placeholder="Type name" className="h-[48px]" />
+                </Form.Item>
+                <Form.Item
+                  name="phone"
+                  label="Phone"
+                  rules={[{ required: true, message: "Please enter your phone number" }]}
+                >
+                  <Input placeholder="Type your phone number" className="h-[48px]" />
+                </Form.Item>
+              </div>
+
+              <Form.Item
+                name="type"
+                label="Subject"
+                rules={[
+                  { required: true, message: "Please enter your Subject" },
+                 
+                ]}
+              >
+                <Input placeholder="Type your subject" className="h-[48px]" />
+              </Form.Item>
+
+              <Form.Item
+                name="email"
+                label="Email"
+                rules={[
+                  { required: true, message: "Please enter your email" },
+                  { type: "email", message: "Please enter a valid email" },
+                ]}
+              >
+                <Input placeholder="Type your email" className="h-[48px]" />
+              </Form.Item>
+
+              <Form.Item
+                name="description"
+                label="Message"
+                rules={[{ required: true, message: "Please enter your message" }]}
+              >
+                <TextArea placeholder="Type description" rows={6} />
+              </Form.Item>
+            </div>
+
+            <Form.Item>
+              <CommonBtn className=" h-[48px] w-full" >
+                Submit
+              </CommonBtn>
+            </Form.Item>
+          </Form>
         </div>
       </div>
     </main>

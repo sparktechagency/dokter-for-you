@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import type { ColumnsType } from 'antd/es/table'; 
 import ConsultationDetails from '../TabsDetails/ConsultationDetails';
+import { useGetConsultationsQuery } from '@/redux/features/profile/consultationSlice';
 
 interface ConsultationData {
     key: string;
@@ -55,7 +56,11 @@ interface ConsultationData {
   ]; 
 
 const Consultation = () => {  
-  const [selectedConsultation, setSelectedConsultation] = useState<string | null>(null);
+  const [selectedConsultation, setSelectedConsultation] = useState<string | null>(null); 
+
+  const name = "VIDEOCALL" 
+  const {data: consultations} = useGetConsultationsQuery(name) 
+  console.log(consultations);
       
       const columns: ColumnsType<ConsultationData> = [
         {

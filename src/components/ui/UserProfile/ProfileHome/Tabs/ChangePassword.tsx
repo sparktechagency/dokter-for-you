@@ -1,25 +1,42 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { ConfigProvider, Form, Input } from 'antd';
-import React, { useState } from 'react';
-import VerifyChangePass from '../TabsDetails/VerifyChangePass';
+import React from 'react';
+import { useChangePasswordMutation } from '@/redux/features/auth/authApi';
+import Swal from 'sweetalert2';
 
 const ChangePassword = () => {
     const [form] = Form.useForm();
-    const [selectedConsultation, setSelectedConsultation] = useState<boolean | null>(false);
+    const [changePassword] = useChangePasswordMutation()
 
-    const handleChangePassword = (values: any) => {
-        setSelectedConsultation(true)
-        console.log(values);
+    const handleChangePassword = async(values: any) => {
+       
+        await changePassword(values).then((res) => {   
+                if (res?.data?.success) {
+                  Swal.fire({
+                    text: res?.data?.message,
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  }).then(()=>{
+                    form.resetFields()
+                  })
+                } else {
+                  Swal.fire({
+                    title: "Oops",
+                    text: res?.data?.message,
+                    icon: "error",
+                    timer: 1500,
+                    showConfirmButton: false,
+                  });
+                }
+              }) 
 
     };
 
     return (
         <div className="px-6 lg:px-12 mt-8">
-            {selectedConsultation ? (
-                <VerifyChangePass onClose={() => setSelectedConsultation(false)}
-                />
-            ) : (
+  
                 <Form
                     form={form}
                     layout="vertical"
@@ -37,7 +54,7 @@ const ChangePassword = () => {
                         }}
                     >
                         <Form.Item
-                            name="current_password"
+                            name="currentPassword"
                             label={<p className="block">Current Password</p>}
                             rules={[
                                 {
@@ -70,9 +87,9 @@ const ChangePassword = () => {
                     >
 
                     <Form.Item
-                        name="new_password"
+                        name="newPassword"
                         label={<p className="block">New Password</p>}
-                        dependencies={["current_password"]}
+                        dependencies={["currentPassword"]}
                         hasFeedback
                         rules={[
                             {
@@ -81,7 +98,7 @@ const ChangePassword = () => {
                             },
                             ({ getFieldValue }) => ({
                                 validator(_, value) {
-                                    if (!value || getFieldValue("current_password") === value) {
+                                    if (!value || getFieldValue("currentPassword") === value) {
                                         return Promise.reject(
                                             new Error("The new password and current password do not match!")
                                         );
@@ -115,9 +132,9 @@ const ChangePassword = () => {
                         }}
                     >
                     <Form.Item
-                        name="confirm_password"
+                        name="confirmPassword"
                         label={<p className="block">Re-Type Password</p>}
-                        dependencies={["new_password"]}
+                        dependencies={["newPassword"]}
                         hasFeedback
                         rules={[
                             {
@@ -126,7 +143,7 @@ const ChangePassword = () => {
                             },
                             ({ getFieldValue }) => ({
                                 validator(_, value) {
-                                    if (!value || getFieldValue("new_password") === value) {
+                                    if (!value || getFieldValue("newPassword") === value) {
                                         return Promise.resolve();
                                     }
                                     return Promise.reject(
@@ -160,7 +177,7 @@ const ChangePassword = () => {
                         </button>
                     </Form.Item>
                 </Form>
-            )}
+           
         </div>
     );
 };

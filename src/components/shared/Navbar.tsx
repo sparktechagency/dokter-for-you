@@ -1,20 +1,36 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DownOutlined, MenuOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import Image from "next/image";
 import { LuSearch } from "react-icons/lu";
 import { IoNotificationsOutline } from "react-icons/io5";
-import { IoIosLogOut } from "react-icons/io";
+import { IoIosLogOut } from "react-icons/io"; 
+import { GoStar } from "react-icons/go";
 import { Drawer } from "antd";
+import AddReviewModal from "../ui/Website/home/AddReviewModal";
+import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
+import { imageUrl } from "@/redux/base/baseApi";
 
 const Navbar: React.FC = () => {
   const [activeLink, setActiveLink] = useState("");
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false); 
+  const [isModalOpen, setIsModalOpen] = useState(false) 
+  const { data } = useGetProfileQuery(undefined) 
+  const userData = data?.data 
+  const [imgURL, setImgURL] = useState(""); 
+
+    useEffect(() => {
+      setImgURL(userData?.profile?.startsWith("https")? userData?.profile : `${imageUrl}${userData?.profile}`);
+    }, [userData]);
+
+  const showModal = () => {
+    setIsModalOpen(true)
+  }
 
   const handleDropdown = (index: any) => {
     setOpenDropdown(openDropdown === index ? null : index);
@@ -78,20 +94,25 @@ const Navbar: React.FC = () => {
                   setIsProfileDropdownOpen(!isProfileDropdownOpen)
                 }
               >
-                <Image src="/person.png" alt="" height={45} width={45} className="object-cover" />
+                <Image src={imgURL} alt="" height={45} width={45} style={{ borderRadius: "100%", width: "45px", height: "45px" }} className="object-cover" />
                
               </div>
 
               {isProfileDropdownOpen && (
                 <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[170px] z-50">
                   <div className="p-4 flex flex-col gap-3 items-center">
-                    <Image src="/person.png" alt="" height={55} width={55} />
-                    <div className="font-bold">MD.Asadujjaman</div>
+                    <Image src={imgURL} alt="" height={55} width={55} style={{ borderRadius: "100%", width: "55px", height: "55px" }} />
+                    <div className="font-bold">{userData?.firstName} {userData?.lastName}</div>
                     <Link href="/profile">
-                      <button className="text-white bg-primary w-full lg:px-6 px-3 py-2 rounded-lg text-[14px]">
+                      <button className="text-white bg-primary w-full lg:px-6 px-3 py-2 rounded-lg text-[14px]" onClick={showModal}>
                         Visit Your Profile
                       </button>
-                    </Link>
+                    </Link> 
+
+                    <button className="flex items-center justify-center border border-[#6B6B6B] w-full  gap-2 my-2 lg:px-6 px-3 py-2 rounded-lg text-[14px] "> 
+                      <span> <GoStar  size={14} color="#6B6B6B"/> </span> 
+                      <span className=" text-[#6B6B6B] text-[14px] font-medium"> Review </span>
+                    </button>
                   </div>
                   <div className="border-t">
                     <Link href="/login" className="px-4 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2">
@@ -178,8 +199,8 @@ const Navbar: React.FC = () => {
                   setIsProfileDropdownOpen(!isProfileDropdownOpen)
                 }
               >
-                <Image src="/person.png" alt="" height={45} width={45} />
-                <span className="text-[#4E4E4E] font-medium">Asadujjaman</span>
+                <Image src={imgURL} alt="" height={45} width={45} style={{ borderRadius: "100%", width: "45px", height: "45px" }} className="rounded-full" />
+                <span className="text-[#4E4E4E] font-medium">{userData?.firstName} {userData?.lastName}</span>
                 <DownOutlined
                   className={`transition-transform ${
                     isProfileDropdownOpen ? "rotate-180" : "rotate-0"
@@ -190,14 +211,19 @@ const Navbar: React.FC = () => {
               {isProfileDropdownOpen && (
                 <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[200px] z-50">
                   <div className="p-4 flex flex-col gap-3 items-center">
-                    <Image src="/person.png" alt="" height={55} width={55} />
-                    <div className="font-bold">MD.Asadujjaman</div>
+                    <Image src={imgURL} alt="" height={55} width={55} style={{ borderRadius: "100%", width: "55px", height: "55px" }} />
+                    <div className="font-bold">{userData?.firstName} {userData?.lastName}</div>
                     <Link href="/profile">
-                      <button className="text-white bg-primary w-full px-6 py-2 rounded-lg text-[14px]">
+                      <button className="text-white bg-primary w-full px-6 py-2 rounded-lg text-[14px]" >
                         Visit Your Profile
                       </button>
-                    </Link>
-                  </div>
+                    </Link> 
+                   
+                  </div> 
+                  <p className="flex items-center justify-start px-4 pb-2 w-full  gap-2  rounded-lg mt-2 text-[16px] text-gray-700 cursor-pointer" onClick={showModal}> 
+                      <span> <GoStar  size={16} /> </span> 
+                      <span className="  text-[16px] font-medium"> Review </span>
+                    </p> 
                   <div className="border-t">
                     <Link href="/login" className="px-4 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2">
                       <IoIosLogOut size={24} />
@@ -264,7 +290,9 @@ const Navbar: React.FC = () => {
 
         </div> 
 
-      </Drawer>
+      </Drawer> 
+
+      <AddReviewModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 
       <div className="pt-[96px]">{/* Page content here */}</div>
     </>
