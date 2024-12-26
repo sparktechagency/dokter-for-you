@@ -4,6 +4,7 @@ import { ColumnsType } from 'antd/es/table';
 import React, { useState } from 'react';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import PrescriptionOrder from '../TabsDetails/PrescriptionOrder';
+import { useGetAllConsultationsQuery } from '@/redux/features/profile/consultationSlice';
 
 interface ConsultationData {
     id: number;
@@ -51,6 +52,18 @@ const data: ConsultationData[] = [
 
 const DigitalPrescriptionOrder = () => {  
     const [selectedConsultation, setSelectedConsultation] = useState<string | null>(null); 
+
+    const name = "PRESCRIPTIONWITHMEDICINE"  
+      const {data: consultations, isLoading} = useGetAllConsultationsQuery(name) 
+      
+    if(isLoading){
+      return <div>Loading...</div>
+    }
+    
+    const consultationsData = consultations?.data
+    
+      console.log("kghdf",consultationsData);
+
     const columns: ColumnsType<ConsultationData> = [
         {
             title: 'S. No.',

@@ -1,14 +1,18 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
+
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { TbBrandZoom } from 'react-icons/tb';
+import Link from 'next/link';
 
 interface ConsultationDetailsProps {
   consultationId: string;
   onClose: () => void;
 }
  
-const ConsultationDetails =({ consultationId , onClose }: ConsultationDetailsProps) => { 
-    console.log(consultationId);
+const ConsultationDetails =({ consultationId , onClose, consultations }: ConsultationDetailsProps) => { 
+    console.log("details Page" ,consultationId, consultations);
   return (
     <div className=''>
       <button
@@ -26,7 +30,7 @@ const ConsultationDetails =({ consultationId , onClose }: ConsultationDetailsPro
   {/* Tracking Info */}
   <div className="bg-[#E7FBF2] p-4 rounded-none mb-6">
     <div className="text-[16px] flex flex-col gap-2">
-      <p className="text-[#4E4E4E]">Tracking No. #2164564615</p>
+      {/* <p className="text-[#4E4E4E]">Tracking No. #2164564615</p> */}
       <p className="text-[#4E4E4E]">Man problem/Erectile dysfunction</p>
       <p className="text-[#4E4E4E]">1/1/2025, 5:30 pm</p>
     </div>
@@ -59,10 +63,10 @@ const ConsultationDetails =({ consultationId , onClose }: ConsultationDetailsPro
       Our doctor has sent your prescription, please download the file.
     </p>
 
-    <button className="mx-auto flex items-center justify-center gap-2 px-6 bg-primary text-white h-[48px]">
+    <Link href={""} className="mx-auto flex items-center justify-center gap-2 px-6 bg-primary text-white h-[48px]">
       <TbBrandZoom className="h-4 w-4" size={26} color='white'/>
       Meeting Link
-    </button>
+    </Link>
   </div>
  </div>
 

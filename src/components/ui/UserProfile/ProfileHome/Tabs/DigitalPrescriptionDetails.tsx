@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
+
 "use client "
 import { Button, ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import React, { useState } from 'react';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import PrescriptionDetails from '../TabsDetails/PrescriptionDetails';
+import { useGetAllConsultationsQuery } from '@/redux/features/profile/consultationSlice';
 
 interface ConsultationData {
     id: number;
@@ -13,83 +17,74 @@ interface ConsultationData {
     price: string;
 }
 
-const data: ConsultationData[] = [
-    {
-        id: 1,
-        regNo: "1906537887",
-        consultFor: "Man problem/Erectile dysfunction",
-        dateTime: "1/1/2025, 5:30 pm",
-        price: "€ 25.00"
-    },
-    {
-        id: 2,
-        regNo: "1906537653",
-        consultFor: "Man problem/Erectile dysfunction",
-        dateTime: "1/1/2025, 5:30 pm",
-        price: "€ 25.00"
-    },
-    {
-        id: 3,
-        regNo: "1906536293",
-        consultFor: "Man problem/Erectile dysfunction",
-        dateTime: "1/1/2025, 5:30 pm",
-        price: "€ 25.00"
-    },
-    {
-        id: 4,
-        regNo: "1906235884",
-        consultFor: "Man problem/Erectile dysfunction",
-        dateTime: "1/1/2025, 5:30 pm",
-        price: "€ 25.00"
-    }
-];
+
 
 const DigitalPrescriptionDetails = () => {
     const [selectedConsultation, setSelectedConsultation] = useState<string | null>(null);
+      const name = "PRESCRIPTION"  
+    const {data:allConsultations} = useGetAllConsultationsQuery(name) 
 
+    if (!allConsultations) return <div>Loading...</div>;
+
+    const DigitalPrescriptionDetails = allConsultations?.data
+
+    console.log("DigitalPrescriptionDetails",DigitalPrescriptionDetails);
+
+    console.log(allConsultations);
     const columns: ColumnsType<ConsultationData> = [
         {
             title: 'S. No.',
-            dataIndex: "id",
-            key: 'id',
+            dataIndex: 'sNo',
+            key: 'sNo',
             width: 80,
-        },
-        {
-            title: 'Reg. No.',
-            dataIndex: 'regNo',
-            key: 'regNo',
-            width: 150,
-        },
-        {
+            render: (_, __, index) => index + 1,
+          },
+          
+          {
             title: 'Consult for:',
-            dataIndex: 'consultFor',
+            dataIndex: ["subCategory", "name"],
             key: 'consultFor',
             width: 250,
-        },
-        {
-            title: 'Date & Time:',
-            dataIndex: 'dateTime',
-            key: 'dateTime',
+          },
+          {
+            title: 'Consultant:',
+            dataIndex: "doctorId",
+            key: 'consultant',
             width: 180,
-        },
-        {
+            render: (_, record)=>{
+              return(
+                <div>
+                  {record?.doctorId?.firstName} {record?.doctorId?.lastName}
+                </div>
+              )
+            }
+          },
+          
+          {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
             width: 120,
-        },
-        {
+            render: () => {
+              return (
+                <div>
+                  {"$25.00"}
+                </div>
+              )
+            }
+          },
+          {
             title: 'Action',
             key: 'action',
             width: 100,
             render: (_,record) => (
-                <Button  onClick={() => setSelectedConsultation(record.regNo)}
-                    type="text"
-                    icon={<MdOutlineArrowOutward size={24} />}
-                    style={{ color: '#00b96b' }}
-                />
+              <Button  onClick={() => setSelectedConsultation(record)}
+                type="text" 
+                icon={<MdOutlineArrowOutward size={24}/>}
+                style={{ color: '#00b96b' }}
+              />
             ),
-        },
+          },
     ];
 
 
@@ -100,6 +95,7 @@ const DigitalPrescriptionDetails = () => {
 
             {selectedConsultation ? (
         <PrescriptionDetails
+        DigitalPrescriptionDetails={DigitalPrescriptionDetails}
           consultationId={selectedConsultation}
           onClose={() => setSelectedConsultation(null)}
         />
@@ -119,7 +115,7 @@ const DigitalPrescriptionDetails = () => {
                 >
                     <Table
                         columns={columns}
-                        dataSource={data}
+                        dataSource={DigitalPrescriptionDetails}
                         pagination={false} 
                         scroll={{ x: 'max-content' }}
                         className="consultation-table"

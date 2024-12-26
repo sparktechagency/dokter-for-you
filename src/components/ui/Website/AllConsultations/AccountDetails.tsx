@@ -1,3 +1,4 @@
+import { useGetProfileQuery } from '@/redux/features/profile/getProfileSlice';
 import React from 'react';
 
 interface InfoRowProps {
@@ -5,7 +6,9 @@ interface InfoRowProps {
   value: string;
 }
 
-const InfoRow = ({ label, value }: InfoRowProps) => {
+const InfoRow = ({ label, value }: InfoRowProps) => { 
+
+
   return (
     <div className="flex items-center gap-2 py-1">
       <div className=" text-gray-600 flex items-center gap-1 text-[16px]">
@@ -19,16 +22,21 @@ const InfoRow = ({ label, value }: InfoRowProps) => {
   );
 }
 
-const userData = {
-  firstName: "Asadujjaman",
-  lastName: "Mahfuz",
-  dateOfBirth: "12 nov, 2024",
-  gender: "Male",
-  email: "Asadujjaman@gmail.com",
-  contactNumber: "+09999999999999999"
-};
 
-const AccountDetails = () => {
+
+const AccountDetails = () => { 
+  const {data} = useGetProfileQuery(undefined) 
+  const profileData = data?.data   
+
+  const userData = {
+    firstName: profileData?.firstName,
+    lastName: profileData?.lastName ,
+    dateOfBirth: profileData?.dateOfBirth,
+    gender: profileData?.gender,
+    email: profileData?.email,
+    contactNumber: profileData?.contact
+  }; 
+
   return (
 
     

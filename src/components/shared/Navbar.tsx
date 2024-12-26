@@ -13,6 +13,9 @@ import { Drawer } from "antd";
 import AddReviewModal from "../ui/Website/home/AddReviewModal";
 import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
 import { imageUrl } from "@/redux/base/baseApi";
+import { useGetAllCategoryQuery } from "@/redux/features/website/categorySlice";
+
+import { useRouter } from "next/navigation";
 
 const Navbar: React.FC = () => {
   const [activeLink, setActiveLink] = useState("");
@@ -22,7 +25,11 @@ const Navbar: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false) 
   const { data } = useGetProfileQuery(undefined) 
   const userData = data?.data 
-  const [imgURL, setImgURL] = useState(""); 
+  const [imgURL, setImgURL] = useState("");  
+  const {data:category} = useGetAllCategoryQuery(undefined) 
+
+  const router = useRouter()
+
 
     useEffect(() => {
       setImgURL(userData?.profile?.startsWith("https")? userData?.profile : `${imageUrl}${userData?.profile}`);
@@ -31,6 +38,12 @@ const Navbar: React.FC = () => {
   const showModal = () => {
     setIsModalOpen(true)
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem("DokterToken");
+    router.push("/login");
+  }
+
 
   const handleDropdown = (index: any) => {
     setOpenDropdown(openDropdown === index ? null : index);
@@ -44,13 +57,10 @@ const Navbar: React.FC = () => {
     { label: "Home", link: "/home" },
     {
       label: "All Consultation",
-      subOptions: [
-        { label: "For Man", value: "Man" },
-        { label: "For Women", value: "Women" },
-        { label: "STDs", value: "STDs" },
-        { label: "Pain", value: "Pain" },
-        { label: "Sleep", value: "Sleep" },
-      ],
+      subOptions: category?.data?.map((item: { name: string; _id: string }) => ({
+        label: item?.name,
+        value: item?._id, 
+      })),
     },
     { label: "About", link: "/about" },
     { label: "Blogs", link: "/blogs" },
@@ -115,10 +125,10 @@ const Navbar: React.FC = () => {
                     </button>
                   </div>
                   <div className="border-t">
-                    <Link href="/login" className="px-4 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2">
+                    <button onClick={handleLogout}>
                       <IoIosLogOut size={24} />
                       <p>Log Out</p>
-                    </Link>
+                    </button>
                   </div>
                 </div>
               )}
@@ -158,7 +168,7 @@ const Navbar: React.FC = () => {
 
                   {navItem.subOptions && openDropdown === index && (
                     <div className="absolute left-0 mt-2 w-[200px] bg-white shadow-lg border rounded-md z-10">
-                      {navItem.subOptions.map((option, subIndex) => (
+                      {navItem.subOptions.map((option:{label: string, value: string}, subIndex: number) => (
                         <Link key={subIndex} href={`/subcategory?category=${option.value}`}>
                           <p
                             className={`py-2 px-4 text-sm text-[#4E4E4E] cursor-pointer hover:bg-primary hover:text-white rounded ${
@@ -193,7 +203,7 @@ const Navbar: React.FC = () => {
             </Link>
             {/* Profile Dropdown */}
             <div className="relative">
-              <div
+{userData   ?            <div
                 className="flex items-center space-x-2 cursor-pointer"
                 onClick={() =>
                   setIsProfileDropdownOpen(!isProfileDropdownOpen)
@@ -206,7 +216,7 @@ const Navbar: React.FC = () => {
                     isProfileDropdownOpen ? "rotate-180" : "rotate-0"
                   }`}
                 />
-              </div>
+              </div> : <div><Link href={"/login"}><button  className="bg-primary text-white px-6 py-3 rounded-lg text-[14px]">Login</button></Link></div>}
 
               {isProfileDropdownOpen && (
                 <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[200px] z-50">
@@ -225,10 +235,10 @@ const Navbar: React.FC = () => {
                       <span className="  text-[16px] font-medium"> Review </span>
                     </p> 
                   <div className="border-t">
-                    <Link href="/login" className="px-4 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center gap-2">
+                    <button className="px-4 py-3 text-primary hover:bg-gray-100 cursor-pointer flex items-center gap-2" onClick={handleLogout}>
                       <IoIosLogOut size={24} />
                       <p>Log Out</p>
-                    </Link>
+                    </button>
                   </div>
                 </div>
               )}
@@ -263,7 +273,7 @@ const Navbar: React.FC = () => {
               )}
               {navItem.subOptions && (
                 <div className="pl-2 pt-3">
-                  {navItem.subOptions.map((option, subIndex) => (
+                  {navItem.subOptions.map((option:{value: string, label: string}, subIndex:number) => (
                     <Link key={subIndex}  href={`/subcategory?category=${option.value}`}>
                       <p className=" text-[#4E4E4E] hover:text-primary pb-2 text-[18px] font-[400]">
                         {option.label} 

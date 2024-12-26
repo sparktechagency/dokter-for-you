@@ -1,4 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
+
+import { imageUrl } from '@/redux/base/baseApi';
 import { ArrowLeft, Download } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react'; 
 
 
@@ -7,8 +12,8 @@ interface ConsultationDetailsProps {
     onClose: () => void;
   } 
 
-const PrescriptionDetails = ({ consultationId , onClose }: ConsultationDetailsProps) => { 
-    console.log(consultationId);
+const PrescriptionDetails = ({ DigitalPrescriptionDetails, onClose }: ConsultationDetailsProps) => { 
+    console.log(DigitalPrescriptionDetails);
     return (
       <div className=''>
       <button
@@ -61,10 +66,10 @@ const PrescriptionDetails = ({ consultationId , onClose }: ConsultationDetailsPr
     <p className="text-center text-red-500 text-sm ">
       Stating that it is valid for 7 days only and can be use once.
     </p>
-    <button className="mx-auto flex items-center justify-center gap-2 px-6 bg-primary text-white h-[48px]">
+    <Link href={`${imageUrl}${DigitalPrescriptionDetails[0]?.pdfFile}`} className="mx-auto flex items-center justify-center gap-2 px-6 bg-primary text-white h-[48px]">
       <Download className="h-4 w-4" size={24} color='white'/>
       Download now
-    </button>
+    </Link>
   </div>
  </div>
 
