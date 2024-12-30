@@ -12,7 +12,12 @@ const questions = [
     }
   ];
 
-const MedicalQuestion5 = () => {
+const MedicalQuestion5 = ({ updateQNA }: { updateQNA: (question: string, answer: string) => void }) => { 
+
+  const handleOptionChange = (question: string, answer: string) => {
+    updateQNA(question, answer);
+}; 
+
     return (
         <div>
              
@@ -22,6 +27,7 @@ const MedicalQuestion5 = () => {
                       key={index}
                       title={question.title}
                       options={question.options}
+                      onOptionChange={(answer: string) => handleOptionChange(question.title, answer)}
                     />
                   ))}
                 </Form>

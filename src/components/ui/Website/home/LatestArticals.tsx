@@ -16,7 +16,7 @@ const LatestArticals = () => {
         <div className=' container'>
         <Title className=" text-center pb-[64px]">Latest Articles</Title>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-7 lg:gap-y-0 gap-y-5 ">
-        {articalsData?.slice(0, 4)?.map((article:{title:string,image:string,createdAt:string}, index:number) => (
+        {articalsData?.slice(0, 3)?.map((article:{title:string,image:string,createdAt:string}, index:number) => (
           <div
             key={index}
             className="bg-white p-3 shadow-md rounded-lg hover:shadow-lg"

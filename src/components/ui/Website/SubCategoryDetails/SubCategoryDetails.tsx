@@ -8,13 +8,17 @@ import CommonBtn from '@/components/shared/CommonBtn';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import { useGetSubCategoryByIdQuery } from '@/redux/features/website/categorySlice';
 import { imageUrl } from '@/redux/base/baseApi';
+import { useGetProfileQuery } from '@/redux/features/profile/getProfileSlice';
 
 const SubCategoryDetails = () => {
   const searchParams = useSearchParams();
   const category = searchParams.get('category');
   const SubCategory = searchParams.get('subcategory');
   const { data: subCategory } = useGetSubCategoryByIdQuery(SubCategory)
-  const subCategoryData = subCategory?.data
+  const subCategoryData = subCategory?.data 
+  const {data:profile} = useGetProfileQuery(undefined) 
+  const profileData = profile?.data 
+  console.log(profileData);
 
   return (
     <div className=' bg-[#F7F7F7] pb-[64px]'>
@@ -49,7 +53,7 @@ const SubCategoryDetails = () => {
 
           <div className="pt-4">
             <p className="font-medium mb-4">Do you need help with selecting the right Consultation?</p>
-            <Link href="/consultations" className=' w-full ' >
+            <Link href={`${profileData ? "/consultations" : "/login"}`} className=' w-full ' >
               <CommonBtn className={` flex gap-1 items-center justify-center px-6  h-[56px] `}>
                 <span>Start Your Consultation</span>
                 <span><MdOutlineKeyboardArrowRight size={22} /></span>

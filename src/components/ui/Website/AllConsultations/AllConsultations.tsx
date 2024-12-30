@@ -37,8 +37,22 @@ const AllConsultations = () => {
     const [current, setCurrent] = useState(0);
     const [hasPreference, setHasPreference] = useState<string | null>()
     const [consultationType , setConsultationType] = useState<string | null>() 
-    console.log(consultationType);
+    const [qnaData, setQnaData] = useState<{ question: string; answer: string }[]>([]);
+    console.log(qnaData);
 
+    const updateQNA = (question: string, answer: string) => {
+        setQnaData((prev) => {
+            const existing = prev.find((qna) => qna.question === question);
+            if (existing) {
+                // Update existing answer
+                return prev.map((qna) =>
+                    qna.question === question ? { question, answer } : qna
+                );
+            }
+            // Add new QNA entry
+            return [...prev, { question, answer }];
+        });
+    }; 
 
     const steps = [
         {
@@ -47,63 +61,63 @@ const AllConsultations = () => {
         },
         {
             title: "Medical Question 1/14",
-            content: <MedicalQuestion1 />
+            content: <MedicalQuestion1 updateQNA={updateQNA} />
         },
         {
             title: "Medical Question 2/14",
-            content: <MedicalQuestion2 />
+            content: <MedicalQuestion2 updateQNA={updateQNA} />
         },
         {
             title: "Medical Question 3/14",
-            content: <MedicalQuestion3 />
+            content: <MedicalQuestion3 updateQNA={updateQNA} />
         },
         {
             title: "Medical Question 4/14",
-            content: <MedicalQuestion4 />
+            content: <MedicalQuestion4 updateQNA={updateQNA} />
         },
         {
             title: "Medical Question 5/14",
-            content: <MedicalQuestion5 />
+            content: <MedicalQuestion5 updateQNA={updateQNA}/>
         },
         {
             title: "Medical Question 6/14",
-            content: <MedicalQuestion6 />
+            content: <MedicalQuestion6 updateQNA={updateQNA} />
         },
         {
             title: "Medical Question 7/14",
-            content: <MedicalQuestion7 />
+            content: <MedicalQuestion7 updateQNA={updateQNA} />
         },
         {
             title: "Medical Question 8/14",
-            content: <MedicalQuestion8 />
+            content: <MedicalQuestion8 updateQNA={updateQNA} />
         },
         {
             title: "Medical Question 9/14",
-            content: <MedicalQuestion9 />
+            content: <MedicalQuestion9 updateQNA={updateQNA} />
         },
         {
             title: "Medical Question 10/14",
-            content: <MedicalQuestion10 />
+            content: <MedicalQuestion10 updateQNA={updateQNA} />
         },
         {
             title: "Medical Question 11/14",
-            content: <MedicalQuestion11 />
+            content: <MedicalQuestion11 updateQNA={updateQNA} />
         },
         {
             title: "Medical Question 12/14",
-            content: <MedicalQuestion12 />
+            content: <MedicalQuestion12 updateQNA={updateQNA} />
         },
         {
             title: "Medical Question 13/14",
-            content: <MedicalQuestion13 />
+            content: <MedicalQuestion13 updateQNA={updateQNA} />
         },
         {
             title: "Medical Question 14/14",
-            content: <MedicalQuestion14 />
+            content: <MedicalQuestion14 updateQNA={updateQNA} />
         },
         {
             title: "",
-            content: <MedicationPreference setHasPreference={setHasPreference} />
+            content: <MedicationPreference setHasPreference={setHasPreference} updateQNA={updateQNA} />
         },
         ...(hasPreference === "has_preference"
             ? [
@@ -136,19 +150,19 @@ const AllConsultations = () => {
 
         {
             title: "Additional Questions 1/4",
-            content: <AdditionalQuestions1 />
+            content: <AdditionalQuestions1 updateQNA={updateQNA} />
         },
         {
             title: "Additional Questions 2/4",
-            content: <AdditionalQuestions2 />
+            content: <AdditionalQuestions2 updateQNA={updateQNA} />
         },
         {
             title: "Additional Questions 3/4",
-            content: <AdditionalQuestions3 />
+            content: <AdditionalQuestions3 updateQNA={updateQNA} />
         },
         {
             title: "Additional Questions 4/4",
-            content: <AdditionalQuestions4 />
+            content: <AdditionalQuestions4 updateQNA={updateQNA} />
         }] : []),
         ...(hasPreference === "has_preference"
             ? [

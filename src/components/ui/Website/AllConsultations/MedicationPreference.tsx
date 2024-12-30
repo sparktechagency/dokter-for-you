@@ -5,17 +5,21 @@ import { Radio } from 'antd';
 import type { RadioChangeEvent } from 'antd'; 
 
 interface preferenceType{
-  setHasPreference:(value:string|null)=>void
+  setHasPreference:(value:string|null)=>void 
+  updateQNA: (question: string, answer: string) => void 
 }
 
-const MedicationPreference = ({setHasPreference}:preferenceType) => {
+const MedicationPreference = ({setHasPreference , updateQNA}:preferenceType) => {
   const [preference, setPreference] = useState<string | null>(null);
   const [error, setError] = useState(false); 
 
   const handlePreferenceChange = (e: RadioChangeEvent) => {
     setPreference(e.target.value);
     setError(false); 
-    setHasPreference(e.target.value)
+    setHasPreference(e.target.value)  
+    const question = "Do you have a medication preference?";
+    const answer = e.target.value;
+    updateQNA(question, answer);
   };
 
 

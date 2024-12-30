@@ -1,98 +1,114 @@
 "use client";
 
-import InputField from "@/components/shared/InputField";
+import InputField from "@/components/shared/InputField"; // Ensure your InputField is Ant Design-compatible
 import { Form, Radio, Select, Checkbox, ConfigProvider } from "antd";
-
+import { useState } from "react";
 
 const Address = () => {
   const [form] = Form.useForm();
+  const [addressData, setAddressData] = useState({});
+
+  const handleFormChange = (changedValues: any, allValues: any) => {
+   
+    console.log(allValues); 
+
+    const formattedData = {
+      address: {
+        firstname: allValues.FirstName || "",
+        lastname: allValues.LastName || "",
+        streetAndHouseNo: allValues["Street and house number"] || "",
+        postalCode: allValues["Postal code"] || "",
+        place: allValues.Place || "",
+        country: allValues.country || "",
+      },
+    };
+    setAddressData(formattedData);
+    console.log(formattedData); // Formatted address data
+  };
 
   return (
-    <div className=" ">
-      <div className="">
+    <div>
+      <div>
         <h1 className="text-2xl font-semibold mb-2">Address</h1>
         <p className="text-[#6B6B6B] mb-6">Please make your choice below to receive your Consultation.</p>
 
-        <div className="bg-[#EEEEEE]  p-6">
-         
-            <div className="flex gap-4 mb-6">
-              <Radio.Group defaultValue="new" className="flex">
-                <Radio value="new" className="flex items-center px-6 py-2  mr-4 ">
-               
-                  New address
-                </Radio>
-                <Radio value="dhl" className="flex items-center px-6 py-2 ">
-                  DHL Service Point
-                </Radio>
-              </Radio.Group>
-            </div> 
+        <div className="bg-[#EEEEEE] p-6">
+          <div className="flex gap-4 mb-6">
+            <Radio.Group defaultValue="new" className="flex">
+              <Radio value="new" className="flex items-center px-6 py-2 mr-4">
+                New address
+              </Radio>
+              <Radio value="dhl" className="flex items-center px-6 py-2">
+                DHL Service Point
+              </Radio>
+            </Radio.Group>
+          </div>
 
-            <Form form={form} layout="vertical">
-      {/* First Name and Last Name */}
-      <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-6">
-        <InputField name="FirstName" label="First Name" />
+          <Form form={form} layout="vertical" onValuesChange={handleFormChange}>
+            {/* First Name and Last Name */}
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-6">
+             
+              <InputField name="FirstName" label="First Name" />
+      
+              <InputField name="LastName" label="Last Name" />
+             
+            </div>
 
-        <InputField name="LastName" label="Last Name"/>
-      </div>
+            {/* Street and House Number */}
+            <div className="grid grid-cols-1 lg:mb-8">
+                <InputField name="Street and house number" label="Street and house number" />
+            </div>
 
-      {/* Street and House Number */} 
-      <div className="grid grid-cols-1  lg:mb-8">
-      <InputField name="Street and house number" label="Street and house number"/>
-</div>
-      {/* Postal Code and Place */}
-      <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-8">
-        <InputField name="Postal code" label="Postal code"/>
+            {/* Postal Code and Place */}
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-8">      
+                <InputField name="Postal code" label="Postal code" />
+      
+                <InputField name="Place" label="Place" />
 
-        <InputField name="Place" label="Place" />
-      </div>
+            </div>
 
-      {/* Second Postal Code and Country */}
-      <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-6">
-        <InputField name="postalCode2" label="Postal code" /> 
-
-        <Form.Item name="country" label="Country"> 
-        <ConfigProvider
-                        theme={{
-                            components: {
-                                Select: {
-                                    activeBorderColor: "#BABABA",
-                                    hoverBorderColor: "#BABABA"
-                                },
-                            },
-                            token: {
-                                borderRadius: 0,
-                            },
-
-                        }}
-                    >
-          <Select
-            placeholder="Select country" 
-            style={{height:"48px"}}
-            className="w-full "
-            options={[
-              { value: "germany", label: "Germany" },
-              { value: "france", label: "France" },
-              { value: "italy", label: "Italy" },
-            ]}
-          /> 
-          </ConfigProvider>
-        </Form.Item>
-      </div>
-    </Form>
+            {/* Second Postal Code and Country */}
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-6">
+                <InputField  name="postalCode2" label="Postal code"/>
+                <ConfigProvider
+                  theme={{
+                    components: {
+                      Select: {
+                        activeBorderColor: "#BABABA",
+                        hoverBorderColor: "#BABABA",
+                      },
+                    },
+                    token: {
+                      borderRadius: 0,
+                    },
+                  }}
+                >
+              <Form.Item name="country" label="Country">
+                  <Select
+                    placeholder="Select country"
+                    style={{ height: "48px" }}
+                    className="w-full"
+                    options={[
+                      { value: "Netherlands", label: "Netherlands" }, 
+                    ]}
+                  />
+              </Form.Item>
+                </ConfigProvider>
+            </div>
+          </Form>
         </div>
- 
- <div className="bg-[#E8EEFE] p-4 mt-5">
-        <h3 className="font-medium text-gray-900 text-[16px]">Overview</h3>
-        <div className="flex lg:flex-row flex-col justify-between items-center lg:text-[16px] text-[14px] gap-3">
-          <div> 
-            <p className="text-gray-500 pt-4 ">Consultation for man / weigh problem - $25.00</p>
-          </div>
-          <div className="text-right">
-            <p className="text-primary font-medium">Total - $25.00</p>
-          </div>
-        </div> 
- </div>
 
+        <div className="bg-[#E8EEFE] p-4 mt-5">
+          <h3 className="font-medium text-gray-900 text-[16px]">Overview</h3>
+          <div className="flex lg:flex-row flex-col justify-between items-center lg:text-[16px] text-[14px] gap-3">
+            <div>
+              <p className="text-gray-500 pt-4">Consultation for man / weigh problem - $25.00</p>
+            </div>
+            <div className="text-right">
+              <p className="text-primary font-medium">Total - $25.00</p>
+            </div>
+          </div>
+        </div>
 
         <div className="mt-6 flex items-center justify-between">
           <Form.Item className="mb-0">
@@ -102,11 +118,10 @@ const Address = () => {
               </span>
             </Checkbox>
           </Form.Item>
-   
         </div>
       </div>
     </div>
   );
-} 
+};
 
 export default Address;

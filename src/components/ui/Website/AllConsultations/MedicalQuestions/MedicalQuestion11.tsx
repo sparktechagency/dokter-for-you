@@ -13,14 +13,20 @@ const questions = [
       ],
     }
   ];
-const MedicalQuestion11 = () => {
+const MedicalQuestion11 = ({ updateQNA }: { updateQNA: (question: string, answer: string) => void }) => { 
+
+  const handleOptionChange = (question: string, answer: string) => {
+    updateQNA(question, answer);
+};
+
     return (
         <Form>
         {questions.map((question, index) => (
           <SingleChoiceQuestion
             key={index}
             title={question.title}
-            options={question.options}
+            options={question.options} 
+            onOptionChange={(answer: string) => handleOptionChange(question.title, answer)}
           />
         ))}
       </Form>
