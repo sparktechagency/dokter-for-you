@@ -3,7 +3,8 @@ import React from 'react';
 
 const ConsultationsPage = () => {
     return (
-        <div>
+        <div> 
+            
          <AllConsultations />   
         </div>
     );

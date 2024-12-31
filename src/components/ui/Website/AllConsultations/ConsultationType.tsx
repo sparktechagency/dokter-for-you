@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react'; 
-import {  toast } from 'sonner'
+import { message } from 'antd';
+
 
 type DeliveryOption = 'regular' | 'video'; 
 
@@ -28,7 +29,7 @@ const ConsultationType = ({setConsultationType , updateQNA}:consultationTypeInte
         updateQNA(question, answer);  
 
         if (option === 'video') {
-          toast.success('The doctor will send the video consultation appointment to your email within 24 hours.');
+          message.success('The doctor will send the video consultation appointment to your email within 24 hours.');
       }
 
     };
