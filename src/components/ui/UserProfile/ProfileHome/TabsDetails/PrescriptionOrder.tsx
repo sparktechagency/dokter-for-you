@@ -9,7 +9,7 @@ interface ConsultationDetailsProps {
   } 
  
 
-const PrescriptionOrder = ({ consultationId , onClose }: ConsultationDetailsProps) => { 
+const PrescriptionOrder = ({   onClose }: ConsultationDetailsProps) => { 
     //console.log(consultationId);
     return (
       <div className=''>

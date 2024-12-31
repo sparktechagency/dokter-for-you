@@ -11,6 +11,7 @@ interface ConsultationDetailsProps {
   onClose: () => void;
 }
  
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ConsultationDetails =({ consultationId , onClose, consultations }: ConsultationDetailsProps) => { 
     //console.log("details Page" ,consultationId, consultations);
   return (

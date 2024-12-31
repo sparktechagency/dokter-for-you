@@ -18,7 +18,7 @@ const VerifyChangePass = ({  onClose }: ConsultationDetailsProps) => {
 
     const [otp, setOtp] = useState<string>("");
   
-    const onFinish = async(values:any) => {
+    const onFinish = async() => {
         //console.log(values); 
         onClose()
     };

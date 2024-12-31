@@ -47,9 +47,7 @@ const Login = () => {
 
 
  const onFinish = async (values:{email:string , password:string}) => {
-   await loginUser(values).then((res) => {
-     //console.log(res);
-   })
+   await loginUser(values)
  };
 
   return (
