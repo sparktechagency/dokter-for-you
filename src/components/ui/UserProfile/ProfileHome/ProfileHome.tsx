@@ -46,7 +46,7 @@ const ProfileHome = () => {
       formData.append("profile", file);
 
       await editProfile(formData).then((res) => { 
-        console.log(res);
+        //console.log(res);
         if (res?.data?.success) {
           Swal.fire({
             text: res?.data?.message,

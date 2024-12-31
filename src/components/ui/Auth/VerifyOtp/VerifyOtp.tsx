@@ -52,7 +52,7 @@ const VerifyOtp = () => {
   }
 
   const onFinish = async(values: { otp: string}) => {
-    // console.log(values); 
+    // //console.log(values); 
     const data = {
       email: email,
       oneTimeCode: parseInt(values?.otp)

@@ -17,9 +17,17 @@ const consultationSlice = baseApi.injectEndpoints({
         query: (id) => ({
             url: `/medicine/${id}` 
         })
+    })  , 
+
+    createConsultation:build.mutation({ 
+        query: (data) => ({
+          url: "/consultation/create",
+          method: "POST",
+          body: data,
+        })
     }) 
 
   }) 
 })  
 
-export const {useGetAllMedicinesQuery , useGetMedicineByIdQuery} =  consultationSlice
+export const {useGetAllMedicinesQuery , useGetMedicineByIdQuery , useCreateConsultationMutation} =  consultationSlice

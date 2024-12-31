@@ -1,30 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import InputField from "@/components/shared/InputField"; // Ensure your InputField is Ant Design-compatible
+import InputField from "@/components/shared/InputField"; 
 import { Form, Radio, Select, Checkbox, ConfigProvider } from "antd";
-import { useState } from "react";
 
-const Address = () => {
+const Address = ({SubCategoryName , setAddress}:{SubCategoryName:string|null , setAddress:(address: { firstname: string; lastname: string; streetAndHouseNo: string; postalCode: string; place: string; country: string;  }) => void}) => {
   const [form] = Form.useForm();
-  const [addressData, setAddressData] = useState({});
 
   const handleFormChange = (changedValues: any, allValues: any) => {
-   
-    console.log(allValues); 
 
     const formattedData = {
-      address: {
         firstname: allValues.FirstName || "",
         lastname: allValues.LastName || "",
         streetAndHouseNo: allValues["Street and house number"] || "",
         postalCode: allValues["Postal code"] || "",
         place: allValues.Place || "",
         country: allValues.country || "",
-      },
     };
-    setAddressData(formattedData);
-    console.log(formattedData); // Formatted address data
+    setAddress(formattedData);
   };
+  
 
   return (
     <div>
@@ -55,21 +50,16 @@ const Address = () => {
             </div>
 
             {/* Street and House Number */}
-            <div className="grid grid-cols-1 lg:mb-8">
-                <InputField name="Street and house number" label="Street and house number" />
+            <div className="grid grid-cols-2 gap-x-4 lg:mb-8">
+                <InputField name="Street and house number" label="Street and house number" /> 
+                <InputField name="Postal code" label="Postal code" />
             </div>
 
             {/* Postal Code and Place */}
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-8">      
-                <InputField name="Postal code" label="Postal code" />
-      
-                <InputField name="Place" label="Place" />
+             
+                <InputField name="Place" label="Place" /> 
 
-            </div>
-
-            {/* Second Postal Code and Country */}
-            <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-6">
-                <InputField  name="postalCode2" label="Postal code"/>
                 <ConfigProvider
                   theme={{
                     components: {
@@ -93,8 +83,11 @@ const Address = () => {
                     ]}
                   />
               </Form.Item>
-                </ConfigProvider>
+                </ConfigProvider> 
+
             </div>
+
+  
           </Form>
         </div>
 
@@ -102,7 +95,7 @@ const Address = () => {
           <h3 className="font-medium text-gray-900 text-[16px]">Overview</h3>
           <div className="flex lg:flex-row flex-col justify-between items-center lg:text-[16px] text-[14px] gap-3">
             <div>
-              <p className="text-gray-500 pt-4">Consultation for man / weigh problem - $25.00</p>
+              <p className="text-gray-500 pt-4">Consultation for {SubCategoryName} - $25.00</p>
             </div>
             <div className="text-right">
               <p className="text-primary font-medium">Total - $25.00</p>

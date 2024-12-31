@@ -5,8 +5,20 @@ import { ArrowRight } from 'lucide-react';
 
 type DeliveryOption = 'forward' | 'digital';
 
-const Delivery = ()=>{
+const Delivery = ({ updateQNA , SubCategoryName }: { updateQNA: (question: string, answer: string) => void  , SubCategoryName:string|null}) => {
   const [selectedOption, setSelectedOption] = useState<DeliveryOption | null>(null);
+
+  const handleOptionChange = (option: DeliveryOption) => {
+    setSelectedOption(option);
+
+    const question = 'Delivery Prescription';
+    const answer =
+      option === 'forward'
+        ? 'Forward Prescription to our Partner'
+        : 'Receive Digital Prescription';
+
+    updateQNA(question, answer);
+  };
 
   return (
     <div className="space-y-6">
@@ -32,14 +44,15 @@ const Delivery = ()=>{
               name="delivery"
               className="mt-1 h-4 w-4 text-emerald-500 border-gray-300 focus:ring-emerald-500"
               checked={selectedOption === 'forward'}
-              onChange={() => setSelectedOption('forward')}
+              onChange={() => handleOptionChange('forward')}
             />
             <div className="flex-1">
               <span className="block font-medium text-gray-900 text-[16px]">
                 Forward Prescription to our Partner
               </span>
               <span className="mt-1 block text-[16px] text-[#999999] font-[400]">
-                We will send your medication and your prescription is delivered to your home by a partner pharmacy
+                We will send your medication and your prescription is delivered to your home by a
+                partner pharmacy
               </span>
               <button className="mt-3 inline-flex items-center text-sm font-medium text-[#1854F9]">
                 More Information
@@ -47,11 +60,12 @@ const Delivery = ()=>{
               </button>
             </div>
           </div>
-         
-            <div className="absolute -top-3 right-6 ">
-         <p className=' h-[40px] rounded-bl-3xl text-[16px] font-[400] bg-[#60E1A5] text-black px-5 flex items-center justify-center '>  Most chosen </p>    
-            </div>
-       
+
+          <div className="absolute -top-3 right-6">
+            <p className="h-[40px] rounded-bl-3xl text-[16px] font-[400] bg-[#60E1A5] text-black px-5 flex items-center justify-center">
+              Most chosen
+            </p>
+          </div>
         </label>
 
         {/* Digital Prescription Option */}
@@ -68,13 +82,13 @@ const Delivery = ()=>{
               name="delivery"
               className="mt-1 h-4 w-4 text-emerald-500 border-gray-300 focus:ring-emerald-500"
               checked={selectedOption === 'digital'}
-              onChange={() => setSelectedOption('digital')}
+              onChange={() => handleOptionChange('digital')}
             />
             <div className="flex-1">
               <span className="block font-medium text-gray-900 text-[16px]">
                 Receive Digital Prescription
               </span>
-              <span className="mt-1 block  text-[16px] text-[#999999]">
+              <span className="mt-1 block text-[16px] text-[#999999]">
                 We will send you a prescription and buy your medication at your own pharmacy
               </span>
               <button className="mt-3 inline-flex items-center text-sm font-medium text-[#1854F9]">
@@ -86,12 +100,13 @@ const Delivery = ()=>{
         </label>
       </div>
 
-      <div className="border-t border-gray-200 pt-4"> 
-
-      <h3 className="font-medium text-gray-900 text-[16px]">Overview</h3>
+      <div className="border-t border-gray-200 pt-4">
+        <h3 className="font-medium text-gray-900 text-[16px]">Overview</h3>
         <div className="flex lg:flex-row flex-col gap-3 justify-between items-center text-[16px]">
-          <div> 
-            <p className="text-gray-500 pt-4 ">Consultation for man / weigh problem - $25.00</p>
+          <div>
+            <p className="text-gray-500 pt-4">
+              Consultation for {SubCategoryName} - $25.00
+            </p>
           </div>
           <div className="text-right">
             <p className="text-primary font-medium">Total - $25.00</p>
@@ -100,6 +115,6 @@ const Delivery = ()=>{
       </div>
     </div>
   );
-} 
+};
 
 export default Delivery;

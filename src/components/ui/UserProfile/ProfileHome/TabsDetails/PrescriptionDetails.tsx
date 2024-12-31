@@ -13,7 +13,7 @@ interface ConsultationDetailsProps {
   } 
 
 const PrescriptionDetails = ({ DigitalPrescriptionDetails, onClose }: ConsultationDetailsProps) => { 
-    console.log(DigitalPrescriptionDetails);
+    //console.log(DigitalPrescriptionDetails);
     return (
       <div className=''>
       <button

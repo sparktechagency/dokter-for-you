@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @next/next/no-img-element */ 
+/* eslint-disable @next/next/no-img-element */
 //@ts-nocheck
 import React, { useState, useEffect } from "react";
 import { Input } from "antd";
@@ -13,14 +13,20 @@ import { RxCross2 } from "react-icons/rx";
 import { CiSearch } from "react-icons/ci";
 
 
-const WeightLossConsultation = () => {
+const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedicines }: { SubCategoryName: string | null, setMedicines: (medicines: { _id: string; name: string; company: string; dosage: string; image: string; count?: number; total?: string }[]) => void }) => {
+
   const [search, setSearch] = useState("");
   const [selectedMeds, setSelectedMeds] = useState([]);
   const [medicineData, setMedicineData] = useState({});
   const [open, setOpen] = useState(false);
   const [singleMedicineId, setSingleMedicineId] = useState(null);
   const { data } = useGetAllMedicinesQuery(search);
+  const [detailedSelectedMeds, setDetailedSelectedMeds] = useState([]);
   const medications = data?.data;
+
+  setMedicines(selectedMeds)  
+  setSelectedMedicines(detailedSelectedMeds)
+  
 
   const { data: medicineById } = useGetMedicineByIdQuery(singleMedicineId, {
     skip: !singleMedicineId,
@@ -46,7 +52,7 @@ const WeightLossConsultation = () => {
   }, [medicineById, singleMedicineId, medicineData, selectedMeds]);
 
   const handleSelect = (med) => {
-    // Open modal only if it's not already selected
+
     if (!isSelected(med._id)) {
       setMedicineData(med);
       setOpen(true);
@@ -55,7 +61,31 @@ const WeightLossConsultation = () => {
 
   const handleAddToSelected = (medData) => {
     setSingleMedicineId(medData._id);
-    setMedicineData({ count: medData.count, total: medData.total });
+
+    // Create a new object containing full medicine data
+    const updatedMedicineData = {
+      ...medicineData,
+      _id: medData._id,
+      count: medData.count,
+      total: medData.total,
+    };
+
+    // Update the detailedSelectedMeds state
+    const existingDetailedMedIndex = detailedSelectedMeds.findIndex(
+      (med) => med._id === medData._id
+    );
+
+    if (existingDetailedMedIndex !== -1) {
+      // Update the existing medicine data in detailedSelectedMeds
+      setDetailedSelectedMeds((prev) =>
+        prev.map((med, index) =>
+          index === existingDetailedMedIndex ? updatedMedicineData : med
+        )
+      );
+    } else {
+      setDetailedSelectedMeds((prev) => [...prev, updatedMedicineData]);
+    }
+
 
     const existingMedIndex = selectedMeds.findIndex(
       (med) => med._id === medData._id
@@ -65,19 +95,22 @@ const WeightLossConsultation = () => {
       setSelectedMeds((prev) =>
         prev.map((med, index) =>
           index === existingMedIndex
-            ? { ...med, count: medData.count, total: medData.total }
+            ? { _id: medData._id, count: medData.count, total: medData.total }
             : med
         )
       );
     } else {
-      setSelectedMeds((prev) => [...prev, medData]);
+      setSelectedMeds((prev) => [
+        ...prev,
+        { _id: medData._id, count: medData.count, total: medData.total },
+      ]);
     }
 
     setOpen(false);
   };
 
   const handleRemove = (id, e) => {
-    e.stopPropagation(); // Stop the click event from bubbling up
+    e.stopPropagation();
     setSelectedMeds((prev) => prev.filter((med) => med._id !== id));
   };
 
@@ -91,34 +124,34 @@ const WeightLossConsultation = () => {
   return (
     <div>
       <h1 className="lg:text-2xl text-[20px] font-semibold">
-        Select your preferred medication for your Weight Loss Consultation - Weight Problem
+        Select your preferred medication for
+        your  {SubCategoryName} Consultation
       </h1>
       <p className="text-gray-600 mt-1">
         The doctor ultimately decides whether to issue you a prescription and whether to prescribe your preferred medication.
       </p>
 
-      <div className="flex lg:flex-row flex-col items-center justify-center gap-4 mt-6"> 
+      <div className="flex lg:flex-row flex-col items-center justify-center gap-4 mt-6">
         <div className=" w-1/2">
 
-        <Input
-          placeholder="Type your medication"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className=" h-[48px] w-1/2"  
-          style={{ borderRadius: "0px"  , border: "1px solid #d9d9d9"}}
-          prefix={<CiSearch size={24} color="#4b5563" />}
-        />
+          <Input
+            placeholder="Type your medication"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className=" h-[48px] w-1/2"
+            style={{ borderRadius: "0px", border: "1px solid #d9d9d9" }}
+            prefix={<CiSearch size={24} color="#4b5563" />}
+          />
         </div>
-      
+
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
         {filteredMeds?.map((med) => (
           <div
             key={med._id}
-            className={`border relative rounded-lg p-4 shadow hover:shadow-lg cursor-pointer ${
-              isSelected(med._id) ? "bg-[#E7FBF2]" : ""
-            }`}
+            className={`border relative rounded-lg p-4 shadow hover:shadow-lg cursor-pointer ${isSelected(med._id) ? "bg-[#E7FBF2]" : ""
+              }`}
             onClick={() => handleSelect(med)}
           >
             <img

@@ -62,7 +62,7 @@ const DigitalPrescriptionOrder = () => {
     
     const consultationsData = consultations?.data
     
-      console.log("kghdf",consultationsData);
+      //console.log("kghdf",consultationsData);
 
     const columns: ColumnsType<ConsultationData> = [
         {

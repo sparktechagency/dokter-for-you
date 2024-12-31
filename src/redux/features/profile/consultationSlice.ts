@@ -5,7 +5,7 @@ const consultationSlice = baseApi.injectEndpoints({
         
         getAllConsultations: build.query({
             query: (name) => {   
-                console.log("Consultation Type:", name);
+                //console.log("Consultation Type:", name);
                 const params = new URLSearchParams(); 
                 if (name) params.append("consultationType", name)
                 return{
@@ -13,7 +13,7 @@ const consultationSlice = baseApi.injectEndpoints({
                 }              
             } , 
             // transformResponse: (response: any) => {
-            //     console.log("Consultation Response:", response);
+            //     //console.log("Consultation Response:", response);
             //     // return response.data 
             // }
         }),

@@ -12,7 +12,7 @@ interface ConsultationDetailsProps {
 }
  
 const ConsultationDetails =({ consultationId , onClose, consultations }: ConsultationDetailsProps) => { 
-    console.log("details Page" ,consultationId, consultations);
+    //console.log("details Page" ,consultationId, consultations);
   return (
     <div className=''>
       <button

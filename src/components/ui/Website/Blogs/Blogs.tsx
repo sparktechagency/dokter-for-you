@@ -14,7 +14,7 @@ const Blogs = () => {
     const [page, setPage] = useState(1)
     const { data: allArticles } = useGetAllArticlesQuery(page)
     const articalsData = allArticles?.data
-    console.log(articalsData?.length);
+    //console.log(articalsData?.length);
 
     return (
         <div>

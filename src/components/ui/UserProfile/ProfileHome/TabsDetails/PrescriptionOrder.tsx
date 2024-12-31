@@ -10,7 +10,7 @@ interface ConsultationDetailsProps {
  
 
 const PrescriptionOrder = ({ consultationId , onClose }: ConsultationDetailsProps) => { 
-    console.log(consultationId);
+    //console.log(consultationId);
     return (
       <div className=''>
       <button

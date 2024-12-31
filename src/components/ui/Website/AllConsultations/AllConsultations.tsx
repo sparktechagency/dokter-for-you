@@ -26,9 +26,10 @@ import AdditionalQuestions3 from './AdditionalQuestions/AdditionalQuestions3';
 import AdditionalQuestions4 from './AdditionalQuestions/AdditionalQuestions4';
 import Delivery from './Delivery';
 import Address from './Address';
-import DeliveryPayment from './DeliveryPayment';
+// import DeliveryPayment from './DeliveryPayment'; 
 import CheckConfirm from './CheckConfirm';
 import ConsultationType from './ConsultationType';
+import { useSearchParams } from 'next/navigation';
 
 const poppins = Poppins({ weight: ['400', '500', '600', '700'], subsets: ['latin'] });
 
@@ -37,19 +38,43 @@ const AllConsultations = () => {
     const [current, setCurrent] = useState(0);
     const [hasPreference, setHasPreference] = useState<string | null>()
     const [consultationType , setConsultationType] = useState<string | null>() 
-    const [qnaData, setQnaData] = useState<{ question: string; answer: string }[]>([]);
-    console.log(qnaData);
+    const [qnaData, setQnaData] = useState<{ question: string; answer: string }[]>([]);   
+    const [userId , setUserId] = useState<string | null>()   
+    const [selectedMedicines , setSelectedMedicines] = useState([])
+
+    const [medicines , setMedicines] = useState([]) 
+    const [address , setAddress] = useState<string | null>()
+    const searchParams = useSearchParams();
+    const category = searchParams.get('category');
+    const SubCategory = searchParams.get('subcategory');  
+    const SubCategoryName = searchParams.get('name');
+
+    const newConsultationType = consultationType ? consultationType === "video" ? "VIDEOCALL" : "PRESCRIPTION" : "PRESCRIPTIONWITHMEDICINE" 
+    
+
+    const data = {
+        "QNA": qnaData , 
+        "userId":userId , 
+        "medicins": medicines ,
+        "category": category ,
+        "subCategory": SubCategory ,
+        "address" : address , 
+        "consultationType": newConsultationType,
+    }  
+
+    //console.log(data);
+
+   
 
     const updateQNA = (question: string, answer: string) => {
         setQnaData((prev) => {
             const existing = prev.find((qna) => qna.question === question);
-            if (existing) {
-                // Update existing answer
+            if (existing) {            
                 return prev.map((qna) =>
                     qna.question === question ? { question, answer } : qna
                 );
             }
-            // Add new QNA entry
+           
             return [...prev, { question, answer }];
         });
     }; 
@@ -57,7 +82,7 @@ const AllConsultations = () => {
     const steps = [
         {
             title: "Check Your Account Details",
-            content: <AccountDetails />
+            content: <AccountDetails setUserId={setUserId} />
         },
         {
             title: "Medical Question 1/14",
@@ -123,7 +148,7 @@ const AllConsultations = () => {
             ? [
                 {
                     title: "",
-                    content: <WeightLossConsulation />
+                    content: <WeightLossConsulation SubCategoryName={SubCategoryName} setMedicines={setMedicines} setSelectedMedicines={setSelectedMedicines} />
                 },
                 {
                     title: "",
@@ -141,7 +166,7 @@ const AllConsultations = () => {
             : [
                 {
                     title: "",
-                    content: <ConsultationType setConsultationType={setConsultationType} />
+                    content: <ConsultationType updateQNA={updateQNA} setConsultationType={setConsultationType} />
                 },
             ]), 
 
@@ -168,27 +193,27 @@ const AllConsultations = () => {
             ? [
                 {
                     title: "",
-                    content: <Delivery />
+                    content: <Delivery updateQNA={updateQNA} SubCategoryName={SubCategoryName} />
                 },
                 {
                     title: "",
-                    content: <Address />
+                    content: <Address SubCategoryName={SubCategoryName} setAddress={setAddress} />
                 }]
             :
             [
                 {
                     title: "",
-                    content: <Address />
+                    content: <Address SubCategoryName={SubCategoryName} setAddress={setAddress} />
                 } 
             ]),
 
+        // {
+        //     title: "",
+        //     content: <DeliveryPayment />
+        // },
         {
             title: "",
-            content: <DeliveryPayment />
-        },
-        {
-            title: "",
-            content: <CheckConfirm />
+            content: <CheckConfirm selectedMedicines={selectedMedicines} SubCategoryName={SubCategoryName} address={address} />
         },
 
 
@@ -217,7 +242,7 @@ const AllConsultations = () => {
                 </div>
 
                 {/* footer buttons   */}
-                <StepsFooterBtn current={current} setCurrent={setCurrent} steps={steps} />
+                <StepsFooterBtn current={current} setCurrent={setCurrent} steps={steps} data={data} />
 
             </div>
         </div>

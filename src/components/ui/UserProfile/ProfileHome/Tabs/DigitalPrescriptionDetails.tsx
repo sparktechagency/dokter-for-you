@@ -28,9 +28,9 @@ const DigitalPrescriptionDetails = () => {
 
     const DigitalPrescriptionDetails = allConsultations?.data
 
-    console.log("DigitalPrescriptionDetails",DigitalPrescriptionDetails);
+    //console.log("DigitalPrescriptionDetails",DigitalPrescriptionDetails);
 
-    console.log(allConsultations);
+    //console.log(allConsultations);
     const columns: ColumnsType<ConsultationData> = [
         {
             title: 'S. No.',

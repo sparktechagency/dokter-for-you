@@ -1,17 +1,38 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react'; 
+import {  toast } from 'sonner'
 
 type DeliveryOption = 'regular' | 'video'; 
 
 interface consultationTypeInterface {
-    setConsultationType:(value:DeliveryOption | null)=>void
+    setConsultationType:(value:DeliveryOption | null)=>void 
+    updateQNA: (question: string, answer: string) => void
 }
 
-const ConsultationType = ({setConsultationType}:consultationTypeInterface) => { 
+const ConsultationType = ({setConsultationType , updateQNA}:consultationTypeInterface) => { 
     const [selectedOption, setSelectedOption] = useState<DeliveryOption | null>(null);  
-    setConsultationType(selectedOption);
+    setConsultationType(selectedOption); 
+
+    const handleOptionChange = (option: DeliveryOption) => {
+        setSelectedOption(option);
+        setConsultationType(option);   
+
+        const question = 'Delivery Prescription';
+        const answer =
+          option === 'regular'
+            ? 'regular'
+            : 'video consultation';
+    
+        updateQNA(question, answer);  
+
+        if (option === 'video') {
+          toast.success('The doctor will send the video consultation appointment to your email within 24 hours.');
+      }
+
+    };
+
     return (
         <div className="space-y-6">
       <div className="space-y-1">
@@ -36,7 +57,7 @@ const ConsultationType = ({setConsultationType}:consultationTypeInterface) => {
               name="delivery"
               className="mt-1 h-4 w-4 text-emerald-500 border-gray-300 focus:ring-emerald-500"
               checked={selectedOption === 'regular'}
-              onChange={() => setSelectedOption('regular')}
+              onChange={() => handleOptionChange('regular')}
             />
             <div className="flex-1">
               <span className="block font-medium text-gray-900 text-[16px]">
@@ -72,7 +93,7 @@ const ConsultationType = ({setConsultationType}:consultationTypeInterface) => {
               name="delivery"
               className="mt-1 h-4 w-4 text-emerald-500 border-gray-300 focus:ring-emerald-500"
               checked={selectedOption === 'video'}
-              onChange={() => setSelectedOption('video')}
+              onChange={() => handleOptionChange('video')}
             />
             <div className="flex-1">
               <span className="block font-medium text-gray-900 text-[16px]">

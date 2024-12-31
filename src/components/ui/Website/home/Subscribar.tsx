@@ -15,7 +15,7 @@ const Subscribe = () => {
             };
 
             if (!email) {
-                  console.error("Email is required");
+                  //console.error("Email is required");
                   return;
             }
 
