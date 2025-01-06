@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 const Login = () => {
  const router = useRouter() 
  const [loginUser, { isSuccess, isError, data, error, isLoading }] = useLoginUserMutation()
- const { refetch } = useGetProfileQuery(undefined, { skip: true }); 
+ const { refetch } = useGetProfileQuery(undefined); 
  useEffect(() => {
    if (isSuccess) {
      if (data) {
@@ -25,13 +25,11 @@ const Login = () => {
          icon: "success",
          timer: 1500,
          showConfirmButton: false
-       }).then(async () => {
+       }).then( () => {
 
          if (data) {
            SetLocalStorage("DokterToken", data?.data); 
-           await refetch();
-
-         
+           refetch();
            router.push("/home");
          }
        
