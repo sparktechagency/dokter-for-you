@@ -3,6 +3,7 @@
 "use client"
 import InputField from "@/components/shared/InputField";
 import { useLoginUserMutation } from "@/redux/features/auth/authApi";
+import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
 import { SetLocalStorage } from "@/util/LocalStroage";
 import {  Checkbox, Form, Input } from "antd";
 import Link from "next/link";
@@ -14,7 +15,7 @@ import Swal from "sweetalert2";
 const Login = () => {
  const router = useRouter() 
  const [loginUser, { isSuccess, isError, data, error, isLoading }] = useLoginUserMutation()
-
+ const { refetch } = useGetProfileQuery(undefined, { skip: true }); 
  useEffect(() => {
    if (isSuccess) {
      if (data) {
@@ -24,12 +25,16 @@ const Login = () => {
          icon: "success",
          timer: 1500,
          showConfirmButton: false
-       }).then(() => {
+       }).then(async () => {
 
          if (data) {
-           SetLocalStorage("DokterToken", data?.data);
+           SetLocalStorage("DokterToken", data?.data); 
+           await refetch();
+
+         
+           router.push("/home");
          }
-         router.push("/home");
+       
 
        });
      }
