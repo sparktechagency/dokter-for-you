@@ -16,13 +16,6 @@ const InputField: React.FC<{ name: string; label: string }> = ({ name, label }) 
         },
       ]}
     > 
-         {/* <ConfigProvider
-        theme={{
-          token: {
-            borderRadius: 0,
-          },
-        }}
-      >   */}
       <Input
         placeholder={`Enter your ${label.toLowerCase()}`}
         style={{
@@ -33,7 +26,6 @@ const InputField: React.FC<{ name: string; label: string }> = ({ name, label }) 
             backgroundColor: "white",
           }}
       /> 
-      {/* </ConfigProvider>  */}
     </Form.Item>
   );
 };

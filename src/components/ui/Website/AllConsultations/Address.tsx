@@ -1,25 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import InputField from "@/components/shared/InputField"; 
-import { Form, Radio, Select, Checkbox, ConfigProvider } from "antd";
+import { netherlandsCities } from "@/components/shared/AllCity";
+import InputField from "@/components/shared/InputField";
+import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
+import { Form, Radio, Select, Checkbox } from "antd";
+import { useEffect } from "react";
 
-const Address = ({SubCategoryName , setAddress}:{SubCategoryName:string|null , setAddress:(address: { firstname: string; lastname: string; streetAndHouseNo: string; postalCode: string; place: string; country: string;  }) => void}) => {
-  const [form] = Form.useForm();
+const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | null, setAddress: (address: { firstname: string; lastname: string; streetAndHouseNo: string; postalCode: string; place: string; country: string; }) => void }) => {
+  const [form] = Form.useForm(); 
+  const { data } = useGetProfileQuery(undefined) 
+  const userData = data?.data  
 
-  const handleFormChange = (changedValues: any, allValues: any) => {
+  useEffect(() => {
+    if (userData) {
+        form.setFieldsValue({
+            firstName: userData?.firstName,
+            lastName: userData?.lastName,
+            gender: userData?.gender,
+            location: userData?.location,
+            city: userData?.city,
+            postcode: userData?.postcode,
+        });
+    }
+}, [userData, form]);
 
-    const formattedData = {
-        firstname: allValues.FirstName || "",
-        lastname: allValues.LastName || "",
-        streetAndHouseNo: allValues["Street and house number"] || "",
-        postalCode: allValues["Postal code"] || "",
-        place: allValues.Place || "",
-        country: allValues.country || "",
+
+ 
+    const handleFormChange = (changedValues: any, allValues: any) => {
+      const formattedData = {
+        firstname: allValues.firstName || userData?.firstName, 
+        lastname: allValues.lastName || userData?.lastName,  
+        streetAndHouseNo: allValues.location || userData?.location, 
+        postalCode: allValues.postcode || userData?.postcode, 
+        place: allValues.city || userData?.city,
+        country: allValues.country || "Netherlands",
+      };
+      setAddress(formattedData);
     };
-    setAddress(formattedData);
-  };
-  
+
 
   return (
     <div>
@@ -39,55 +58,52 @@ const Address = ({SubCategoryName , setAddress}:{SubCategoryName:string|null , s
             </Radio.Group>
           </div>
 
-          <Form form={form} layout="vertical" onValuesChange={handleFormChange}>
-            {/* First Name and Last Name */}
+          <Form form={form} layout="vertical" onValuesChange={handleFormChange} 
+          initialValues={{
+              firstName: userData?.firstName,
+              lastName: userData?.lastName,
+              gender: userData?.gender,
+              location: userData?.location,
+              city: userData?.city,
+              postcode: userData?.postcode,
+            }} >
+           
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-6">
-             
-              <InputField name="FirstName" label="First Name" />
-      
-              <InputField name="LastName" label="Last Name" />
-             
+
+              <InputField name="firstName" label="First Name" />
+
+              <InputField name="lastName" label="Last Name" />
+
             </div>
 
             {/* Street and House Number */}
             <div className="grid grid-cols-2 gap-x-4 lg:mb-8">
-                <InputField name="Street and house number" label="Street and house number" /> 
-                <InputField name="Postal code" label="Postal code" />
+              <InputField name="location" label="Street and house number" />
+              <InputField name="postcode" label="Postal code" />
             </div>
 
             {/* Postal Code and Place */}
-            <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-8">      
-             
-                <InputField name="Place" label="Place" /> 
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-8">
 
-                <ConfigProvider
-                  theme={{
-                    components: {
-                      Select: {
-                        activeBorderColor: "#BABABA",
-                        hoverBorderColor: "#BABABA",
-                      },
-                    },
-                    token: {
-                      borderRadius: 0,
-                    },
-                  }}
-                >
-              <Form.Item name="country" label="Country">
-                  <Select
-                    placeholder="Select country"
-                    style={{ height: "48px" }}
-                    className="w-full"
-                    options={[
-                      { value: "Netherlands", label: "Netherlands" }, 
-                    ]}
-                  />
+              <Form.Item name="city"
+                label={<p className='text-[#4E4E4E] text-[16px]'>City</p>}
+                rules={[
+                  {
+                    required: true,
+                    message: `Please enter your city name`,
+                  },
+                ]}
+              >
+                <Select
+                  style={{ width: "100%", height: "48px" }}
+                  options={netherlandsCities}
+                  placeholder="Select your city name"
+                />
               </Form.Item>
-                </ConfigProvider> 
-
+              <InputField name='gender' label='Gender' />
             </div>
 
-  
+
           </Form>
         </div>
 
@@ -105,7 +121,7 @@ const Address = ({SubCategoryName , setAddress}:{SubCategoryName:string|null , s
 
         <div className="mt-6 flex items-center justify-between">
           <Form.Item className="mb-0">
-            <Checkbox>
+            <Checkbox defaultChecked>
               <span className="lg:text-sm text-[12px] text-red-500">
                 Each person is responsible for the data they enter, and we are not responsible for any errors in data registration
               </span>

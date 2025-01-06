@@ -105,10 +105,10 @@ const CheckConfirm = ({selectedMedicines , SubCategoryName , address}:{selectedM
 
                 <h2 className="font-semibold mb-4 text-[18px]">Confirm the conditions:</h2>
                 <div className="space-y-2 text-[#4E4E4E]">
-                    <Checkbox>I declare that I have completed everything truthfully, completely and without reservation</Checkbox>
-                    <Checkbox>I agree to the content and applicability of the general terms and conditions, the privacy statement and the right of withdrawal of Dokteronline.</Checkbox>
-                    <Checkbox>I hereby expressly give permission to Dokteronline to collect and process my (medical) personal data as described in the privacy statement. This permission also applies to the processing by the treating physician.</Checkbox>
-                    <Checkbox>I hereby give permission to Dokteronline to forward any prescription written by the doctor and my (medical) personal data to and have them processed by the pharmacy.</Checkbox>
+                    <Checkbox defaultChecked>I declare that I have completed everything truthfully, completely and without reservation</Checkbox>
+                    <Checkbox defaultChecked>I agree to the content and applicability of the general terms and conditions, the privacy statement and the right of withdrawal of Dokteronline.</Checkbox>
+                    <Checkbox defaultChecked>I hereby expressly give permission to Dokteronline to collect and process my (medical) personal data as described in the privacy statement. This permission also applies to the processing by the treating physician.</Checkbox>
+                    <Checkbox defaultChecked>I hereby give permission to Dokteronline to forward any prescription written by the doctor and my (medical) personal data to and have them processed by the pharmacy.</Checkbox>
                 </div>
             </div>
         </div>

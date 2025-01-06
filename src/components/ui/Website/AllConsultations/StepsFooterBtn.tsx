@@ -2,34 +2,34 @@
 "use client"
 import { useCreateConsultationMutation } from '@/redux/features/website/consultationSlice';
 import { message } from 'antd';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';  
- 
+import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
+
 export interface Qna {
     question: string
     answer: string
-  }
-  
-  export interface Medicin {
+}
+
+export interface Medicin {
     _id: string
     count: number
     total: string
-  }
-  
-  export interface Address {
+}
+
+export interface Address {
     firstname: string
     lastname: string
     streetAndHouseNo: string
     postalCode: string
     country: string
     place: string
-  }
-interface propsType{
-    current:number ,
-    setCurrent:Dispatch<SetStateAction<number>> , 
+}
+interface propsType {
+    current: number,
+    setCurrent: Dispatch<SetStateAction<number>>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    steps:({ title: string; content: React.JSX.Element; } | { content: string; title?: undefined; })[];  
+    steps: ({ title: string; content: React.JSX.Element; skippable?: boolean; } | { content: string; title?: undefined; skippable?: boolean; })[];
     data: {
         QNA: Qna[]
         userId: string
@@ -38,139 +38,185 @@ interface propsType{
         subCategory: string
         consultationType: string
         address: Address
-      }
-      
-    
+    }
+    hasPreference: string | null
+    medicines: string[]
+    consultationType: string | null
 }
-const StepsFooterBtn = ({current ,setCurrent, steps , data}:propsType) => {  
+const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medicines, consultationType }: propsType) => {
     const router = useRouter();
     const [createConsultation] = useCreateConsultationMutation();
     const [validationErrors, setValidationErrors] = useState<{ [key: number]: boolean }>({});
-
+ 
     const next = () => {
-        // Validation logic for each step
-        const validateCurrentStep = () => {
-            switch (current) {
+        const validateCurrentStep = () => {  
+
+            if (steps[current]?.skippable) {
+                return true; 
+            }
+
+            if (current === 16) {
+                if (hasPreference === "has_preference") {
+                    if (medicines.length === 0) {
+                        message.error("Please select at least one medicine to proceed.");
+                        return false;
+                    }
+                    return true; 
+                }
+                return !!data.QNA.find((qna) => qna.question === "Delivery Prescription");
+            }
+            if (hasPreference === "has_preference" && current >= 18 && current <= 21) {
+                const questionMap: { [key: number]: string } = {
+                    18: "Do you have any known allergies to medications or specific ingredients in this drug?",
+                    19: "Do you have any chronic conditions or medical issues that might affect the use of this medication?",
+                    20: "Are you currently taking any other medications that might interact with this drug?",
+                    21: "Have you used this medication before, and if so, did you experience any side effects?",
+                };
+            
+                const question = questionMap[current]; 
+                if (!question) {
+                  
+                    return false; 
+                }
+            
+                const isAnswered = !!data.QNA.find((qna) => qna.question === question); 
+            
+                return isAnswered; 
+            }
+           
+            if (hasPreference === "has_preference" && current === 22) {
+                return !!data.QNA.find((qna) => qna.question === "Delivery Prescription");
+            }
+        
+            if (hasPreference === "has_preference" && current === 23) {
+                if (!data.address) {
+                    return false;
+                }
+                return true; 
+            }
+        
+          
+            if (consultationType !== "video" && current >= 18 && current <= 21) {
+                const questionMap: { [key: number]: string } = {
+                    18: "Do you have any known allergies to medications or specific ingredients in this drug?",
+                    19: "Do you have any chronic conditions or medical issues that might affect the use of this medication?",
+                    20: "Are you currently taking any other medications that might interact with this drug?",
+                    21: "Have you used this medication before, and if so, did you experience any side effects?",
+                };
+        
+                const question = questionMap[current];
+                if (!question) {
+                 
+                    return false;
+                }
+        
+                const isAnswered = !!data.QNA.find((qna) => qna.question === question);
+            
+        
+                return isAnswered;
+            } 
+
+            if (consultationType !== "video" && current === 22) {
+                if (!data.address) {
+                    return false;
+                }
+                return true; // Address provided, allow progression
+            } 
+
+            switch (current as number) {
                 case 0:
-                    if (!data.userId) {
-                        return false;
-                    }
-                    break;
+                    return !!data.userId;
+
                 case 1:
-                    if (!data.QNA.find(qna => qna.question === "What is your weight?")) {
-                        return false;
-                    }
-                    break; 
+                    return !!data.QNA.find(qna => qna.question === "What is your weight?");
 
                 case 2:
-                    if (!data.QNA.find(qna => qna.question === "What is your Height?")) {
-                        return false;
-                    }
-                    break;
-               
+                    return !!data.QNA.find(qna => qna.question === "What is your Height?");
+
                 case 3:
-                    if (!data.QNA.find(qna => qna.question === "Do you have any pain anywhere in your body?")) {
-                        return false;
-                    }
-                    break;
-               
+                    return !!data.QNA.find(qna => qna.question === "Do you have any pain anywhere in your body?");
+
                 case 4:
-                    if (!data.QNA.find(qna => qna.question === "Why, and for which Diagnosis do you want treatment?")) {
-                        return false;
-                    }
-                    break;
-               
+                    return !!data.QNA.find(qna => qna.question === "Why, and for which Diagnosis do you want treatment?");
+
                 case 5:
-                    if (!data.QNA.find(qna => qna.question === "Was this diagnosis made by a doctor, and did this doctor recommend treatment ?")) {
-                        return false;
-                    }
-                    break;
-               
+                    return !!data.QNA.find(qna => qna.question === "Was this diagnosis made by a doctor, and did this doctor recommend treatment ?");
+
                 case 6:
-                    if (!data.QNA.find(qna => qna.question === "Do any of the medical issues listed below apply to you?")) {
-                        return false;
-                    }
-                    break;
-               
+                    return !!data.QNA.find(qna => qna.question === "Do any of the medical issues listed below apply to you?");
+
                 case 7:
-                    if (!data.QNA.find(qna => qna.question === "Are you experiencing any fatigue or low energy ?")) {
-                        return false;
-                    }
-                    break;
+                    return !!data.QNA.find(qna => qna.question === "Are you experiencing any fatigue or low energy ?");
+
                 case 8:
-                    if (!data.QNA.find(qna => qna.question === "How is your appetite?")) {
-                        return false;
-                    }
-                    break;
+                    return !!data.QNA.find(qna => qna.question === "How is your appetite?");
+
                 case 9:
-                    if (!data.QNA.find(qna => qna.question === "Have you had any recent weight changes?")) {
-                        return false;
-                    }
-                    break;
-               
+                    return !!data.QNA.find(qna => qna.question === "Have you had any recent weight changes?");
+
                 case 10:
-                    if (!data.QNA.find(qna => qna.question === "How do you sleep at night?")) {
-                        return false;
-                    }
-                    break;
+                    return !!data.QNA.find(qna => qna.question === "How do you sleep at night?");
+
                 case 11:
-                    if (!data.QNA.find(qna => qna.question === "Are you having any problems with digestion?")) {
-                        return false;
-                    }
-                    break;
+                    return !!data.QNA.find(qna => qna.question === "Are you having any problems with digestion?");
+
                 case 12:
-                    if (!data.QNA.find(qna => qna.question === "Have you noticed any changes in your vision or hearing?")) {
-                        return false;
-                    }
-                    break;
+                    return !!data.QNA.find(qna => qna.question === "Have you noticed any changes in your vision or hearing?");
+
                 case 13:
-                    if (!data.QNA.find(qna => qna.question === "Do you have any trouble breathing or shortness of breath?")) {
-                        return false;
-                    }
-                    break;
+                    return !!data.QNA.find(qna => qna.question === "Do you have any trouble breathing or shortness of breath?");
+
                 case 14:
-                    if (!data.QNA.find(qna => qna.question === "Do you have any allergies?")) {
-                        return false;
-                    }
-                    break;
-            
+                    return !!data.QNA.find(qna => qna.question === "Do you have any allergies?");
+
                 case 15:
-                    if (!data.QNA.find(qna => qna.question === "Do you have any known allergies to medications or specific ingredients in this drug?")) {
-                        return false;
-                    }
-                    break;
-            
-               
+                    return !!data.QNA.find(qna => qna.question === "Do you have a medication preference?");
+
                 case 16:
-                    if (!data.QNA.find(qna => qna.question === "Do you have any chronic conditions or medical issues that might affect the use of this medication?")) {
-                        return false;
+                    if (hasPreference === "has_preference") {
+                        return medicines.length > 0;
                     }
-                    break;
-            
+                    return !!data.QNA.find((qna) => qna.question === "Delivery Prescription");
+
                 case 17:
-                    if (!data.QNA.find(qna => qna.question === "Are you currently taking any other medications that might interact with this drug?")) {
-                        return false;
+                    if (consultationType !== "video") {
+                        const questionMap: { [key: number]: string } = {
+                            17: "Do you have any known allergies to medications or specific ingredients in this drug?",
+                            18: "Do you have any chronic conditions or medical issues that might affect the use of this medication?",
+                            19: "Are you currently taking any other medications that might interact with this drug?",
+                            20: "Have you used this medication before, and if so, did you experience any side effects?",
+                        };
+
+                        const question = questionMap[current];
+                        if (!question) {
+                          
+                            return false;
+                        }
+
+
+                        const isAnswered = !!data.QNA.find(qna => qna.question === question);
+                  
+
+                        return isAnswered;
                     }
-                    break;
-            
-                case 17:
-                    if (!data.QNA.find(qna => qna.question === "Have you used this medication before, and if so, did you experience any side effects?")) {
-                        return false;
-                    }
-                    break;
-            
-               
+
+
+                    return !!data.address;
+
+              
+
                 default:
-                    break;
+                    throw new Error(`Unhandled step: ${current}`);
             }
-            return true;
-        };
+        }
+
 
         if (!validateCurrentStep()) {
-            setValidationErrors((prev) => ({ ...prev, [current]: true }));
+            setValidationErrors((prev) => ({ ...prev, [current]: true })); 
             message.error("Please select an option to move forward.");
             return;
-        }
+        } 
+    
 
         setValidationErrors((prev) => ({ ...prev, [current]: false }));
         setCurrent((prev) => Math.min(prev + 1, steps.length - 1));
@@ -188,24 +234,24 @@ const StepsFooterBtn = ({current ,setCurrent, steps , data}:propsType) => {
         });
     };
     return (
-        <div className="steps-action flex items-center justify-end gap-3 pb-5"> 
-        {current > 0 && ( 
-                <button  onClick={prev} className='text-primary font-medium border-2 border-primary  mt-6 px-5 h-[44px] flex items-center gap-1'>
-                  <span> <BsArrowLeft color='#0a2369' size={22} /> </span>
+        <div className="steps-action flex items-center justify-end gap-3 pb-5">
+            {current > 0 && (
+                <button onClick={prev} className='text-primary font-medium border-2 border-primary  mt-6 px-5 h-[44px] flex items-center gap-1'>
+                    <span> <BsArrowLeft color='#0a2369' size={22} /> </span>
                 </button>
-            )} 
+            )}
 
             {current < steps.length - 1 && (
-                <button onClick={next} className='mt-6 px-5 h-[45px] bg-primary text-white  flex items-center gap-1'> 
-                <span>Continue</span> <span><BsArrowRight size={22} /> </span>
+                <button onClick={next} className='mt-6 px-5 h-[45px] bg-primary text-white  flex items-center gap-1'>
+                    <span>Continue</span> <span><BsArrowRight size={22} /> </span>
                 </button>
             )}
             {current === steps.length - 1 && (
-                <button   onClick={() =>{handleSubmit()}} className='mt-6 px-5 py-[10px] bg-primary text-white ' >
+                <button onClick={() => { handleSubmit() }} className='mt-6 px-5 py-[10px] bg-primary text-white ' >
                     Done
                 </button>
             )}
-            
+
         </div>
     );
 };
