@@ -46,7 +46,7 @@ const Login = () => {
        icon: "error",
      });
    }
- }, [isSuccess, isError, error, data, router]);
+ }, [isSuccess, isError, error, data, router , refetch]);
 
 
  const onFinish = async (values:{email:string , password:string}) => {
