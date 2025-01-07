@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 const Login = () => {
  const router = useRouter() 
  const [loginUser, { isSuccess, isError, data, error, isLoading }] = useLoginUserMutation()
- const { refetch } = useGetProfileQuery(undefined); 
+ const { refetch } = useGetProfileQuery(undefined);  
  useEffect(() => {
    if (isSuccess) {
      if (data) {
@@ -29,8 +29,8 @@ const Login = () => {
 
          if (data) {
            SetLocalStorage("DokterToken", data?.data); 
-           refetch();
            router.push("/home");
+           refetch();
          }
        
 
@@ -81,7 +81,7 @@ const Login = () => {
                 type="password"
                 placeholder="Enter your password"
                 style={{
-                  height: 40,
+                  height: 48,
                   border: "1px solid #d9d9d9",
                   outline: "none",
                   boxShadow: "none"
@@ -90,8 +90,8 @@ const Login = () => {
             </Form.Item>
 
             <div className="flex items-center justify-between">
-              <Form.Item style={{marginBottom: 0}} name="remember" valuePropName="checked">
-                <Checkbox>Remember me</Checkbox>
+              <Form.Item style={{marginBottom: 0}} name="remember" valuePropName="checked" >
+                <Checkbox defaultChecked>Remember me</Checkbox>
               </Form.Item>
 
               <a

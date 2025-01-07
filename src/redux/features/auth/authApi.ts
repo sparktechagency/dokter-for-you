@@ -18,7 +18,8 @@ const authApi = baseApi.injectEndpoints({
         url: "/auth/login",
         method: "POST",
         body: data,
-      }),
+      }), 
+      invalidatesTags: ["profile"],
     }), 
 
     verifyEmail: build.mutation({

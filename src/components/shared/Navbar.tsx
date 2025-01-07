@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { LuSearch } from "react-icons/lu";
 import { IoNotificationsOutline } from "react-icons/io5";
-import { IoIosLogOut } from "react-icons/io"; 
+import { IoIosLogOut } from "react-icons/io";
 import { GoStar } from "react-icons/go";
 import { Drawer } from "antd";
 import AddReviewModal from "../ui/Website/home/AddReviewModal";
@@ -21,19 +21,25 @@ const Navbar: React.FC = () => {
   const [activeLink, setActiveLink] = useState("");
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false); 
-  const [isModalOpen, setIsModalOpen] = useState(false) 
-  const { data } = useGetProfileQuery(undefined) 
-  const userData = data?.data 
-  const [imgURL, setImgURL] = useState("");  
-  const {data:category} = useGetAllCategoryQuery(undefined) 
-
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [userData, setUserData] = useState<any>(null);
+  const { data } = useGetProfileQuery(undefined)
+  const [imgURL, setImgURL] = useState("");
+  const { data: category } = useGetAllCategoryQuery(undefined)
   const router = useRouter()
 
+  const getProfileImageUrl = (profile: string): string => {
+    return profile.startsWith("https") ? profile : `${imageUrl}${profile}`;
+  };
+  
 
-    useEffect(() => {
-      setImgURL(userData?.profile?.startsWith("https")? userData?.profile : `${imageUrl}${userData?.profile}`);
-    }, [userData]);
+  useEffect(() => {
+    if (data?.data) {
+      setUserData(data.data);
+      setImgURL(getProfileImageUrl(data.data.profile));
+    }
+  }, [data]); 
 
   const showModal = () => {
     setIsModalOpen(true)
@@ -59,7 +65,7 @@ const Navbar: React.FC = () => {
       label: "All Consultation",
       subOptions: category?.data?.map((item: { name: string; _id: string }) => ({
         label: item?.name,
-        value: item?._id, 
+        value: item?._id,
       })),
     },
     { label: "About", link: "/about" },
@@ -71,28 +77,28 @@ const Navbar: React.FC = () => {
     <>
       {/* Navbar */}
       <div className="fixed top-0 w-full bg-white/100 shadow z-50">
-        <div className="container mx-auto flex items-center justify-between h-[96px] px-4 lg:px-0"> 
+        <div className="container mx-auto flex items-center justify-between h-[96px] px-4 lg:px-0">
 
           {/* Logo */}
-          <div className=" flex items-center justify-between w-full lg:w-auto  ">  
+          <div className=" flex items-center justify-between w-full lg:w-auto  ">
 
-          <div className="lg:hidden flex items-center space-x-4">
-            <MenuOutlined
-              className="text-2xl cursor-pointer"
-              onClick={toggleDrawer}
-            />
-          </div>
-
-         
-         <div className=" flex-shrink-0"> 
-            <Link href="/home">
-              <img
-                src="/logo.png"
-                alt="Logo"
-             
-                className="mr-2  lg:h-[70px] h-[60px] lg:w-[200px] w-[190px]"
+            <div className="lg:hidden flex items-center space-x-4">
+              <MenuOutlined
+                className="text-2xl cursor-pointer"
+                onClick={toggleDrawer}
               />
-            </Link>  
+            </div>
+
+
+            <div className=" flex-shrink-0">
+              <Link href="/home">
+                <img
+                  src="/logo.png"
+                  alt="Logo"
+
+                  className="mr-2  lg:h-[70px] h-[60px] lg:w-[200px] w-[190px]"
+                />
+              </Link>
             </div>
 
 
@@ -105,7 +111,7 @@ const Navbar: React.FC = () => {
                 }
               >
                 <Image src={imgURL} alt="" height={45} width={45} style={{ borderRadius: "100%", width: "45px", height: "45px" }} className="object-cover" />
-               
+
               </div>
 
               {isProfileDropdownOpen && (
@@ -117,10 +123,10 @@ const Navbar: React.FC = () => {
                       <button className="text-white bg-primary w-full lg:px-6 px-3 py-2 rounded-lg text-[14px]" onClick={showModal}>
                         Visit Your Profile
                       </button>
-                    </Link> 
+                    </Link>
 
-                    <button className="flex items-center justify-center border border-[#6B6B6B] w-full  gap-2 my-2 lg:px-6 px-3 py-2 rounded-lg text-[14px] "> 
-                      <span> <GoStar  size={14} color="#6B6B6B"/> </span> 
+                    <button className="flex items-center justify-center border border-[#6B6B6B] w-full  gap-2 my-2 lg:px-6 px-3 py-2 rounded-lg text-[14px] ">
+                      <span> <GoStar size={14} color="#6B6B6B" /> </span>
                       <span className=" text-[#6B6B6B] text-[14px] font-medium"> Review </span>
                     </button>
                   </div>
@@ -132,8 +138,8 @@ const Navbar: React.FC = () => {
                   </div>
                 </div>
               )}
-            </div> 
-          
+            </div>
+
           </div>
 
           {/* Large Device Navigation */}
@@ -142,11 +148,10 @@ const Navbar: React.FC = () => {
               {navLinks.map((navItem, index) => (
                 <div key={index} className="relative group">
                   <div
-                    className={`flex items-center cursor-pointer text-[#4E4E4E] hover:text-primary font-[400px] ${
-                      activeLink === navItem.label
+                    className={`flex items-center cursor-pointer text-[#4E4E4E] hover:text-primary font-[400px] ${activeLink === navItem.label
                         ? "text-primary font-medium"
                         : ""
-                    }`}
+                      }`}
                     onClick={() => {
                       setActiveLink(navItem.label);
                       if (navItem.subOptions) handleDropdown(index);
@@ -159,23 +164,21 @@ const Navbar: React.FC = () => {
                     )}
                     {navItem.subOptions && (
                       <DownOutlined
-                        className={`ml-2 text-sm transition-transform ${
-                          openDropdown === index ? "rotate-180" : "rotate-0"
-                        }`}
+                        className={`ml-2 text-sm transition-transform ${openDropdown === index ? "rotate-180" : "rotate-0"
+                          }`}
                       />
                     )}
                   </div>
 
                   {navItem.subOptions && openDropdown === index && (
                     <div className="absolute left-0 mt-2 w-[200px] bg-white shadow-lg border rounded-md z-10">
-                      {navItem.subOptions.map((option:{label: string, value: string}, subIndex: number) => (
+                      {navItem.subOptions.map((option: { label: string, value: string }, subIndex: number) => (
                         <Link key={subIndex} href={`/subcategory?category=${option.value}`}>
                           <p
-                            className={`py-2 px-4 text-sm text-[#4E4E4E] cursor-pointer hover:bg-primary hover:text-white rounded ${
-                              activeLink === option.value
+                            className={`py-2 px-4 text-sm text-[#4E4E4E] cursor-pointer hover:bg-primary hover:text-white rounded ${activeLink === option.value
                                 ? "bg-primary text-white"
                                 : ""
-                            }`}
+                              }`}
                             onClick={() => setActiveLink(option.value)}
                           >
                             {option.label}
@@ -203,7 +206,7 @@ const Navbar: React.FC = () => {
             </Link>
             {/* Profile Dropdown */}
             <div className="relative">
-{userData   ?            <div
+              {userData ? <div
                 className="flex items-center space-x-2 cursor-pointer"
                 onClick={() =>
                   setIsProfileDropdownOpen(!isProfileDropdownOpen)
@@ -212,11 +215,10 @@ const Navbar: React.FC = () => {
                 <Image src={imgURL} alt="" height={45} width={45} style={{ borderRadius: "100%", width: "45px", height: "45px" }} className="rounded-full" />
                 <span className="text-[#4E4E4E] font-medium">{userData?.firstName} {userData?.lastName}</span>
                 <DownOutlined
-                  className={`transition-transform ${
-                    isProfileDropdownOpen ? "rotate-180" : "rotate-0"
-                  }`}
+                  className={`transition-transform ${isProfileDropdownOpen ? "rotate-180" : "rotate-0"
+                    }`}
                 />
-              </div> : <div><Link href={"/login"}><button  className="bg-primary text-white px-6 py-3 rounded-lg text-[14px]">Login</button></Link></div>}
+              </div> : <div><Link href={"/login"}><button className="bg-primary text-white px-6 py-3 rounded-lg text-[14px]">Login</button></Link></div>}
 
               {isProfileDropdownOpen && (
                 <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[200px] z-50">
@@ -227,13 +229,13 @@ const Navbar: React.FC = () => {
                       <button className="text-white bg-primary w-full px-6 py-2 rounded-lg text-[14px]" >
                         Visit Your Profile
                       </button>
-                    </Link> 
-                   
-                  </div> 
-                  <p className="flex items-center justify-start px-4 pb-2 w-full  gap-2  rounded-lg mt-2 text-[16px] text-gray-700 cursor-pointer" onClick={showModal}> 
-                      <span> <GoStar  size={16} /> </span> 
-                      <span className="  text-[16px] font-medium"> Review </span>
-                    </p> 
+                    </Link>
+
+                  </div>
+                  <p className="flex items-center justify-start px-4 pb-2 w-full  gap-2  rounded-lg mt-2 text-[16px] text-gray-700 cursor-pointer" onClick={showModal}>
+                    <span> <GoStar size={16} /> </span>
+                    <span className="  text-[16px] font-medium"> Review </span>
+                  </p>
                   <div className="border-t">
                     <button className="px-4 py-3 text-primary hover:bg-gray-100 cursor-pointer flex items-center gap-2" onClick={handleLogout}>
                       <IoIosLogOut size={24} />
@@ -246,7 +248,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Mobile Hamburger Menu */}
-     
+
         </div>
       </div>
 
@@ -273,20 +275,20 @@ const Navbar: React.FC = () => {
               )}
               {navItem.subOptions && (
                 <div className="pl-2 pt-3">
-                  {navItem.subOptions.map((option:{value: string, label: string}, subIndex:number) => (
-                    <Link key={subIndex}  href={`/subcategory?category=${option.value}`}>
+                  {navItem.subOptions.map((option: { value: string, label: string }, subIndex: number) => (
+                    <Link key={subIndex} href={`/subcategory?category=${option.value}`}>
                       <p className=" text-[#4E4E4E] hover:text-primary pb-2 text-[18px] font-[400]">
-                        {option.label} 
+                        {option.label}
                       </p>
                     </Link>
                   ))}
                 </div>
               )}
             </div>
-          ))}  
+          ))}
 
           <div className=" flex items-center gap-3">
-          <Link href="/search">
+            <Link href="/search">
               <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
                 <LuSearch size={24} color="#4E4E4E" />
               </div>
@@ -298,9 +300,9 @@ const Navbar: React.FC = () => {
             </Link>
           </div>
 
-        </div> 
+        </div>
 
-      </Drawer> 
+      </Drawer>
 
       <AddReviewModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 

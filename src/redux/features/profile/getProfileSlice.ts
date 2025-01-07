@@ -6,7 +6,8 @@ const getProfileSlice = baseApi.injectEndpoints({
         getProfile:build.query({ 
             query: () => ({
                 url: `/user/profile`,
-            })
+            }) ,
+            providesTags: ["profile"],
         }),  
         
 
