@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 const MedicalQuestion2 = ({ updateQNA }: { updateQNA: (question: string, answer: string) => void }) => {
     const [unit, setUnit] = useState('CM');
-    const [height, setHeight] = useState<number | null>(60);
+    const [height, setHeight] = useState<number | null>();
 
     const question = "What is your Height?";
 
@@ -37,8 +37,7 @@ const MedicalQuestion2 = ({ updateQNA }: { updateQNA: (question: string, answer:
                         className="w-24 h-[40px]"
                         value={height}
                         onChange={handleHeightChange}
-                        min={60}
-                        placeholder="60"
+                        min={60}                 
                     />
                     <Select
                         value={unit}
