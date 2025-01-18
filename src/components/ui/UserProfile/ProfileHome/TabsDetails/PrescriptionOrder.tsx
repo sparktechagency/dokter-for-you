@@ -3,14 +3,15 @@ import Image from 'next/image';
 import React from 'react'; 
 import ceevit from "@/assests/Ceevit.png"
 import ace from "@/assests/Ace.png"
+import moment from 'moment';
 interface ConsultationDetailsProps {
     consultationId: string;
     onClose: () => void;
   } 
  
 
-const PrescriptionOrder = ({   onClose }: ConsultationDetailsProps) => { 
-    //console.log(consultationId);
+const PrescriptionOrder = ({consultationId ,    onClose }: ConsultationDetailsProps) => { 
+    console.log(consultationId); 
     return (
       <div className=''>
       <button
@@ -28,9 +29,9 @@ const PrescriptionOrder = ({   onClose }: ConsultationDetailsProps) => {
   {/* Tracking Info */}
   <div className="bg-[#E7FBF2] p-4 rounded-none mb-6">
     <div className="text-[16px] flex flex-col gap-2">
-      <p className="text-[#4E4E4E]">Tracking No. #2164564615</p>
-      <p className="text-[#4E4E4E]">Man problem/Erectile dysfunction</p>
-      <p className="text-[#4E4E4E]">1/1/2025, 5:30 pm</p>
+   <p className="text-[#4E4E4E]">Tracking No. {consultationId?.trackingNo}</p>
+        <p className="text-[#4E4E4E]">{consultationId?.category?.name} / {consultationId?.subCategory?.name}</p>
+        <p className="text-[#4E4E4E]">{ moment(consultationId?.createdAt).format('DD/MM/YYYY , hh:mm a')}</p>
     </div>
   </div>
  
@@ -39,7 +40,7 @@ const PrescriptionOrder = ({   onClose }: ConsultationDetailsProps) => {
   <div className=" pb-4 mb-4 ">
     <div className="flex justify-between items-center mb-2">
       <div>
-        <p className="lg:text-[16px] text-[14px] text-[#4E4E4E]">Consultation for man&apos;s weigh problem</p>
+        <p className="lg:text-[16px] text-[14px] text-[#4E4E4E]">Consultation for {consultationId?.category?.name} problem</p>
         <p className="lg:text-sm text-[12px] text-[#999999]">Medical questions/view, doctor&apos;s advice and prescription</p>
       </div>
       <p className="text-right text-primary">$25.00</p>
@@ -142,10 +143,7 @@ const PrescriptionOrder = ({   onClose }: ConsultationDetailsProps) => {
         <p className='text-[#999999] pb-1'>Contents of the Box</p>
         <p className='text-[#4E4E4E]'>2</p>
       </div>
-      <div className="text-sm">
-        <p className='text-[#999999] pb-1'>Price</p>
-        <p className='text-[#4E4E4E]'>$13.00</p>
-      </div>
+
     </div>
 
     <div className="flex lg:flex-row flex-wrap items-center justify-between gap-4 p-4 border-b"> 
@@ -171,33 +169,10 @@ const PrescriptionOrder = ({   onClose }: ConsultationDetailsProps) => {
         <p className='text-[#999999] pb-1'>Contents of the Box</p>
         <p className='text-[#4E4E4E]'>2</p>
       </div>
-      <div className="text-sm">
-        <p className='text-[#999999] pb-1'>Price</p>
-        <p className='text-[#4E4E4E]'>$18.00</p>
-      </div>
+
     </div>
 
- 
 
-    {/* Total Calculation */}
-    <div className="mt-4 space-y-2">
-      <div className="flex  lg:justify-end justify-between items-center lg:gap-[200px] text-sm pb-2">
-        <span className='text-[#6B6B6B] font-medium'>Subtotal -</span>
-        <span>$31.00</span>
-      </div>
-      <div className="flex lg:justify-end justify-between items-center lg:gap-[200px] text-sm pb-2">
-        <span className='text-[#6B6B6B] font-medium'>discount -</span>
-        <span>$00.00</span>
-      </div>
-      <div className="flex lg:justify-end justify-between items-center lg:gap-[200px] text-sm pb-2">
-        <span className='text-[#6B6B6B] font-medium'>Shipping Cost -</span>
-        <span>$2.00</span>
-      </div>
-      <div className="flex lg:justify-end justify-between items-center lg:gap-[200px] font-medium pt-2 border-t ">
-        <span className='text-primary font-medium'>Total -</span>
-        <span className='text-primary font-medium'>$33.00</span>
-      </div>
-    </div>
   </div>
 
   {/* Buy Now Button */}

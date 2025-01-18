@@ -20,8 +20,8 @@ interface ConsultationData {
 
 
 const DigitalPrescriptionDetails = () => {
-    const [selectedConsultation, setSelectedConsultation] = useState<string | null>(null);
-      const name = "PRESCRIPTION"  
+    const [selectedConsultation, setSelectedConsultation] = useState(null);
+      const name = "regular"  
     const {data:allConsultations} = useGetAllConsultationsQuery(name) 
 
     if (!allConsultations) return <div>Loading...</div>;

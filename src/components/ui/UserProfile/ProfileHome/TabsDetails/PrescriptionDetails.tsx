@@ -3,6 +3,7 @@
 
 import { imageUrl } from '@/redux/base/baseApi';
 import { ArrowLeft, Download } from 'lucide-react';
+import moment from 'moment';
 import Link from 'next/link';
 import React from 'react'; 
 
@@ -12,8 +13,9 @@ interface ConsultationDetailsProps {
     onClose: () => void;
   } 
 
-const PrescriptionDetails = ({ DigitalPrescriptionDetails, onClose }: ConsultationDetailsProps) => { 
-    //console.log(DigitalPrescriptionDetails);
+const PrescriptionDetails = ({ DigitalPrescriptionDetails,consultationId , onClose }: ConsultationDetailsProps) => { 
+    console.log(DigitalPrescriptionDetails);  
+    console.log("selectedConsultation",consultationId);
     return (
       <div className=''>
       <button
@@ -31,9 +33,9 @@ const PrescriptionDetails = ({ DigitalPrescriptionDetails, onClose }: Consultati
   {/* Tracking Info */}
   <div className="bg-[#E7FBF2] p-4 rounded-none mb-6">
     <div className="text-[16px] flex flex-col gap-2">
-      <p className="text-[#4E4E4E]">Tracking No. #2164564615</p>
-      <p className="text-[#4E4E4E]">Man problem/Erectile dysfunction</p>
-      <p className="text-[#4E4E4E]">1/1/2025, 5:30 pm</p>
+      <p className="text-[#4E4E4E]">Tracking No. {consultationId?.trackingNo}</p>
+      <p className="text-[#4E4E4E]">{consultationId?.category?.name} / {consultationId?.subCategory?.name}</p>
+      <p className="text-[#4E4E4E]">{ moment(consultationId?.createdAt).format('DD/MM/YYYY , hh:mm a')}</p>
     </div>
   </div>
  
@@ -42,7 +44,7 @@ const PrescriptionDetails = ({ DigitalPrescriptionDetails, onClose }: Consultati
   <div className=" pb-4 mb-4 ">
     <div className="flex justify-between items-center mb-2">
       <div>
-        <p className="text-[16px] text-[#4E4E4E]">Consultation for man&apos;s weigh problem</p>
+        <p className="text-[16px] text-[#4E4E4E]">Consultation for {consultationId?.category?.name} problem</p>
         <p className="text-sm text-[#999999]">Medical questions/view, doctor&apos;s advice and prescription</p>
       </div>
       <p className="text-right text-primary">$25.00</p>

@@ -5,12 +5,12 @@ import { ArrowRight } from 'lucide-react';
 
 type DeliveryOption = 'forward' | 'digital';
 
-const Delivery = ({ updateQNA , SubCategoryName }: { updateQNA: (question: string, answer: string) => void  , SubCategoryName:string|null}) => {
+const Delivery = ({ updateQNA , SubCategoryName , setForwardStatus }: { updateQNA: (question: string, answer: string) => void  , SubCategoryName:string|null , setForwardStatus: React.Dispatch<React.SetStateAction<boolean | null>>}) => {
   const [selectedOption, setSelectedOption] = useState<DeliveryOption | null>(null);
 
   const handleOptionChange = (option: DeliveryOption) => {
     setSelectedOption(option);
-
+    setForwardStatus(option === 'forward' ? true : false );
     const question = 'Delivery Prescription';
     const answer =
       option === 'forward'

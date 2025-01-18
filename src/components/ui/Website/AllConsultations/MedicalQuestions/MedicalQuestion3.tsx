@@ -1,11 +1,11 @@
 'use client';
 
-import { ConfigProvider, Form, Input, Radio, Space } from 'antd';
+import { ConfigProvider, Form, Input, message, Radio, Space } from 'antd';
 import React, { useState } from 'react';
 
 const questions = [
   {
-    title: 'Do you have any pain anywhere in your body?',
+    title: 'Do you have any existing medical conditions?',
     options: ['Yes', 'No'],
   },
 ];
@@ -16,20 +16,29 @@ const MedicalQuestion3 = ({ updateQNA }: { updateQNA: (question: string, answer:
 
   const handleOptionChange = (question: string, answer: string) => {
     setSelectedAnswer(answer);
-    updateQNA(question, answer);
-
-    // Clear additional input if "No" is selected
-    if (answer === 'No') {
-      setAdditionalInfo('');
+  
+    if (answer === "No") {
+      // Clear additional input and update QNA
+      setAdditionalInfo("");
+      updateQNA(question, answer);
+    } else if (answer === "Yes") {
+      // Validate additional info before updating QNA
+      if (additionalInfo.trim().length === 0) {
+        message.error("Please enter a reason.");
+      } else {
+        updateQNA(question, `${answer}, ${additionalInfo}`);
+      }
     }
   };
-
+  
   const handleAdditionalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setAdditionalInfo(value);
-
-    // Update the QNA with additional input
-    updateQNA(questions[0].title, `${selectedAnswer}: ${value}`);
+  
+    // Automatically update QNA when typing (only for "Yes")
+    if (selectedAnswer === "Yes" && value.trim().length > 0) {
+      updateQNA(questions[0].title, `Yes, ${value}`);
+    }
   };
 
   return (
@@ -87,12 +96,12 @@ const MedicalQuestion3 = ({ updateQNA }: { updateQNA: (question: string, answer:
             >
               <Form.Item>
                 <Input
-                  placeholder="Reason"
+                  placeholder="Reason "
                   value={additionalInfo}
                   onChange={handleAdditionalInfoChange}
                   style={{
                     height: 48,
-                    width: '40%',
+                    width: '420px',
                   }}
                 />
               </Form.Item>

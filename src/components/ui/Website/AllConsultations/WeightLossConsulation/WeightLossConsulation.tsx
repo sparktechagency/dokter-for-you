@@ -62,7 +62,7 @@ const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedi
   const handleAddToSelected = (medData) => {
     setSingleMedicineId(medData._id);
 
-    // Create a new object containing full medicine data
+   
     const updatedMedicineData = {
       ...medicineData,
       _id: medData._id,
@@ -70,13 +70,13 @@ const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedi
       total: medData.total,
     };
 
-    // Update the detailedSelectedMeds state
+ 
     const existingDetailedMedIndex = detailedSelectedMeds.findIndex(
       (med) => med._id === medData._id
     );
 
     if (existingDetailedMedIndex !== -1) {
-      // Update the existing medicine data in detailedSelectedMeds
+     
       setDetailedSelectedMeds((prev) =>
         prev.map((med, index) =>
           index === existingDetailedMedIndex ? updatedMedicineData : med
@@ -111,7 +111,8 @@ const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedi
 
   const handleRemove = (id, e) => {
     e.stopPropagation();
-    setSelectedMeds((prev) => prev.filter((med) => med._id !== id));
+    setSelectedMeds((prev) => prev.filter((med) => med._id !== id)); 
+    setDetailedSelectedMeds((prev) => prev.filter((med) => med._id !== id))
   };
 
   const filteredMeds = medications?.filter((med) =>
@@ -165,7 +166,7 @@ const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedi
             </p>
             {isSelected(med._id) && (
               <p
-                onClick={(e) => handleRemove(med._id, e)} // Prevent modal from opening when clicking the cancel icon
+                onClick={(e) => handleRemove(med._id, e)}
                 className="top-2 right-2 absolute text-red-500 py-1 rounded-lg text-sm"
               >
                 <RxCross2 size={22} />

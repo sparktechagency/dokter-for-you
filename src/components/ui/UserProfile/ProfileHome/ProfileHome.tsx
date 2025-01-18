@@ -7,9 +7,10 @@ import Consultation from './Tabs/Consultation';
 import DigitalPrescriptionDetails from './Tabs/DigitalPrescriptionDetails';
 import DigitalPrescriptionOrder from './Tabs/DigitalPrescriptionOrder';
 import ChangePassword from './Tabs/ChangePassword';
-import { useEditProfileMutation, useGetProfileQuery } from '@/redux/features/profile/getProfileSlice';
+import { useConsultationSuccessMutation, useEditProfileMutation, useGetProfileQuery } from '@/redux/features/profile/getProfileSlice';
 import Swal from 'sweetalert2';
 import { imageUrl } from '@/redux/base/baseApi';
+import { useSearchParams } from 'next/navigation';
 
 
 const tabs = [
@@ -25,7 +26,20 @@ const ProfileHome = () => {
   const [editProfile] = useEditProfileMutation()
   const userData = data?.data 
   const [imgURL, setImgURL] = useState("");
-  const [activeTab, setActiveTab] = useState("1");  
+  const [activeTab, setActiveTab] = useState("1");   
+  const searchParams = useSearchParams(); 
+  const [consultationSuccess] = useConsultationSuccessMutation()
+  const sessionId = searchParams.get('session_id');
+  const id = searchParams.get('id');   
+
+  useEffect(() => {
+    if (id && sessionId) {
+      const data = { id, session_id: sessionId };
+      consultationSuccess(data).then((res) => {  
+        console.log(res);
+      });
+    }
+  }, [id, sessionId , consultationSuccess]);
 
   useEffect(() => {
     setImgURL(userData?.profile?.startsWith("https")? userData?.profile : `${imageUrl}${userData?.profile}`);

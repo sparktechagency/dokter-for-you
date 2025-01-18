@@ -18,8 +18,7 @@ import MedicalQuestion8 from './MedicalQuestions/MedicalQuestion8';
 import MedicalQuestion9 from './MedicalQuestions/MedicalQuestion9';
 import MedicalQuestion10 from './MedicalQuestions/MedicalQuestion10';
 import MedicalQuestion11 from './MedicalQuestions/MedicalQuestion11';
-import MedicalQuestion12 from './MedicalQuestions/MedicalQuestion12';
-import MedicalQuestion14 from './MedicalQuestions/MedicalQuestion14';
+// import MedicalQuestion14 from './MedicalQuestions/MedicalQuestion14'; 
 import MedicationPreference from './MedicationPreference';
 import WeightLossConsulation from './WeightLossConsulation/WeightLossConsulation';
 import AdditionalQuestions1 from './AdditionalQuestions/AdditionalQuestions1';
@@ -32,6 +31,7 @@ import Address from './Address';
 import CheckConfirm from './CheckConfirm';
 import ConsultationType from './ConsultationType';
 import { useSearchParams } from 'next/navigation';
+import MedicalQuestion12 from './MedicalQuestions/MedicalQuestion12';
 
 const poppins = Poppins({ weight: ['400', '500', '600', '700'], subsets: ['latin'] });
 
@@ -43,6 +43,7 @@ const AllConsultations = () => {
     const [qnaData, setQnaData] = useState<{ question: string; answer: string }[]>([]);   
     const [userId , setUserId] = useState<string | null>()   
     const [selectedMedicines , setSelectedMedicines] = useState([])
+    const [forwardStatus , setForwardStatus] = useState(false)
     
     const [medicines , setMedicines] = useState([]) 
     const [address , setAddress] = useState<string | null>()
@@ -51,8 +52,7 @@ const AllConsultations = () => {
     const SubCategory = searchParams.get('subcategory');  
     const SubCategoryName = searchParams.get('name');
 
-    const newConsultationType = consultationType ? consultationType === "video" ? "VIDEOCALL" : "PRESCRIPTION" : "PRESCRIPTIONWITHMEDICINE" 
-    
+    const newConsultationType = consultationType ? consultationType === "video" ? "video" : "regular" : "regular" 
 
     const data = {
         "QNA": qnaData , 
@@ -60,10 +60,10 @@ const AllConsultations = () => {
         "medicins": medicines ,
         "category": category ,
         "subCategory": SubCategory ,
-        "address" : address , 
+        "address" : address ,  
+        "forwardToPartner" : forwardStatus ,
         "consultationType": newConsultationType,
     }  
-
    
     const updateQNA = (question: string, answer: string) => {
         setQnaData((prev) => {
@@ -85,73 +85,68 @@ const AllConsultations = () => {
             skippable: false,
         },
         {
-            title: "Medical Question 1/14",
+            title: "Medical Question 1/13",
             content: <MedicalQuestion1 updateQNA={updateQNA} /> ,
             skippable: false,
         },
         {
-            title: "Medical Question 2/14",
+            title: "Medical Question 2/13",
             content: <MedicalQuestion2 updateQNA={updateQNA} /> ,
             skippable: false,
         },
         {
-            title: "Medical Question 3/14",
+            title: "Medical Question 3/13",
             content: <MedicalQuestion3 updateQNA={updateQNA} /> ,
             skippable: false,
         },
         {
-            title: "Medical Question 4/14",
+            title: "Medical Question 4/13",
             content: <MedicalQuestion4 updateQNA={updateQNA} /> ,
             skippable: false,
         },
         {
-            title: "Medical Question 5/14",
+            title: "Medical Question 5/13",
             content: <MedicalQuestion5 updateQNA={updateQNA}/> ,
             skippable: false,
         },
         {
-            title: "Medical Question 6/14",
+            title: "Medical Question 6/13",
             content: <MedicalQuestion6 updateQNA={updateQNA} /> ,
             skippable: false,
         },
         {
-            title: "Medical Question 7/14",
+            title: "Medical Question 7/13",
             content: <MedicalQuestion7 updateQNA={updateQNA} /> ,
             skippable: false,
         },
         {
-            title: "Medical Question 8/14",
+            title: "Medical Question 8/13",
             content: <MedicalQuestion8 updateQNA={updateQNA} /> ,
             skippable: false,
         },
         {
-            title: "Medical Question 9/14",
+            title: "Medical Question 9/13",
             content: <MedicalQuestion9 updateQNA={updateQNA} /> ,
             skippable: false,
         },
         {
-            title: "Medical Question 10/14",
+            title: "Medical Question 10/13",
             content: <MedicalQuestion10 updateQNA={updateQNA} /> ,
             skippable: false,
         },
         {
-            title: "Medical Question 11/14",
+            title: "Medical Question 11/13",
             content: <MedicalQuestion11 updateQNA={updateQNA} /> ,
             skippable: false,
         },
         {
-            title: "Medical Question 12/14",
+            title: "Medical Question 12/13",
             content: <MedicalQuestion12 updateQNA={updateQNA} /> ,
             skippable: false,
         },
         {
-            title: "Medical Question 13/14",
+            title: "Medical Question 13/13",
             content: <MedicalQuestion13 updateQNA={updateQNA} /> ,
-            skippable: false,
-        },
-        {
-            title: "Medical Question 14/14",
-            content: <MedicalQuestion14 updateQNA={updateQNA} /> ,
             skippable: false,
         },
         {
@@ -215,7 +210,7 @@ const AllConsultations = () => {
             ? [
                 {
                     title: "",
-                    content: <Delivery updateQNA={updateQNA} SubCategoryName={SubCategoryName} /> ,
+                    content: <Delivery updateQNA={updateQNA} SubCategoryName={SubCategoryName} setForwardStatus={setForwardStatus} /> ,
                     skippable: false,
                 },
                 {

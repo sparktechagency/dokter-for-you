@@ -5,6 +5,7 @@ import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { TbBrandZoom } from 'react-icons/tb';
 import Link from 'next/link';
+import moment from 'moment';
 
 interface ConsultationDetailsProps {
   consultationId: string;
@@ -13,7 +14,7 @@ interface ConsultationDetailsProps {
  
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ConsultationDetails =({ consultationId , onClose, consultations }: ConsultationDetailsProps) => { 
-    //console.log("details Page" ,consultationId, consultations);
+    console.log("details Page", consultationId); 
   return (
     <div className=''>
       <button
@@ -32,8 +33,8 @@ const ConsultationDetails =({ consultationId , onClose, consultations }: Consult
   <div className="bg-[#E7FBF2] p-4 rounded-none mb-6">
     <div className="text-[16px] flex flex-col gap-2">
       {/* <p className="text-[#4E4E4E]">Tracking No. #2164564615</p> */}
-      <p className="text-[#4E4E4E]">Man problem/Erectile dysfunction</p>
-      <p className="text-[#4E4E4E]">1/1/2025, 5:30 pm</p>
+      <p className="text-[#4E4E4E]">{consultationId?.category?.name} / {consultationId?.subCategory?.name}</p>
+      <p className="text-[#4E4E4E]">{ moment(consultationId?.createdAt).format('DD/MM/YYYY , hh:mm a')}</p>
     </div>
   </div>
  
@@ -42,7 +43,7 @@ const ConsultationDetails =({ consultationId , onClose, consultations }: Consult
   <div className=" pb-4 mb-4 ">
     <div className="flex justify-between items-center mb-2">
       <div>
-        <p className="text-[16px] text-[#4E4E4E]">Consultation for man&apos;s weigh problem</p>
+        <p className="text-[16px] text-[#4E4E4E]">Consultation for {consultationId?.subCategory?.name} problem</p>
         <p className="text-sm text-[#999999]">Medical questions/view, doctor&apos;s advice and prescription</p>
       </div>
       <p className="text-right text-primary">$25.00</p>

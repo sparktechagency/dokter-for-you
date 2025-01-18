@@ -55,7 +55,7 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
                 return true; 
             }
 
-            if (current === 16) {
+            if (current === 15) {
                 if (hasPreference === "has_preference") {
                     if (medicines.length === 0) {
                         message.error("Please select at least one medicine to proceed.");
@@ -65,12 +65,12 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
                 }
                 return !!data.QNA.find((qna) => qna.question === "Delivery Prescription");
             }
-            if (hasPreference === "has_preference" && current >= 18 && current <= 21) {
+            if (hasPreference === "has_preference" && current >= 17 && current <= 20) {
                 const questionMap: { [key: number]: string } = {
-                    18: "Do you have any known allergies to medications or specific ingredients in this drug?",
-                    19: "Do you have any chronic conditions or medical issues that might affect the use of this medication?",
-                    20: "Are you currently taking any other medications that might interact with this drug?",
-                    21: "Have you used this medication before, and if so, did you experience any side effects?",
+                    17: "Do you have any known allergies to medications or specific ingredients in this drug?",
+                    18: "Do you have any chronic conditions or medical issues that might affect the use of this medication?",
+                    19: "Are you currently taking any other medications that might interact with this drug?",
+                    20: "Have you used this medication before, and if so, did you experience any side effects?",
                 };
             
                 const question = questionMap[current]; 
@@ -84,11 +84,11 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
                 return isAnswered; 
             }
            
-            if (hasPreference === "has_preference" && current === 22) {
+            if (hasPreference === "has_preference" && current === 21) {
                 return !!data.QNA.find((qna) => qna.question === "Delivery Prescription");
             }
         
-            if (hasPreference === "has_preference" && current === 23) {
+            if (hasPreference === "has_preference" && current === 22) {
                 if (!data.address) {
                     return false;
                 }
@@ -96,12 +96,12 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
             }
         
           
-            if (consultationType !== "video" && current >= 18 && current <= 21) {
+            if (consultationType !== "video" && current >= 17 && current <= 20) {
                 const questionMap: { [key: number]: string } = {
-                    18: "Do you have any known allergies to medications or specific ingredients in this drug?",
-                    19: "Do you have any chronic conditions or medical issues that might affect the use of this medication?",
-                    20: "Are you currently taking any other medications that might interact with this drug?",
-                    21: "Have you used this medication before, and if so, did you experience any side effects?",
+                    17: "Do you have any known allergies to medications or specific ingredients in this drug?",
+                    18: "Do you have any chronic conditions or medical issues that might affect the use of this medication?",
+                    19: "Are you currently taking any other medications that might interact with this drug?",
+                    20: "Have you used this medication before, and if so, did you experience any side effects?",
                 };
         
                 const question = questionMap[current];
@@ -116,11 +116,11 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
                 return isAnswered;
             } 
 
-            if (consultationType !== "video" && current === 22) {
+            if (consultationType !== "video" && current === 21) {
                 if (!data.address) {
                     return false;
                 }
-                return true; // Address provided, allow progression
+                return true; 
             } 
 
             switch (current as number) {
@@ -134,57 +134,54 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
                     return !!data.QNA.find(qna => qna.question === "What is your Height?");
 
                 case 3:
-                    return !!data.QNA.find(qna => qna.question === "Do you have any pain anywhere in your body?");
+                    return !!data.QNA.find(qna => qna.question === "Do you have any existing medical conditions?");
 
                 case 4:
-                    return !!data.QNA.find(qna => qna.question === "Why, and for which Diagnosis do you want treatment?");
+                    return !!data.QNA.find(qna => qna.question === "Have you undergone any surgery in the past?");
 
                 case 5:
-                    return !!data.QNA.find(qna => qna.question === "Was this diagnosis made by a doctor, and did this doctor recommend treatment ?");
+                    return !!data.QNA.find(qna => qna.question === "Are you currently taking any medications?");
 
                 case 6:
-                    return !!data.QNA.find(qna => qna.question === "Do any of the medical issues listed below apply to you?");
+                    return !!data.QNA.find(qna => qna.question === "Have you ever experienced any adverse reactions to medications?");
 
                 case 7:
-                    return !!data.QNA.find(qna => qna.question === "Are you experiencing any fatigue or low energy ?");
-
-                case 8:
-                    return !!data.QNA.find(qna => qna.question === "How is your appetite?");
-
-                case 9:
-                    return !!data.QNA.find(qna => qna.question === "Have you had any recent weight changes?");
-
-                case 10:
-                    return !!data.QNA.find(qna => qna.question === "How do you sleep at night?");
-
-                case 11:
-                    return !!data.QNA.find(qna => qna.question === "Are you having any problems with digestion?");
-
-                case 12:
-                    return !!data.QNA.find(qna => qna.question === "Have you noticed any changes in your vision or hearing?");
-
-                case 13:
-                    return !!data.QNA.find(qna => qna.question === "Do you have any trouble breathing or shortness of breath?");
-
-                case 14:
                     return !!data.QNA.find(qna => qna.question === "Do you have any allergies?");
 
-                case 15:
+                case 8:
+                    return !!data.QNA.find(qna => qna.question === "Do you smoke or have you smoked in the past?");
+
+                case 9:
+                    return !!data.QNA.find(qna => qna.question === "Do you consume alcohol?");
+
+                case 10:
+                    return !!data.QNA.find(qna => qna.question === "Do you have any close family members with hereditary conditions?");
+
+                case 11:
+                    return !!data.QNA.find(qna => qna.question === "Do you use recreational drugs?");
+
+                case 12:
+                    return !!data.QNA.find(qna => qna.question === "Is your blood pressure typically lower than 90/60 mmHg or higher than 140/90 mmHg?");
+
+                case 13:
+                    return !!data.QNA.find(qna => qna.question === "Would you like to provide any additional information?");
+
+                case 14:
                     return !!data.QNA.find(qna => qna.question === "Do you have a medication preference?");
 
-                case 16:
+                case 15:
                     if (hasPreference === "has_preference") {
                         return medicines.length > 0;
                     }
                     return !!data.QNA.find((qna) => qna.question === "Delivery Prescription");
 
-                case 17:
+                case 16:
                     if (consultationType !== "video") {
                         const questionMap: { [key: number]: string } = {
-                            17: "Do you have any known allergies to medications or specific ingredients in this drug?",
-                            18: "Do you have any chronic conditions or medical issues that might affect the use of this medication?",
-                            19: "Are you currently taking any other medications that might interact with this drug?",
-                            20: "Have you used this medication before, and if so, did you experience any side effects?",
+                            16: "Do you have any known allergies to medications or specific ingredients in this drug?",
+                            17: "Do you have any chronic conditions or medical issues that might affect the use of this medication?",
+                            18: "Are you currently taking any other medications that might interact with this drug?",
+                            19: "Have you used this medication before, and if so, did you experience any side effects?",
                         };
 
                         const question = questionMap[current];
@@ -227,7 +224,8 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
     };
 
     const handleSubmit = async () => {
-        await createConsultation(data).then((res) => {
+        await createConsultation(data).then((res) => { 
+            console.log(res);
             if (res?.data?.success) {
                 router.push(res?.data?.data);
             }

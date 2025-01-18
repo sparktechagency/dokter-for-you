@@ -24,7 +24,7 @@ const Consultation = () => {
   const [selectedConsultation, setSelectedConsultation] = useState<string | null>(null); 
   
 
-  const name = "VIDEOCALL"  
+  const name = "video"  
   const {data: consultations, isLoading} = useGetAllConsultationsQuery(name) 
   
 if(isLoading){

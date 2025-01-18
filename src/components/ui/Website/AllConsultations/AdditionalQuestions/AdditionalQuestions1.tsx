@@ -1,5 +1,5 @@
 "use client"
-import { ConfigProvider, Form, Input, Radio, Space } from 'antd';
+import { ConfigProvider, Form, Input, message, Radio, Space } from 'antd';
 import React, { useState } from 'react';
 const questions = [
     {
@@ -17,21 +17,28 @@ const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
   const handleOptionChange = (question: string, answer: string) => {
     setSelectedAnswer(answer);
-    updateQNA(question, answer);
-
-    // Clear additional input if "No" is selected
-    if (answer === 'No') {
-      setAdditionalInfo('');
+  
+    if (answer === "No") {
+      setAdditionalInfo("");
+      updateQNA(question, answer);
+    } else if (answer === "Yes") {
+      if (additionalInfo.trim().length === 0) {
+        message.error("Please enter a reason.");
+      } else {
+        updateQNA(question, `${answer}, ${additionalInfo}`);
+      }
     }
   };
-
+  
   const handleAdditionalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setAdditionalInfo(value);
+  
+    if (selectedAnswer === "Yes" && value.trim().length > 0) {
+      updateQNA(questions[0].title, `Yes, ${value}`);
+    }
+  }; 
 
-    // Update the QNA with additional input
-    updateQNA(questions[0].title, `${selectedAnswer}: ${value}`);
-  };
 
     return (
       <div>
@@ -94,7 +101,7 @@ const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
                     onChange={handleAdditionalInfoChange}
                     style={{
                       height: 48,
-                      width: '40%',
+                      width: '420px',
                     }}
                   />
                 </Form.Item>

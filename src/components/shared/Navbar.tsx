@@ -16,6 +16,7 @@ import { imageUrl } from "@/redux/base/baseApi";
 import { useGetAllCategoryQuery } from "@/redux/features/website/categorySlice";
 
 import { useRouter } from "next/navigation";
+import { useGetAllNotificationQuery } from "@/redux/features/website/notificationSlice";
 
 const Navbar: React.FC = () => {
   const [activeLink, setActiveLink] = useState("");
@@ -26,8 +27,11 @@ const Navbar: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
   const { data } = useGetProfileQuery(undefined)
   const [imgURL, setImgURL] = useState("");
-  const { data: category } = useGetAllCategoryQuery(undefined)
-  const router = useRouter()
+  const { data: category } = useGetAllCategoryQuery(undefined) 
+  const {data:notifications} = useGetAllNotificationQuery(undefined) 
+  const router = useRouter() 
+
+  const totalNotifications = notifications?.data?.length
 
   const getProfileImageUrl = (profile: string): string => {
     return profile.startsWith("https") ? profile : `${imageUrl}${profile}`;
@@ -200,10 +204,17 @@ const Navbar: React.FC = () => {
               </div>
             </Link>
             <Link href="/notifications">
-              <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
-                <IoNotificationsOutline size={24} color="#4E4E4E" />
-              </div>
-            </Link>
+      <div className="relative bg-[#E8EEFE]  w-[48px] h-[48px] rounded-full flex items-center justify-center">
+        <div className="text-[#4E4E4E] text-lg cursor-pointer ">
+          <IoNotificationsOutline size={24} color="#4E4E4E" /> 
+          {totalNotifications > 0 && (
+          <span className="absolute -top-2 -right-1 bg-red-500 text-white text-[10px] font-bold w-[26px] h-[26px] rounded-full flex items-center justify-center">
+            {totalNotifications > 9 ? "9+" : totalNotifications}
+          </span>
+        )}
+        </div>
+      </div>
+    </Link>
             {/* Profile Dropdown */}
             <div className="relative">
               {userData ? <div
@@ -247,7 +258,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          {/* Mobile Hamburger Menu */}
+   
 
         </div>
       </div>
@@ -294,10 +305,17 @@ const Navbar: React.FC = () => {
               </div>
             </Link>
             <Link href="/notifications">
-              <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
-                <IoNotificationsOutline size={24} color="#4E4E4E" />
-              </div>
-            </Link>
+      <div className="relative bg-[#E8EEFE]  w-[48px] h-[48px] rounded-full flex items-center justify-center">
+        <div className="text-[#4E4E4E] text-lg cursor-pointer ">
+          <IoNotificationsOutline size={24} color="#4E4E4E" /> 
+          {totalNotifications > 0 && (
+          <span className="absolute -top-2 -right-1 bg-red-500 text-white text-[10px] font-bold w-[26px] h-[26px] rounded-full flex items-center justify-center">
+            {totalNotifications > 9 ? "9+" : totalNotifications}
+          </span>
+        )}
+        </div>
+      </div>
+    </Link>
           </div>
 
         </div>

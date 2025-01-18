@@ -4,9 +4,13 @@ const categorySlice = baseApi.injectEndpoints({
   endpoints: (build) => ({   
 
     getAllCategory: build.query({
-        query: () => ({
-            url: `/category` 
-        })
+        query: (search) => { 
+            const params = new URLSearchParams();  
+            if(search) params.append("search", search)
+            return{
+                url: `/category?${params.toString()}`,
+            }
+        }
     }),  
 
     getCategoryById: build.query({
