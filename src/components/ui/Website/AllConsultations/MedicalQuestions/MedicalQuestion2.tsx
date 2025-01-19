@@ -37,7 +37,7 @@ const MedicalQuestion2 = ({ updateQNA }: { updateQNA: (question: string, answer:
                         className="w-24 h-[40px]"
                         value={height}
                         onChange={handleHeightChange}
-                        min={60}                 
+                        min={140}                 
                     />
                     <Select
                         value={unit}

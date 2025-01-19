@@ -43,7 +43,7 @@ const MedicalQuestion1 = ({ updateQNA }: { updateQNA: (question: string, answer:
                         style={{height: '40px'}}
                         value={weight}
                         onChange={handleWeightChange}
-                        min={20}
+                        min={40}
                       
                     />
                     <Select

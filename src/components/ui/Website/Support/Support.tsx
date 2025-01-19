@@ -3,7 +3,7 @@
 import { PiMailbox } from "react-icons/pi";
 import Image from "next/image";
 import Title from "@/components/shared/Title";
-import { TfiMapAlt } from "react-icons/tfi";
+// import { TfiMapAlt } from "react-icons/tfi"; 
 import { MdOutlineHeadsetMic } from "react-icons/md";
 import { Form, Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
@@ -58,7 +58,7 @@ const Support = () => {
           <Title className=" py-[40px] text-center">
             GET IN TOUCH WITH US
           </Title>
-          <div className="grid grid-cols-1 gap-[53px] md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-[53px] md:grid-cols-2">
             {/* Email Card */}
             <div className="rounded-lg bg-[#e8eefe] shadow-md transition-transform hover:scale-105  p-6">
               <div className="flex justify-center -mt-16">
@@ -83,12 +83,12 @@ const Support = () => {
               <h3 className="text-center text-[24px] font-semibold text-blue-900 mt-4">
                 Help line
               </h3>
-              <p className="text-center text-gray-600 mt-2">+1 234 567 8900</p>
-              <p className="text-center text-gray-600">+1 234 567 8901</p>
+              <p className="text-center text-gray-600 mt-2">+31 (0)85-7605234</p>
+                
             </div>
 
             {/* Address Card */}
-            <div className="rounded-lg bg-[#E6F7FA] shadow-md transition-transform hover:scale-105 p-6">
+            {/* <div className="rounded-lg bg-[#E6F7FA] shadow-md transition-transform hover:scale-105 p-6">
               <div className="flex justify-center -mt-16">
                 <div className="rounded-full bg-white p-4 h-[100px] w-[95px] flex items-center justify-center shadow-md">
                   <TfiMapAlt className="h-10 w-10 text-[#4E4E4E]" />
@@ -99,7 +99,7 @@ const Support = () => {
               </h3>
               <p className="text-center text-gray-600 mt-2">123 Business Street</p>
               <p className="text-center text-gray-600">New York, NY 10001</p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

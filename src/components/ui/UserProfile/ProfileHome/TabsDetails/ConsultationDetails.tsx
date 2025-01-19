@@ -65,7 +65,7 @@ const ConsultationDetails =({ consultationId , onClose, consultations }: Consult
       Our doctor has sent your prescription, please download the file.
     </p>
 
-    <Link href={""} className="mx-auto flex items-center justify-center gap-2 px-6 bg-primary text-white h-[48px]">
+    <Link href={consultationId?.link} className="mx-auto flex items-center justify-center gap-2 px-6 bg-primary text-white h-[48px]">
       <TbBrandZoom className="h-4 w-4" size={26} color='white'/>
       Meeting Link
     </Link>

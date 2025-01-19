@@ -30,9 +30,23 @@ const getProfileSlice = baseApi.injectEndpoints({
                     body: data,
                 }
             }
-        })
+        }) , 
+
+        // createPDF: build.mutation({
+        //     query: (id) => ({
+        //         url: `/pdf/generate-pdf/${id}`, 
+        //         method: "POST",  
+        //     }),
+        // }),  
+
+        getPDF: build.query({
+            query: (id) => ({
+                url: `/pdf/generate-pdf/${id}`, 
+            }),
+        }),
+
 
     })
 })
 
-export const { useGetProfileQuery, useEditProfileMutation , useConsultationSuccessMutation} = getProfileSlice 
+export const { useGetProfileQuery, useEditProfileMutation , useConsultationSuccessMutation , useGetPDFQuery} = getProfileSlice 

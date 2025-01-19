@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { Button, ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
@@ -13,21 +14,16 @@ interface ConsultationData {
     consultFor: string;
     medication: string;
     dateTime: string;
-    price: string;
+    price: string; 
+    suggestedMedicine:{dosage: string;}[]
   } 
 
 const DigitalPrescriptionOrder = () => {  
        const [selectedConsultation, setSelectedConsultation] = useState(null);
          const name = "medication"  
        const {data:allConsultations} = useGetAllConsultationsQuery(name) 
-   
-      //  if (!allConsultations) return <div>Loading...</div>; 
-   
        const DigitalPrescriptionOrderDetails = allConsultations?.data  
-       console.log("DigitalPrescriptionOrderDetails",DigitalPrescriptionOrderDetails);
 
-
-      //console.log("kghdf",consultationsData);
 
     const columns: ColumnsType<ConsultationData> = [
       {
@@ -81,7 +77,7 @@ const DigitalPrescriptionOrder = () => {
                    title: 'Action',
                    key: 'action',
                    width: 100,
-                   render: (_,record) => (
+                   render: (_,record: any) => (
                      <Button  onClick={() => setSelectedConsultation(record)}
                        type="text" 
                        icon={<MdOutlineArrowOutward size={24}/>}

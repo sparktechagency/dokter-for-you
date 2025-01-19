@@ -1,17 +1,55 @@
 import { ArrowLeft, Download } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react'; 
-import ceevit from "@/assests/Ceevit.png"
-import ace from "@/assests/Ace.png"
 import moment from 'moment';
+import { imageUrl } from '@/redux/base/baseApi';
+import { useBuyNowMutation } from '@/redux/features/profile/pdfAndBuySlice';
+import { useRouter } from 'next/navigation';
 interface ConsultationDetailsProps {
-    consultationId: string;
+    consultationId: {
+      trackingNo: string;
+      date: string;
+      time: string;
+      patient: string;
+      doctor: string;
+      status: string;
+      _id: string; 
+      createdAt: string; 
+      category: {
+        name: string;
+      }
+      subCategory: {
+        name: string;
+      } 
+      address:{
+        streetAndHouseNo: string;
+        postalCode: string;
+        place: string;
+        country: string; 
+        firstname: string;
+        lastname: string; 
+      } 
+      orderDate: string; 
+      medicins:[]
+    };
     onClose: () => void;
   } 
  
 
 const PrescriptionOrder = ({consultationId ,    onClose }: ConsultationDetailsProps) => { 
-    console.log(consultationId); 
+    // console.log(consultationId);   
+const [BuyNow] = useBuyNowMutation()  
+const router = useRouter()
+
+const handleBuyNow = async() =>{ 
+    await BuyNow(consultationId._id).then((res) => {
+
+      if (res?.data?.success) {
+        router.push(res?.data?.data)
+      }
+    })
+}
+
     return (
       <div className=''>
       <button
@@ -64,10 +102,10 @@ const PrescriptionOrder = ({consultationId ,    onClose }: ConsultationDetailsPr
     <p className="text-center text-red-500 text-sm ">
       Stating that it is valid for 7 days only and can be use once.
     </p>
-    <button className="mx-auto flex items-center justify-center gap-2 px-6 bg-primary text-white h-[48px]">
+    <a  href={`${imageUrl}api/v1/pdf/generate-pdf/${consultationId?._id}`} download className="mx-auto flex items-center justify-center gap-2 px-6 bg-primary text-white h-[48px]" >
       <Download className="h-4 w-4" size={24} color='white'/>
       Download now
-    </button>
+    </a>
   </div>
  </div>
 
@@ -76,9 +114,9 @@ const PrescriptionOrder = ({consultationId ,    onClose }: ConsultationDetailsPr
     <div>
       <p className="text-sm font-medium mb-2">Address:</p>
       <p className="text-sm text-[#6B6B6B]">
-        john david<br />
-        101 new house street 2957<br />
-        amsterdam, NL
+       {consultationId?.address?.firstname}  {consultationId?.address?.lastname}<br />
+       {consultationId?.address?.streetAndHouseNo}<br />
+      {consultationId?.address?.postalCode} {consultationId?.address?.place}<br />
       </p>
     </div>
     <div>
@@ -91,19 +129,18 @@ const PrescriptionOrder = ({consultationId ,    onClose }: ConsultationDetailsPr
     </div> 
 
     <div>
-      <p className="text-sm font-medium mb-2">Pharmacy Address</p>
+      <p className="text-sm font-medium mb-2">Pharmacy Name</p>
       <p className="text-sm text-[#6B6B6B]">
-        4957 Washington Ave,<br />
-        Manchester
+      Apotheek Zaandam<br />
+      Oost
       </p>
     </div> 
 
     
-    <div>
-      <p className="text-sm font-medium mb-2">Time schedule</p>
-      <p className="text-sm text-[#6B6B6B]">
-      Order Date : 14/11/2022, <br />
-       10:09
+    <div className=''>
+      <p className="text-sm font-medium mb-2 ">Time schedule</p>
+      <p className="text-[12px] text-[#6B6B6B]">
+      Order Date :  { moment(consultationId?.orderDate).format('DD/MM/YYYY , hh:mm a')}
       </p>
     </div> 
 
@@ -119,64 +156,40 @@ const PrescriptionOrder = ({consultationId ,    onClose }: ConsultationDetailsPr
   </div>
 
   {/* Medication List */}
-  <div className="mb-6  bg-[#F7F7F7] px-4 py-5">
-    <div className="flex lg:flex-row flex-wrap items-center justify-between gap-4 p-4 "> 
-
-        <div className=' flex items-center gap-5'>
-      <Image
-        src={ceevit}
-        alt="Ceelvit"
-        width={70}
-        height={70}
-        className="object-cover"
-      />
-      <div className="flex-1">
-        <p className="font-medium text-[16px] pb-1">Ceelvit</p>
-        <p className="text-sm text-[#6B6B6B]">Vitamin C 250 mg</p>
-      </div>
+  <div className="mb-6  bg-[#F7F7F7] px-4 py-5"> 
+    {
+      consultationId?.medicins?.map((medication:{_id: {image: string, name: string, medicineType: string, _id: string, dosage: string[]} , count: number  }) => (
+        <div className="flex items-center justify-between gap-4 p-4 " key={medication?._id?._id}>
+          <div className="flex items-center gap-5"> 
+            <Image
+              src={medication?._id?.image?.startsWith("http") ? medication?._id?.image : `${imageUrl}${medication?._id?.image}`}
+              alt={medication?._id?.name}
+              width={70}  
+              height={70}
+              className="object-cover"
+            />
+            <div className="flex-1">
+              <p className="font-medium text-[16px] pb-1">{medication?._id?.name}</p>  
+              <p className="text-sm text-[#6B6B6B]">{medication?._id?.medicineType} {medication?._id?.dosage[0]}</p>
+            </div>
+          </div>
+          <div className="text-sm">
+            <p className='text-[#999999] pb-1'>Dosage</p>
+            <p className='text-[#4E4E4E]'>{medication?._id?.dosage[0]}</p>
+          </div>
+          <div className="text-sm">
+            <p className='text-[#999999] pb-1'>Contents of the Box</p>
+            <p className='text-[#4E4E4E]'>{medication?.count}</p>
+          </div>
+         
         </div>
-      <div className="text-sm">
-        <p className='text-[#999999] pb-1'>Dosage</p>
-        <p className='text-[#4E4E4E]'>250 mg</p>
-      </div>
-      <div className="text-sm">
-        <p className='text-[#999999] pb-1'>Contents of the Box</p>
-        <p className='text-[#4E4E4E]'>2</p>
-      </div>
-
-    </div>
-
-    <div className="flex lg:flex-row flex-wrap items-center justify-between gap-4 p-4 border-b"> 
-
-        <div className=' flex items-center gap-5'>
-      <Image
-        src={ace}
-        alt="Ceelvit"
-        width={70}
-        height={70}
-        className="object-cover"
-      />
-      <div className="flex-1">
-        <p className="font-medium text-[16px] pb-1">Ace</p>
-        <p className="text-sm text-[#6B6B6B]">Paracetamol BP 500 mg</p>
-      </div>
-        </div>
-      <div className="text-sm">
-        <p className='text-[#999999] pb-1'>Dosage</p>
-        <p className='text-[#4E4E4E]'>250 mg</p>
-      </div>
-      <div className="text-sm">
-        <p className='text-[#999999] pb-1'>Contents of the Box</p>
-        <p className='text-[#4E4E4E]'>2</p>
-      </div>
-
-    </div>
-
-
+      ))
+    }
+  
   </div>
 
   {/* Buy Now Button */}
-  <div className="flex justify-end mb-8 pt-6">
+  <div className="flex justify-end mb-8 pt-6" onClick={handleBuyNow}>
     <button className="bg-[#1a237e] px-6 h-[48px] text-white">Buy Now</button>
   </div>
 
