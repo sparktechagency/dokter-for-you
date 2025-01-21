@@ -12,9 +12,8 @@ interface ConsultationDetailsProps {
     onClose: () => void;
   } 
 
-const PrescriptionDetails = ({ DigitalPrescriptionDetails,consultationId , onClose }: ConsultationDetailsProps) => { 
-    console.log(DigitalPrescriptionDetails);  
-    console.log("selectedConsultation",consultationId);
+const PrescriptionDetails = ({ consultationId , onClose }: ConsultationDetailsProps) => { 
+
     return (
       <div className=''>
       <button

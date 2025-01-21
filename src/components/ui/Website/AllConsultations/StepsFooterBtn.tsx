@@ -225,7 +225,7 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
 
     const handleSubmit = async () => {
         await createConsultation(data).then((res) => { 
-            console.log(res);
+          
             if (res?.data?.success) {
                 router.push(res?.data?.data);
             }

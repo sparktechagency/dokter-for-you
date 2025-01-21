@@ -35,9 +35,7 @@ const ProfileHome = () => {
   useEffect(() => {
     if (id && sessionId) {
       const data = { id, session_id: sessionId };
-      consultationSuccess(data).then((res) => {  
-        console.log(res);
-      });
+      consultationSuccess(data)
     }
   }, [id, sessionId , consultationSuccess]);
 

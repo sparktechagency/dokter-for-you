@@ -11,7 +11,7 @@ const Search = () => {
   const [search , setSearch] = React.useState("")
   const { data: allCategories } = useGetAllCategoryQuery(search)
   const AllCategory = allCategories?.data
- console.log(search);
+
 
   return (
     <div className='bg-[#F7F7F7] '>
