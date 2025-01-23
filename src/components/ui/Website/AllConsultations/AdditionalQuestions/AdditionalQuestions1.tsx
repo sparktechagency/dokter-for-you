@@ -1,17 +1,21 @@
 "use client"
 import { ConfigProvider, Form, Input, message, Radio, Space } from 'antd';
 import React, { useState } from 'react';
-const questions = [
+
+
+const AdditionalQuestions1 = ({ dynamicQNA  , question}: { dynamicQNA: (question: string, answer: string) => void  , question: string}) => {  
+
+  const questions = [
     {
-      title: 'Do you have any known allergies to medications or specific ingredients in this drug?',
+      title: question,
       options: [
        "Yes" ,
        "No"
       ],
     }
-  ]; 
-
-const AdditionalQuestions1 = ({ updateQNA }: { updateQNA: (question: string, answer: string) => void }) => { 
+  ];  
+ 
+  const [form] = Form.useForm();
 const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [additionalInfo, setAdditionalInfo] = useState<string>('');
 
@@ -20,12 +24,12 @@ const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   
     if (answer === "No") {
       setAdditionalInfo("");
-      updateQNA(question, answer);
+      dynamicQNA(question, answer);
     } else if (answer === "Yes") {
       if (additionalInfo.trim().length === 0) {
         message.error("Please enter a reason.");
       } else {
-        updateQNA(question, `${answer}, ${additionalInfo}`);
+        dynamicQNA(question, `${answer}, ${additionalInfo}`);
       }
     }
   };
@@ -35,14 +39,14 @@ const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     setAdditionalInfo(value);
   
     if (selectedAnswer === "Yes" && value.trim().length > 0) {
-      updateQNA(questions[0].title, `Yes, ${value}`);
+      dynamicQNA(questions[0].title, `Yes, ${value}`);
     }
   }; 
 
 
     return (
       <div>
-      <Form>
+      <Form  form={form}>
         {questions.map((question, index) => (
           <div key={index}>
             {/* Main Question */}

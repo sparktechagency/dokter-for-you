@@ -25,9 +25,19 @@ const consultationSlice = baseApi.injectEndpoints({
           method: "POST",
           body: data,
         })
-    }) 
+    })  , 
+
+    getDynamicQuestions: build.query({
+        query: (id) => { 
+          const params = new URLSearchParams(); 
+          if(id) params.append("subCategory", id)
+          return{ 
+            url: `/question?${params.toString()}`,
+          }
+        }
+    })
 
   }) 
 })  
 
-export const {useGetAllMedicinesQuery , useGetMedicineByIdQuery , useCreateConsultationMutation} =  consultationSlice
+export const {useGetAllMedicinesQuery , useGetMedicineByIdQuery , useCreateConsultationMutation , useGetDynamicQuestionsQuery} =  consultationSlice

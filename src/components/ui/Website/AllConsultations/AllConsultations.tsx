@@ -22,9 +22,9 @@ import MedicalQuestion11 from './MedicalQuestions/MedicalQuestion11';
 import MedicationPreference from './MedicationPreference';
 import WeightLossConsulation from './WeightLossConsulation/WeightLossConsulation';
 import AdditionalQuestions1 from './AdditionalQuestions/AdditionalQuestions1';
-import AdditionalQuestions2 from './AdditionalQuestions/AdditionalQuestions2';
-import AdditionalQuestions3 from './AdditionalQuestions/AdditionalQuestions3';
-import AdditionalQuestions4 from './AdditionalQuestions/AdditionalQuestions4';
+// import AdditionalQuestions2 from './AdditionalQuestions/AdditionalQuestions2';
+// import AdditionalQuestions3 from './AdditionalQuestions/AdditionalQuestions3';
+// import AdditionalQuestions4 from './AdditionalQuestions/AdditionalQuestions4';
 import Delivery from './Delivery';
 import Address from './Address';
 // import DeliveryPayment from './DeliveryPayment'; 
@@ -32,6 +32,7 @@ import CheckConfirm from './CheckConfirm';
 import ConsultationType from './ConsultationType';
 import { useSearchParams } from 'next/navigation';
 import MedicalQuestion12 from './MedicalQuestions/MedicalQuestion12';
+import { useGetDynamicQuestionsQuery } from '@/redux/features/website/consultationSlice';
 
 const poppins = Poppins({ weight: ['400', '500', '600', '700'], subsets: ['latin'] });
 
@@ -41,21 +42,25 @@ const AllConsultations = () => {
     const [hasPreference, setHasPreference] = useState<string | null>()
     const [consultationType , setConsultationType] = useState<string | null>() 
     const [qnaData, setQnaData] = useState<{ question: string; answer: string }[]>([]);   
+    const [dynamicQnaData, setDynamicQnaData] = useState<{ question: string; answer: string }[]>([]);   
     const [userId , setUserId] = useState<string | null>()   
     const [selectedMedicines , setSelectedMedicines] = useState([])
-    const [forwardStatus , setForwardStatus] = useState(false)
-    
+    const [forwardStatus , setForwardStatus] = useState(false)  
     const [medicines , setMedicines] = useState([]) 
     const [address , setAddress] = useState<string | null>()
     const searchParams = useSearchParams();
     const category = searchParams.get('category');
     const SubCategory = searchParams.get('subcategory');  
-    const SubCategoryName = searchParams.get('name');
+    const SubCategoryName = searchParams.get('name'); 
+    const {data:dynamicQuestions} = useGetDynamicQuestionsQuery(SubCategory)  
+    const allDynamicQuestions = dynamicQuestions?.data
+    const total = allDynamicQuestions?.length
 
     const newConsultationType = consultationType ? consultationType === "video" ? "video" : "regular" : "regular" 
 
     const data = {
-        "QNA": qnaData , 
+        "QNA": qnaData ,  
+        "DinamicQNA" : dynamicQnaData ,
         "userId":userId , 
         "medicins": medicines ,
         "category": category ,
@@ -63,7 +68,9 @@ const AllConsultations = () => {
         "address" : address ,  
         "forwardToPartner" : forwardStatus ,
         "consultationType": newConsultationType,
-    }  
+    }   
+
+    console.log(data);
    
     const updateQNA = (question: string, answer: string) => {
         setQnaData((prev) => {
@@ -76,7 +83,20 @@ const AllConsultations = () => {
            
             return [...prev, { question, answer }];
         });
-    }; 
+    };  
+
+    const dynamicQNA = (question: string, answer: string) => {
+        setDynamicQnaData((prev) => {
+            const existing = prev.find((qna) => qna.question === question);
+            if (existing) {            
+                return prev.map((qna) =>
+                    qna.question === question ? { question, answer } : qna
+                );
+            }
+           
+            return [...prev, { question, answer }];
+        });
+    };   
 
     const steps = [
         {
@@ -169,43 +189,35 @@ const AllConsultations = () => {
                     content: <ConsultationType updateQNA={updateQNA} setConsultationType={setConsultationType} /> ,
                     skippable: false,
                 },
-            ]), 
+            ]),  
 
-            ...(consultationType !== "video"
-                ? [
-                    {
-                        title: "",
-                        content: <div>
-                            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                                Questions about your medication preference
-                            </h2>
-    
-                            <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
-                                We have some additional questions about the product you sellected
-                            </h2>
-                        </div> ,
-                         skippable: true,
-                    },
+
+...(consultationType !== "video"
+    ? [
         {
-            title: "Additional Questions 1/4",
-            content: <AdditionalQuestions1 updateQNA={updateQNA} /> ,
-            skippable: false,
+            title: "",
+            content: <div>
+                <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                    Questions about your medication preference
+                </h2>
+
+                <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
+                    We have some additional questions about the product you selected
+                </h2>
+            </div> ,
+             skippable: true,
         },
-        {
-            title: "Additional Questions 2/4",
-            content: <AdditionalQuestions2 updateQNA={updateQNA} /> ,
+        ...(allDynamicQuestions?.map((question, index) => ({
+            title: `Additional Questions ${index + 1}/${total}`,
+            content: (
+              <AdditionalQuestions1
+                question={question?.question}
+                dynamicQNA={dynamicQNA}
+              />
+            ),
             skippable: false,
-        },
-        {
-            title: "Additional Questions 3/4",
-            content: <AdditionalQuestions3 updateQNA={updateQNA} /> ,
-            skippable: false,
-        },
-        {
-            title: "Additional Questions 4/4",
-            content: <AdditionalQuestions4 updateQNA={updateQNA} /> ,
-            skippable: false,
-        }] : []),
+          })) || [])
+    ] : []),
         ...(hasPreference === "has_preference"
             ? [
                 {
@@ -263,7 +275,7 @@ const AllConsultations = () => {
                 </div>
 
                 {/* footer buttons   */}
-                <StepsFooterBtn current={current} setCurrent={setCurrent} steps={steps} data={data} hasPreference={hasPreference} medicines={medicines} consultationType={consultationType} />
+                <StepsFooterBtn current={current} setCurrent={setCurrent} steps={steps} data={data} hasPreference={hasPreference} medicines={medicines} consultationType={consultationType} allDynamicQuestions={allDynamicQuestions} />
 
             </div>
         </div>

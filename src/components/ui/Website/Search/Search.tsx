@@ -53,7 +53,7 @@ const Search = () => {
                     {category?.name}
                   </h2>
                   <p className="text-gray-600 text-sm leading-relaxed">
-                    {category?.summary?.slice(0, 80)}...
+                    {category?.summary?.slice(0, 70)}...
                   </p>
                 </div>
               </div>

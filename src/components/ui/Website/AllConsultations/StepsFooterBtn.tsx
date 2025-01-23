@@ -43,7 +43,7 @@ interface propsType {
     medicines: string[]
     consultationType: string | null
 }
-const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medicines, consultationType }: propsType) => {
+const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medicines, consultationType , allDynamicQuestions }: propsType) => {
     const router = useRouter();
     const [createConsultation] = useCreateConsultationMutation();
     const [validationErrors, setValidationErrors] = useState<{ [key: number]: boolean }>({});
