@@ -4,9 +4,10 @@ const consultationSlice = baseApi.injectEndpoints({
   endpoints: (build) => ({    
 
     getAllMedicines: build.query({
-        query: (search) => {  
+        query: ({search , id}) => {  
             const params = new URLSearchParams(); 
-            if(search) params.append("search", search)
+            if(search) params.append("search", search) 
+            if(id) params.append("subCategory", id)
             return{
                 url: `/medicine?${params.toString()}`, 
             }

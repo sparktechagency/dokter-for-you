@@ -69,8 +69,8 @@ const Support = () => {
               <h3 className="text-center text-[24px] font-[500px] text-blue-900 mt-4">
                 Email
               </h3>
-              <p className="text-center text-gray-600 mt-2">contact@gmail.com</p>
-              <p className="text-center text-gray-600">support@gmail.com</p>
+              <p className="text-center text-gray-600 mt-2">support@dokterforyou.com</p>
+            
             </div>
 
             {/* Help Line Card */}
@@ -81,7 +81,7 @@ const Support = () => {
                 </div>
               </div>
               <h3 className="text-center text-[24px] font-semibold text-blue-900 mt-4">
-                Help line
+               What&apos;s App
               </h3>
               <p className="text-center text-gray-600 mt-2">+31 (0)85-7605234</p>
                 

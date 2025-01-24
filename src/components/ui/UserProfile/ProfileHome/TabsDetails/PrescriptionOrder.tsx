@@ -193,11 +193,7 @@ const handleBuyNow = async() =>{
     <button className="bg-[#1a237e] px-6 h-[48px] text-white">Buy Now</button>
   </div>
 
-  {/* Bottom Text and Icons */}
-  <div className="text-sm text-gray-600 mb-6 font-medium">
-    <p>Praesent eget Nunc quis libero, ipsum nisi. Vestibulum sit ipsum facilisis eu leo. Nibh Praesent scelerisque ex Donec ipsum hendrerit ut non, ipsum Ut non, gravida quis at vitae eu enim. tocus, dui ipsum tincidunt urna elit felis, tempor</p>
-    <p className="mt-4">Morbi nisi enim, adipiscing eget dui viverra quam Cras libero, Nunc ultrici lacus, lorem. lacus elit ex, leo ipsum elit venenatis cursus ex enim, dignis</p>
-  </div>
+
 
 
       </div>

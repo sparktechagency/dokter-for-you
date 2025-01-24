@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 import { useCreateConsultationMutation } from '@/redux/features/website/consultationSlice';
 import { message } from 'antd';
 import { useRouter } from 'next/navigation';
+import { parse } from 'path';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 
@@ -32,6 +34,7 @@ interface propsType {
     steps: ({ title: string; content: React.JSX.Element; skippable?: boolean; } | { content: string; title?: undefined; skippable?: boolean; })[];
     data: {
         QNA: Qna[]
+        DinamicQNA: Qna[]
         userId: string
         medicins: Medicin[]
         category: string
@@ -41,14 +44,19 @@ interface propsType {
     }
     hasPreference: string | null
     medicines: string[]
-    consultationType: string | null
+    consultationType: string | null 
+    allDynamicQuestions: Qna[] 
+    form: any
 }
-const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medicines, consultationType , allDynamicQuestions }: propsType) => {
+const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medicines, consultationType , allDynamicQuestions , form}: propsType) => {
     const router = useRouter();
     const [createConsultation] = useCreateConsultationMutation();
-    const [validationErrors, setValidationErrors] = useState<{ [key: number]: boolean }>({});
- 
-    const next = () => {
+    const [validationErrors, setValidationErrors] = useState<{ [key: number]: boolean }>({}); 
+    const dynamicEnd = 17 + allDynamicQuestions?.length; 
+
+    const next = () => { 
+        form.resetFields();
+      
         const validateCurrentStep = () => {  
 
             if (steps[current]?.skippable) {
@@ -65,30 +73,34 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
                 }
                 return !!data.QNA.find((qna) => qna.question === "Delivery Prescription");
             }
-            if (hasPreference === "has_preference" && current >= 17 && current <= 20) {
-                const questionMap: { [key: number]: string } = {
-                    17: "Do you have any known allergies to medications or specific ingredients in this drug?",
-                    18: "Do you have any chronic conditions or medical issues that might affect the use of this medication?",
-                    19: "Are you currently taking any other medications that might interact with this drug?",
-                    20: "Have you used this medication before, and if so, did you experience any side effects?",
-                };
-            
-                const question = questionMap[current]; 
-                if (!question) {
-                  
+            if (current >= 17  && current < dynamicEnd) {
+                const dynamicQuestion = allDynamicQuestions[current - 17]; 
+                if (!dynamicQuestion) {
                     return false; 
                 }
             
-                const isAnswered = !!data.QNA.find((qna) => qna.question === question); 
+                const isAnswered = !!data.DinamicQNA.find((qna) => qna.question === dynamicQuestion.question);
+                if (!isAnswered) {
+                  
+                    return false;
+                }
+                return true;
+            }
             
-                return isAnswered; 
+        if (current === dynamicEnd) {
+       
+        if (hasPreference === "has_preference") {
+            const deliveryPrescription = data.QNA.find((qna) => qna.question === "Delivery Prescription");
+            if (!deliveryPrescription) {
+                message.error("Please provide a Delivery Prescription.");
+                return false;
             }
-           
-            if (hasPreference === "has_preference" && current === 21) {
-                return !!data.QNA.find((qna) => qna.question === "Delivery Prescription");
-            }
-        
-            if (hasPreference === "has_preference" && current === 22) {
+            return true;
+        }
+        return true; 
+    } 
+
+            if (hasPreference === "has_preference" && current === dynamicEnd + 1) { 
                 if (!data.address) {
                     return false;
                 }
@@ -96,27 +108,21 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
             }
         
           
-            if (consultationType !== "video" && current >= 17 && current <= 20) {
-                const questionMap: { [key: number]: string } = {
-                    17: "Do you have any known allergies to medications or specific ingredients in this drug?",
-                    18: "Do you have any chronic conditions or medical issues that might affect the use of this medication?",
-                    19: "Are you currently taking any other medications that might interact with this drug?",
-                    20: "Have you used this medication before, and if so, did you experience any side effects?",
-                };
-        
-                const question = questionMap[current];
-                if (!question) {
-                 
+            if (consultationType !== "video" && current >= 17 && current < dynamicEnd ) {
+                const dynamicQuestion = allDynamicQuestions[current - 17]; 
+                if (!dynamicQuestion) {
+                    return false; 
+                }
+            
+                const isAnswered = !!data.DinamicQNA.find((qna) => qna.question === dynamicQuestion.question);
+                if (!isAnswered) {
+                    message.error(`Please answer the question: "${dynamicQuestion.question}"`);
                     return false;
                 }
-        
-                const isAnswered = !!data.QNA.find((qna) => qna.question === question);
-            
-        
-                return isAnswered;
+                return true;
             } 
 
-            if (consultationType !== "video" && current === 21) {
+            if (consultationType !== "video" && current === dynamicEnd) {
                 if (!data.address) {
                     return false;
                 }
@@ -177,27 +183,18 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
 
                 case 16:
                     if (consultationType !== "video") {
-                        const questionMap: { [key: number]: string } = {
-                            16: "Do you have any known allergies to medications or specific ingredients in this drug?",
-                            17: "Do you have any chronic conditions or medical issues that might affect the use of this medication?",
-                            18: "Are you currently taking any other medications that might interact with this drug?",
-                            19: "Have you used this medication before, and if so, did you experience any side effects?",
-                        };
-
-                        const question = questionMap[current];
-                        if (!question) {
-                          
-                            return false;
-                        }
-
-
-                        const isAnswered = !!data.QNA.find(qna => qna.question === question);
-                  
-
-                        return isAnswered;
+                        const dynamicQuestion = allDynamicQuestions[current - 16]; 
+                if (!dynamicQuestion) {
+                    return false; 
+                }
+            
+                const isAnswered = !!data.DinamicQNA.find((qna) => qna.question === dynamicQuestion.question);
+                if (!isAnswered) {
+                    message.error(`Please answer the question: "${dynamicQuestion.question}"`);
+                    return false;
+                }
+                return true;
                     }
-
-
                     return !!data.address;
 
               
@@ -216,7 +213,9 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
     
 
         setValidationErrors((prev) => ({ ...prev, [current]: false }));
-        setCurrent((prev) => Math.min(prev + 1, steps.length - 1));
+        setCurrent((prev) => Math.min(prev + 1, steps.length - 1)); 
+     
+
     };
 
     const prev = () => {

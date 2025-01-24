@@ -1,27 +1,32 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { ConfigProvider, Form, Input, message, Radio, Space } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
-const AdditionalQuestions1 = ({ dynamicQNA  , question}: { dynamicQNA: (question: string, answer: string) => void  , question: string}) => {  
+const AdditionalQuestions1 = ({ dynamicQNA, question , form , current}: { dynamicQNA: (question: string, answer: string) => void, question: string , form:any , current:number }) => {
 
   const questions = [
     {
       title: question,
       options: [
-       "Yes" ,
-       "No"
+        "Yes",
+        "No"
       ],
     }
-  ];  
- 
-  const [form] = Form.useForm();
-const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [additionalInfo, setAdditionalInfo] = useState<string>('');
+  ];
+
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [additionalInfo, setAdditionalInfo] = useState<string >(''); 
+
+  useEffect(() => {
+    setSelectedAnswer(null); 
+    setAdditionalInfo("");
+  }, [current]); 
 
   const handleOptionChange = (question: string, answer: string) => {
     setSelectedAnswer(answer);
-  
+
     if (answer === "No") {
       setAdditionalInfo("");
       dynamicQNA(question, answer);
@@ -33,20 +38,20 @@ const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
       }
     }
   };
-  
+
   const handleAdditionalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setAdditionalInfo(value);
-  
+
     if (selectedAnswer === "Yes" && value.trim().length > 0) {
       dynamicQNA(questions[0].title, `Yes, ${value}`);
     }
-  }; 
+  };
 
 
-    return (
-      <div>
-      <Form  form={form}>
+  return (
+    <div>
+      <Form form={form}>
         {questions.map((question, index) => (
           <div key={index}>
             {/* Main Question */}
@@ -115,7 +120,7 @@ const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
         ))}
       </Form>
     </div>
-    );
+  );
 };
 
 export default AdditionalQuestions1;

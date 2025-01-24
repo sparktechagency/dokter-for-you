@@ -22,7 +22,8 @@ interface MedicationModalProps {
     packSize: string; 
     price: string; 
     quantity: string|number|null; 
-    strength: string; 
+    strength: string;  
+    unitPerBox: string[];
   };
   handleAddToSelected: (selectedItem: { _id: string; count: number; total: string }) => void;
 }
@@ -51,13 +52,13 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
       className="medication-modal"
     >
       <div className="flex flex-col md:flex-row gap-8 mt-4">
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/2 h-auto">
           <div className="bg-gray-50 px-[25px] py-[77px] rounded-lg flex items-center justify-center">
             <Image
               src={medicineData?.image?.startsWith("http") ? medicineData?.image : `${imageUrl}${medicineData?.image}`}
               alt={medicineData?.name}
               width={600}
-              height={600}
+              height={400}
               className="object-cover"
             />
           </div>
@@ -75,7 +76,7 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
           <p className="text-[#6B6B6B] font-[400] text-[16px] mb-2">{medicineData?.medicineType}</p>
 
           <p className="text-[#999999] font-[400] text-[14px] mb-4">
-            {medicineData?.description}
+            {medicineData?.description === "undefined" ? "" : medicineData?.description}
           </p>
 
           <div className="flex items-center gap-5 mb-4">
@@ -113,7 +114,7 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
               </div>
 
               <div className="flex gap-2">
-                {['10', '50', '100'].map((size) => (
+                {medicineData?.unitPerBox?.map((size) => (
                   <div
                     key={size}
                     onClick={() => setPackSize(size)}

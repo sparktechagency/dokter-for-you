@@ -65,7 +65,7 @@ const ConsultationType = ({setConsultationType , updateQNA}:consultationTypeInte
               Regular
               </span>
               <span className="mt-1 block text-[16px] text-[#999999] font-[400]">
-              Blueclinic ensures that your medication is delivered to your home by a partner pharmacy.
+              Apotheek Zaandam Oost ensures that your medication is delivered to your home by a partner pharmacy.
               </span>
               <button className="mt-3 inline-flex items-center text-sm font-medium text-[#1854F9]">
                 More Information

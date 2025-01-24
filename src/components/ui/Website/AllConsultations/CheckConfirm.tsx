@@ -6,9 +6,9 @@ import { Checkbox } from 'antd';
 import Image from 'next/image';
 import React from 'react';
 
-const CheckConfirm = ({selectedMedicines , SubCategoryName , address}:{selectedMedicines:any , SubCategoryName:string|null , address:{ firstname: string; lastname: string; streetAndHouseNo: string; postalCode: string; place: string; country: string;   }}) => { 
-  const {data:userProfile} = useGetProfileQuery(undefined) 
-  const profileData = userProfile?.data
+const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selectedMedicines: any, SubCategoryName: string | null, address: { firstname: string; lastname: string; streetAndHouseNo: string; postalCode: string; place: string; country: string; } }) => {
+    const { data: userProfile } = useGetProfileQuery(undefined)
+    const profileData = userProfile?.data
     return (
         <div>
             <div className="">
@@ -22,36 +22,36 @@ const CheckConfirm = ({selectedMedicines , SubCategoryName , address}:{selectedM
 
                         <p className="font-semibold text-primary">€25.00</p>
                     </div>
-                </div> 
+                </div>
 
 
-                <div className="bg-[#F3F6FF]  shadow-sm mb-4"> 
+                <div className="bg-[#F3F6FF]  shadow-sm mb-4">
                     {
-                        selectedMedicines?.map((medicine:{name:string , medicineType:string , dosage:string , image:string , form:string , total:string} , index:number) => (
-                            <div key={index} className=" grid lg:grid-cols-4 grid-cols-2 justify-items-stretch gap-4 p-4 border-b"> 
-                            <div className='flex items-center gap-2'>
-                            <Image src={`${imageUrl}${medicine?.image}`} alt="Ceevit" width={80} height={80} className="mr-4" />
-                            <div className="flex-grow">
-                                <h3 className="font-semibold">{medicine?.name}</h3>
-                                <p className="text-sm text-gray-500">{medicine?.medicineType} {medicine?.dosage}</p>
+                        selectedMedicines?.map((medicine: { name: string, medicineType: string, dosage: string, image: string, form: string, total: string }, index: number) => (
+                            <div key={index} className=" grid lg:grid-cols-4 grid-cols-2 justify-items-stretch gap-4 p-4 border-b">
+                                <div className='flex items-center gap-2'>
+                                    <Image src={`${imageUrl}${medicine?.image}`} alt="Ceevit" width={80} height={80} className="mr-4" />
+                                    <div className="flex-grow">
+                                        <h3 className="font-semibold">{medicine?.name}</h3>
+                                        <p className="text-sm text-gray-500">{medicine?.medicineType} {medicine?.dosage}</p>
+                                    </div>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-sm text-[#999999] pb-1 font-medium">From</p>
+                                    <p className="text-sm">{medicine?.form}</p>
+                                </div>
+                                <div className="text-right ml-8">
+                                    <p className="text-sm text-[#999999] pb-1 font-medium">Dosage</p>
+                                    <p className="text-sm">{medicine?.dosage}</p>
+                                </div>
+                                <div className="text-right ml-8">
+                                    <p className="text-sm text-[#999999] pb-1 font-medium">Quantity of medicine</p>
+                                    <p className="text-sm">{medicine?.total}</p>
+                                </div>
                             </div>
-                            </div>
-                            <div className="text-right">
-                                <p className="text-sm text-[#999999] pb-1 font-medium">From</p>
-                                <p className="text-sm">{medicine?.form}</p>
-                            </div>
-                            <div className="text-right ml-8">
-                                <p className="text-sm text-[#999999] pb-1 font-medium">Dosage</p>
-                                <p className="text-sm">{medicine?.dosage}</p>
-                            </div>
-                            <div className="text-right ml-8">
-                                <p className="text-sm text-[#999999] pb-1 font-medium">Quantity of medicine</p>
-                                <p className="text-sm">{medicine?.total}</p>
-                            </div>
-                        </div>
                         ))
                     }
-                  
+
                 </div>
 
                 <div className="bg-[#F3F6FF] p-4  shadow-sm mb-4 grid lg:grid-cols-4 grid-cols-1 lg:gap-4 gap-6">
@@ -87,10 +87,10 @@ const CheckConfirm = ({selectedMedicines , SubCategoryName , address}:{selectedM
                     <div className="bg-green-50 py-7 px-[24px] ">
                         <h3 className="font-semibold mb-2">What happens after confirming this request?</h3>
                         <p className="text-sm">
-                            The doctor checks your request and writes a prescription Your prescription is forwarded to the Blueclinic pharmacy network You pay for your medication to Blueclinic The pharmacy delivers your treatment or you receive your paper prescription
+                            The doctor checks your request and writes a prescription Your prescription is forwarded to the Apotheek Zaandam Oost pharmacy network You pay for your medication to Apotheek Zaandam Oost The pharmacy delivers your treatment or you receive your paper prescription
                         </p>
                     </div>
-                    <div className="bg-[#E8EEFE] p-4  px-8 shadow-sm">  
+                    <div className="bg-[#E8EEFE] p-4  px-8 shadow-sm">
 
                         <div className="flex justify-between my-4 text-xl text-[#6B6B6B]">
                             <span>Subtotal -</span>
@@ -106,9 +106,9 @@ const CheckConfirm = ({selectedMedicines , SubCategoryName , address}:{selectedM
                 <h2 className="font-semibold mb-4 text-[18px]">Confirm the conditions:</h2>
                 <div className="space-y-2 text-[#4E4E4E]">
                     <Checkbox defaultChecked>I declare that I have completed everything truthfully, completely and without reservation</Checkbox>
-                    <Checkbox defaultChecked>I agree to the content and applicability of the general terms and conditions, the privacy statement and the right of withdrawal of Dokteronline.</Checkbox>
-                    <Checkbox defaultChecked>I hereby expressly give permission to Dokteronline to collect and process my (medical) personal data as described in the privacy statement. This permission also applies to the processing by the treating physician.</Checkbox>
-                    <Checkbox defaultChecked>I hereby give permission to Dokteronline to forward any prescription written by the doctor and my (medical) personal data to and have them processed by the pharmacy.</Checkbox>
+                    <Checkbox defaultChecked>I agree to the content and applicability of the general terms and conditions, the privacy statement and the right of withdrawal of Dokter For You.</Checkbox>
+                    <Checkbox defaultChecked>I hereby expressly give permission to Dokter For You to collect and process my (medical) personal data as described in the privacy statement. This permission also applies to the processing by the treating physician.</Checkbox>
+                    <Checkbox defaultChecked>I hereby give permission to Dokter For You to forward any prescription written by the doctor and my (medical) personal data to and have them processed by the pharmacy.</Checkbox>
                 </div>
             </div>
         </div>

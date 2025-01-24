@@ -20,19 +20,19 @@ const BannerCards: React.FC = () => {
       icon: "/img2.png",
       title: "Consultation by means of a medical questionnaire",
       description:
-        "Learn about the options and choose a treatment that suits your needs.",
+        "A doctor will assess your questionnaire and check whether the treatment you prefer is suitable.",
     },
     {
       icon: "/img3.png",
       title: "We look with you",
       description:
-        "Learn about the options and choose a treatment that suits your needs.",
+        "We collaborate with you to explore your needs and options.",
     },
     {
       icon:  "/img4.png",
       title: "Easily delivered to your home",
       description:
-        "Learn about the options and choose a treatment that suits your needs.",
+        "Your original medication will be shipped from one of the EU pharmacies we have access to, directly per express to your home within 48 hours.",
     },
   ];
 

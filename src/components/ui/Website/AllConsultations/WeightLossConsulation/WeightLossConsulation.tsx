@@ -13,20 +13,19 @@ import { RxCross2 } from "react-icons/rx";
 import { CiSearch } from "react-icons/ci";
 
 
-const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedicines }: { SubCategoryName: string | null, setMedicines: (medicines: { _id: string; name: string; company: string; dosage: string; image: string; count?: number; total?: string }[]) => void }) => {
+const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedicines , SubCategory}: { SubCategoryName: string | null,SubCategory:string | null, setMedicines: (medicines: { _id: string; name: string; company: string; dosage: string; image: string; count?: number; total?: string }[]) => void }) => {
 
   const [search, setSearch] = useState("");
   const [selectedMeds, setSelectedMeds] = useState([]);
   const [medicineData, setMedicineData] = useState({});
   const [open, setOpen] = useState(false);
   const [singleMedicineId, setSingleMedicineId] = useState(null);
-  const { data } = useGetAllMedicinesQuery(search);
+  const { data } = useGetAllMedicinesQuery({search , id:SubCategory});
   const [detailedSelectedMeds, setDetailedSelectedMeds] = useState([]);
   const medications = data?.data;
-
+  const [showMore, setShowMore] = useState(false);
   setMedicines(selectedMeds)  
-  setSelectedMedicines(detailedSelectedMeds)
-  
+  setSelectedMedicines(detailedSelectedMeds) 
 
   const { data: medicineById } = useGetMedicineByIdQuery(singleMedicineId, {
     skip: !singleMedicineId,
@@ -117,10 +116,15 @@ const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedi
 
   const filteredMeds = medications?.filter((med) =>
     med.name.toLowerCase().includes(search.toLowerCase())
-  );
+  ); 
+
 
   const isSelected = (id) =>
     selectedMeds.some((selectedMed) => selectedMed?._id === id);
+
+  const displayedMeds = showMore ? filteredMeds : filteredMeds?.slice(0, 12); 
+
+
 
   return (
     <div>
@@ -148,7 +152,7 @@ const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedi
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
-        {filteredMeds?.map((med) => (
+        {displayedMeds?.map((med) => (
           <div
             key={med._id}
             className={`border relative rounded-lg p-4 shadow hover:shadow-lg cursor-pointer ${isSelected(med._id) ? "bg-[#E7FBF2]" : ""
@@ -174,7 +178,18 @@ const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedi
             )}
           </div>
         ))}
-      </div>
+      </div> 
+
+      {filteredMeds?.length > 12 && (
+        <div className="mt-6 text-center">
+          <button
+            onClick={() => setShowMore(!showMore)}
+            className="px-4 py-2 bg-primary text-white  "
+          >
+            {showMore ? "Show Less" : "See More"}
+          </button>
+        </div>
+      )}
 
       <MadicationDetailsModal
         open={open}

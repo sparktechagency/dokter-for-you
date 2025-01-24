@@ -55,7 +55,7 @@ const AllConsultations = () => {
     const {data:dynamicQuestions} = useGetDynamicQuestionsQuery(SubCategory)  
     const allDynamicQuestions = dynamicQuestions?.data
     const total = allDynamicQuestions?.length
-
+    const [form] = Form.useForm();
     const newConsultationType = consultationType ? consultationType === "video" ? "video" : "regular" : "regular" 
 
     const data = {
@@ -70,7 +70,6 @@ const AllConsultations = () => {
         "consultationType": newConsultationType,
     }   
 
-    console.log(data);
    
     const updateQNA = (question: string, answer: string) => {
         setQnaData((prev) => {
@@ -178,7 +177,7 @@ const AllConsultations = () => {
             ? [
                 {
                     title: "",
-                    content: <WeightLossConsulation SubCategoryName={SubCategoryName} setMedicines={setMedicines} setSelectedMedicines={setSelectedMedicines} /> ,
+                    content: <WeightLossConsulation SubCategoryName={SubCategoryName} setMedicines={setMedicines} setSelectedMedicines={setSelectedMedicines} SubCategory={SubCategory} /> ,
                     skippable: false,     
                 },
                 
@@ -212,7 +211,9 @@ const AllConsultations = () => {
             content: (
               <AdditionalQuestions1
                 question={question?.question}
-                dynamicQNA={dynamicQNA}
+                dynamicQNA={dynamicQNA} 
+                form={form} 
+                current={current}
               />
             ),
             skippable: false,
@@ -275,7 +276,7 @@ const AllConsultations = () => {
                 </div>
 
                 {/* footer buttons   */}
-                <StepsFooterBtn current={current} setCurrent={setCurrent} steps={steps} data={data} hasPreference={hasPreference} medicines={medicines} consultationType={consultationType} allDynamicQuestions={allDynamicQuestions} />
+                <StepsFooterBtn current={current} setCurrent={setCurrent} steps={steps} data={data} hasPreference={hasPreference} medicines={medicines} consultationType={consultationType} allDynamicQuestions={allDynamicQuestions} form={form} />
 
             </div>
         </div>
