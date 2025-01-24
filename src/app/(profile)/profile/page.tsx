@@ -1,10 +1,12 @@
 import ProfileHome from '@/components/ui/UserProfile/ProfileHome/ProfileHome';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 const ProfilePage = () => {
     return (
         <div>
-             <ProfileHome />
+             <Suspense fallback={<div>Loading...</div>}>
+                <ProfileHome />
+            </Suspense>
         </div>
     );
 };
