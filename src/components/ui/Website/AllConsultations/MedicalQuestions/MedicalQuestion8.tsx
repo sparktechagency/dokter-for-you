@@ -23,7 +23,7 @@ const MedicalQuestion8 = ({ updateQNA }: { updateQNA: (question: string, answer:
       updateQNA(question, answer);
     } else if (answer === "Yes") {
       if (additionalInfo.trim().length === 0) {
-        message.error("Please enter a reason.");
+        message.error("Please enter  Additional Information.");
       } else {
         updateQNA(question, `${answer}, ${additionalInfo}`);
       }
@@ -96,7 +96,7 @@ const MedicalQuestion8 = ({ updateQNA }: { updateQNA: (question: string, answer:
               >
                 <Form.Item>
                   <Input
-                    placeholder="Reason"
+                    placeholder="Additional Information"
                     value={additionalInfo}
                     onChange={handleAdditionalInfoChange}
                     style={{

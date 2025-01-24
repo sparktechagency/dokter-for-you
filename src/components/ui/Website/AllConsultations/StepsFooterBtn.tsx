@@ -4,7 +4,6 @@
 import { useCreateConsultationMutation } from '@/redux/features/website/consultationSlice';
 import { message } from 'antd';
 import { useRouter } from 'next/navigation';
-import { parse } from 'path';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 

@@ -32,7 +32,7 @@ const AdditionalQuestions1 = ({ dynamicQNA, question , form , current}: { dynami
       dynamicQNA(question, answer);
     } else if (answer === "Yes") {
       if (additionalInfo.trim().length === 0) {
-        message.error("Please enter a reason.");
+        message.error("Please enter  Additional Information.");
       } else {
         dynamicQNA(question, `${answer}, ${additionalInfo}`);
       }
@@ -105,7 +105,7 @@ const AdditionalQuestions1 = ({ dynamicQNA, question , form , current}: { dynami
               >
                 <Form.Item>
                   <Input
-                    placeholder="Reason"
+                    placeholder="Additional Information"
                     value={additionalInfo}
                     onChange={handleAdditionalInfoChange}
                     style={{
