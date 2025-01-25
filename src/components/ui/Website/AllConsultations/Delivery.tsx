@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
 
 type DeliveryOption = 'forward' | 'digital';
 
@@ -54,10 +53,7 @@ const Delivery = ({ updateQNA , SubCategoryName , setForwardStatus }: { updateQN
                 We will send your medication and your prescription is delivered to your home by a
                 partner pharmacy
               </span>
-              <button className="mt-3 inline-flex items-center text-sm font-medium text-[#1854F9]">
-                More Information
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </button>
+              
             </div>
           </div>
 
@@ -91,10 +87,7 @@ const Delivery = ({ updateQNA , SubCategoryName , setForwardStatus }: { updateQN
               <span className="mt-1 block text-[16px] text-[#999999]">
                 We will send you a prescription and buy your medication at your own pharmacy
               </span>
-              <button className="mt-3 inline-flex items-center text-sm font-medium text-[#1854F9]">
-                More Information
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </button>
+              
             </div>
           </div>
         </label>

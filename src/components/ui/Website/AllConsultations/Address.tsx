@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { netherlandsCities } from "@/components/shared/AllCity";
+// import { netherlandsCities } from "@/components/shared/AllCity"; 
 import InputField from "@/components/shared/InputField";
 import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
-import { Form, Radio, Select, Checkbox } from "antd";
+import { Form, Radio, Checkbox } from "antd";
 import { useEffect } from "react";
 
 const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | null, setAddress: (address: { firstname: string; lastname: string; streetAndHouseNo: string; postalCode: string; place: string; country: string; }) => void }) => {
@@ -84,22 +84,9 @@ const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | nu
 
             {/* Postal Code and Place */}
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-8">
-
-              <Form.Item name="city"
-                label={<p className='text-[#4E4E4E] text-[16px]'>City</p>}
-                rules={[
-                  {
-                    required: true,
-                    message: `Please enter your city name`,
-                  },
-                ]}
-              >
-                <Select
-                  style={{ width: "100%", height: "48px" }}
-                  options={netherlandsCities}
-                  placeholder="Select your city name"
-                />
-              </Form.Item>
+ 
+            <InputField name="city" label="City Name" /> 
+      
               <InputField name='gender' label='Gender' />
             </div>
 

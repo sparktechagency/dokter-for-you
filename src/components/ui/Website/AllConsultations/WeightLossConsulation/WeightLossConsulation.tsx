@@ -166,7 +166,7 @@ const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedi
             />
             <h3 className="text-lg font-semibold mt-4 text-center">{med.name}</h3>
             <p className="text-sm text-gray-500 text-center">
-              {`${med?.company} ${med?.dosage}`}
+              {`${med?.dosage}`}
             </p>
             {isSelected(med._id) && (
               <p
