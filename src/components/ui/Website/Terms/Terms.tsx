@@ -8,7 +8,6 @@ const Terms = () => {
     const { data } = useGetAllInfoQuery(name)
     const terms = data?.data
 
-    console.log(data); 
     return (
         <div className='bg-[#F7F7F7] py-[40px] '>
             {
