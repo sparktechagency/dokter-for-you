@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowRight } from 'lucide-react'; 
 import { message } from 'antd';
 
 
@@ -65,12 +64,9 @@ const ConsultationType = ({setConsultationType , updateQNA}:consultationTypeInte
               Regular
               </span>
               <span className="mt-1 block text-[16px] text-[#999999] font-[400]">
-              Apotheek Zaandam Oost ensures that your medication is delivered to your home by a partner pharmacy.
+              Your answers will be checked by a registered doctor and the receipt will be sent to a registered pharmacy. The pharmacy will contact you to inform you about the prescribed medicine.
               </span>
-              <button className="mt-3 inline-flex items-center text-sm font-medium text-[#1854F9]">
-                More Information
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </button>
+       
             </div>
           </div>
          
@@ -101,12 +97,9 @@ const ConsultationType = ({setConsultationType , updateQNA}:consultationTypeInte
               Video Consultation
               </span>
               <span className="mt-1 block  text-[16px] text-[#999999]">
-              With  digital prescription, you buy your medication at your own pharmacy prescription, you buy your medication at your own pharmacy
+              With digital prescription, you can get your medication at your own pharmacy.
               </span>
-              <button className="mt-3 inline-flex items-center text-sm font-medium text-[#1854F9]">
-                More Information
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </button>
+       
             </div>
           </div>
         </label>
@@ -117,10 +110,10 @@ const ConsultationType = ({setConsultationType , updateQNA}:consultationTypeInte
       <h3 className="font-medium text-gray-900 text-[16px]">Overview</h3>
         <div className="flex lg:flex-row flex-col gap-3 justify-between items-center text-[16px]">
           <div> 
-            <p className="text-gray-500 pt-4 ">Consultation for man / weigh problem - $25.00</p>
+            <p className="text-gray-500 pt-4 ">Consultation for man / weigh problem - €25.00</p>
           </div>
           <div className="text-right">
-            <p className="text-primary font-medium">Total - $25.00</p>
+            <p className="text-primary font-medium">Total - €25.00</p>
           </div>
         </div>
       </div>

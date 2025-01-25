@@ -4,7 +4,7 @@ import { useGetAllInfoQuery } from '@/redux/features/website/footerSlice';
 import React from 'react';
 
 const UserAgreement = () => { 
-        const name = "USER AGREEMENT"
+        const name = "user-agreement"
         const { data } = useGetAllInfoQuery(name)
         const agreement = data?.data
     return (
@@ -13,11 +13,11 @@ const UserAgreement = () => {
                 agreement?.map((item: { name: string, description: string }, index: number) => (
                     <div className=' container' key={index}>
 
-                        <Title className='pb-[24px] uppercase'> {item?.name === "USER AGREEMENT" ? "USER AGREEMENT" : item?.name}</Title>
+                        <Title className='pb-[24px] uppercase'> {item?.name === "user-agreement" ? "USER AGREEMENT" : item?.name}</Title>
 
-                        <div className=' text-[#767676]'>
-                            {item?.description}
-                        </div>
+                        <div className=' text-[#767676]' dangerouslySetInnerHTML={{ __html: item?.description }}/>
+                           
+                      
                     </div>
                 ))
             }

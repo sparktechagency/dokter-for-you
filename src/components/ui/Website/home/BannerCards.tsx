@@ -26,13 +26,13 @@ const BannerCards: React.FC = () => {
       icon: "/img3.png",
       title: "We look with you",
       description:
-        "We collaborate with you to explore your needs and options.",
+        "We collaborate with you to explore your needs and options. Video consultation is possible!",
     },
     {
       icon:  "/img4.png",
       title: "Easily delivered to your home",
       description:
-        "Your original medication will be shipped from one of the EU pharmacies we have access to, directly per express to your home within 48 hours.",
+        "Our original medication will be shipped from one of the EU pharmacies we have access to, directly per express to your home within 24 hours.",
     },
   ];
 

@@ -16,10 +16,10 @@ const Footer = () => {
             </Link>
         <div className=" flex lg:flex-row flex-col  items-center gap-3  w-full ">
         
-          <div className="lg:w-1/4 w-full">
+          <div className="lg:w-1/3 w-full">
           
-            <p className="text-[#999999] w-[295px]">
-              When your health is concerned, we believe you have the right to decide what to do with your body. That is why we offer you the opportunity to consult a licensed and registered tu
+            <p className="text-[#999999] w-[450px]">
+            When it comes to your health, we believe you have the right to decide what to do with your body. That’s why we offer you the opportunity to consult a licensed and registered physician and receive your prescribed medication at home without leaving your home. All within 24 hours.
             </p>
           
           </div>
@@ -39,16 +39,19 @@ const Footer = () => {
 
          
          
-<div className="lg:w-1/4 w-full flex flex-col lg:gap-[30px] gap-3">
-  <Link href="/terms" className="text-[#6B6B6B] text-[16px] hover:underline">
-    Terms & Conditions
-  </Link>
+<div className="lg:w-1/4 w-full flex flex-col lg:gap-[30px] gap-3"> 
+<Link href="/faq" className="text-[#6B6B6B] text-[16px] hover:underline">
+    FAQ
+  </Link>  
+  
   <Link href="/user-agreement" className="text-[#6B6B6B] text-[16px] hover:underline">
     User Agreement
   </Link>
-  <Link href="/faq" className="text-[#6B6B6B] text-[16px] hover:underline">
-    FAQ
+
+  <Link href="/terms" className="text-[#6B6B6B] text-[16px] hover:underline">
+    Terms & Conditions
   </Link>
+
 </div>
 
           

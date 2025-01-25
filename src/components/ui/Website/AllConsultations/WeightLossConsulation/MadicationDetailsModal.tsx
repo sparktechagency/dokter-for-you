@@ -68,9 +68,9 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
           e.preventDefault();
           handleSubmit();
         }}>
-          <div className="uppercase text-[#1854F9] text-sm font-semibold mb-2">
+          {/* <div className="uppercase text-[#1854F9] text-sm font-semibold mb-2">
             {medicineData?.company}
-          </div>
+          </div> */}
 
           <h2 className="text-2xl font-medium mb-2 text-[#222222]">{medicineData?.name}</h2>
           <p className="text-[#6B6B6B] font-[400] text-[16px] mb-2">{medicineData?.medicineType}</p>

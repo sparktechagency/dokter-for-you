@@ -87,7 +87,7 @@ const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selecte
                     <div className="bg-green-50 py-7 px-[24px] ">
                         <h3 className="font-semibold mb-2">What happens after confirming this request?</h3>
                         <p className="text-sm">
-                            The doctor checks your request and writes a prescription Your prescription is forwarded to the Apotheek Zaandam Oost pharmacy network You pay for your medication to Apotheek Zaandam Oost The pharmacy delivers your treatment or you receive your paper prescription
+                        The doctor checks your request and writes a prescription if necessary. Your prescription will be forwarded to an affiliated pharmacy. After checking and approving the prescription, the affiliated pharmacy will send you a payment link by email for the prescribed medicine. After payment, you will receive your medicine at home the next working day via express delivery.
                         </p>
                     </div>
                     <div className="bg-[#E8EEFE] p-4  px-8 shadow-sm">
@@ -105,7 +105,7 @@ const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selecte
 
                 <h2 className="font-semibold mb-4 text-[18px]">Confirm the conditions:</h2>
                 <div className="space-y-2 text-[#4E4E4E]">
-                    <Checkbox defaultChecked>I declare that I have completed everything truthfully, completely and without reservation</Checkbox>
+                    <Checkbox defaultChecked>I declare that I have filled in everything truthfully, completely and without reservation. If I receive medication based on false information, this is harmful and I am liable to prosecution.</Checkbox>
                     <Checkbox defaultChecked>I agree to the content and applicability of the general terms and conditions, the privacy statement and the right of withdrawal of Dokter For You.</Checkbox>
                     <Checkbox defaultChecked>I hereby expressly give permission to Dokter For You to collect and process my (medical) personal data as described in the privacy statement. This permission also applies to the processing by the treating physician.</Checkbox>
                     <Checkbox defaultChecked>I hereby give permission to Dokter For You to forward any prescription written by the doctor and my (medical) personal data to and have them processed by the pharmacy.</Checkbox>

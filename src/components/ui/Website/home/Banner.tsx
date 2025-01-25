@@ -27,7 +27,7 @@ const Banner = () => {
                 
         
                 <p className={`mt-3 lg:px-0 px-2 lg:text-[24px] text-[20px] font-[400] ${poppins.className} tracking-wide lg:text-start lg:w-[488px]  text-[#4E4E4E] ` }>
-                We Provide the best consultation to you with the best doctor
+                We provide you the best consultation and fastest delivery of your medicine
                 </p> 
 
                 <Link href="/consultation-category" className=' w-full lg:block flex items-center justify-center  ' >

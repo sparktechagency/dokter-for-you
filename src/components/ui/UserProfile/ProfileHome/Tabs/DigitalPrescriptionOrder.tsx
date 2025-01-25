@@ -68,7 +68,7 @@ const DigitalPrescriptionOrder = () => {
                    render: () => {
                      return (
                        <div>
-                         {"$25.00"}
+                         {"€25.00"}
                        </div>
                      )
                    }

@@ -45,15 +45,15 @@ const PrescriptionDetails = ({ consultationId , onClose }: ConsultationDetailsPr
         <p className="text-[16px] text-[#4E4E4E]">Consultation for {consultationId?.category?.name} problem</p>
         <p className="text-sm text-[#999999]">Medical questions/view, doctor&apos;s advice and prescription</p>
       </div>
-      <p className="text-right text-primary">$25.00</p>
+      <p className="text-right text-primary">€25.00</p>
     </div>
     <div className="flex items-center justify-end gap-[200px]">
       <span className='text-[#6B6B6B]'>discount -</span>
-      <span className='text-[#6B6B6B]'>$00.00</span>
+      <span className='text-[#6B6B6B]'>€00.00</span>
     </div>
     <div className="flex justify-end items-center font-medium mt-3 gap-[200px] border-t pt-2">
       <span>Total -</span>
-      <span>$25.00</span>
+      <span>€25.00</span>
     </div>
   </div>
 
@@ -72,12 +72,6 @@ const PrescriptionDetails = ({ consultationId , onClose }: ConsultationDetailsPr
        </a>
   </div>
  </div>
-
-  {/* Bottom Text and Icons */}
-  <div className="text-sm text-gray-600 mb-6 font-medium pt-6">
-    <p>Praesent eget Nunc quis libero, ipsum nisi. Vestibulum sit ipsum facilisis eu leo. Nibh Praesent scelerisque ex Donec ipsum hendrerit ut non, ipsum Ut non, gravida quis at vitae eu enim. tocus, dui ipsum tincidunt urna elit felis, tempor</p>
-    <p className="mt-4">Morbi nisi enim, adipiscing eget dui viverra quam Cras libero, Nunc ultrici lacus, lorem. lacus elit ex, leo ipsum elit venenatis cursus ex enim, dignis</p>
-  </div>
 
 
       </div>

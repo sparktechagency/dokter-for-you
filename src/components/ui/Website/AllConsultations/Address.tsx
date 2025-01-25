@@ -111,10 +111,10 @@ const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | nu
           <h3 className="font-medium text-gray-900 text-[16px]">Overview</h3>
           <div className="flex lg:flex-row flex-col justify-between items-center lg:text-[16px] text-[14px] gap-3">
             <div>
-              <p className="text-gray-500 pt-4">Consultation for {SubCategoryName} - $25.00</p>
+              <p className="text-gray-500 pt-4">Consultation for {SubCategoryName} - €25.00</p>
             </div>
             <div className="text-right">
-              <p className="text-primary font-medium">Total - $25.00</p>
+              <p className="text-primary font-medium">Total - €25.00</p>
             </div>
           </div>
         </div>

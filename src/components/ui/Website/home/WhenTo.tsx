@@ -17,7 +17,7 @@ const WhenTo = () => {
         <p className=" text-gray-600">
         {item?.description?.slice(0, 250)}
         </p>
-        <button className="mt-6 px-6 py-2  border border-primary text-primary hover:text-white  hover:bg-primary" onClick={()=>router.push(`/about/1`)}>
+        <button className="mt-6 px-6 py-2  border border-primary text-primary hover:text-white  hover:bg-primary" onClick={()=>router.push(`/about/${item._id}`)}>
           Learn More
         </button>
       </div>

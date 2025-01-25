@@ -105,11 +105,11 @@ const Delivery = ({ updateQNA , SubCategoryName , setForwardStatus }: { updateQN
         <div className="flex lg:flex-row flex-col gap-3 justify-between items-center text-[16px]">
           <div>
             <p className="text-gray-500 pt-4">
-              Consultation for {SubCategoryName} - $25.00
+              Consultation for {SubCategoryName} - €25.00
             </p>
           </div>
           <div className="text-right">
-            <p className="text-primary font-medium">Total - $25.00</p>
+            <p className="text-primary font-medium">Total - €25.00</p>
           </div>
         </div>
       </div>

@@ -81,15 +81,15 @@ const handleBuyNow = async() =>{
         <p className="lg:text-[16px] text-[14px] text-[#4E4E4E]">Consultation for {consultationId?.category?.name} problem</p>
         <p className="lg:text-sm text-[12px] text-[#999999]">Medical questions/view, doctor&apos;s advice and prescription</p>
       </div>
-      <p className="text-right text-primary">$25.00</p>
+      <p className="text-right text-primary">€25.00</p>
     </div>
     <div className="flex items-center justify-end gap-[200px] text-[14px]">
       <span className='text-[#6B6B6B]'>discount - </span>
-      <span className='text-[#6B6B6B]'>$00.00</span>
+      <span className='text-[#6B6B6B]'>€00.00</span>
     </div>
     <div className="flex justify-end items-center font-medium mt-3 gap-[200px] border-t pt-2">
       <span>Total -</span>
-      <span>$25.00</span>
+      <span>€25.00</span>
     </div>
   </div>
 
