@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from 'react';
-import { Modal, InputNumber, Button } from 'antd';
+import { Modal, InputNumber, Button, message } from 'antd';
 import Image from 'next/image';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { imageUrl } from '@/redux/base/baseApi';
-
 
 interface MedicationModalProps {
   open: boolean;
@@ -29,15 +28,23 @@ interface MedicationModalProps {
 }
 
 const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelected }: MedicationModalProps) => {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [packSize, setPackSize] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = () => { 
+
+    if (!packSize) {
+      return message.error("Please select a pcs before proceeding.");
+    } 
+
     handleAddToSelected({
       _id: medicineData?._id,
       count: quantity,
       total: `${packSize} pcs`,
-    });
+    }) 
+
+    setQuantity(1);
+    setPackSize('');
     setOpen(false);
   };
 
@@ -97,11 +104,11 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
               <div className="flex items-center gap-2">
                 <Button
                   icon={<MinusOutlined />}
-                  onClick={() => setQuantity(Math.max(0, quantity - 1))}
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="w-8 h-8 flex items-center justify-center bg-gray-200 border-none shadow-sm"
                 />
                 <InputNumber
-                  min={0}
+                  min={1}
                   value={quantity}
                   onChange={(value) => setQuantity(Number(value))}
                   className="text-center w-10 h-8 bg-gray-200 text-black rounded shadow-sm border-none"

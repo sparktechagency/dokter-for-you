@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DownOutlined, MenuOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,7 +14,6 @@ import AddReviewModal from "../ui/Website/home/AddReviewModal";
 import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
 import { imageUrl } from "@/redux/base/baseApi";
 import { useGetAllCategoryQuery } from "@/redux/features/website/categorySlice";
-
 import { useRouter } from "next/navigation";
 import { useGetAllNotificationQuery } from "@/redux/features/website/notificationSlice";
 
@@ -27,23 +26,23 @@ const Navbar: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
   const { data } = useGetProfileQuery(undefined)
   const [imgURL, setImgURL] = useState("");
-  const { data: category } = useGetAllCategoryQuery(undefined) 
-  const {data:notifications} = useGetAllNotificationQuery(undefined) 
-  const router = useRouter() 
+  const { data: category } = useGetAllCategoryQuery(undefined)
+  const { data: notifications } = useGetAllNotificationQuery(undefined)
+  const router = useRouter()
 
   const totalNotifications = notifications?.data?.length
 
   const getProfileImageUrl = (profile: string): string => {
     return profile.startsWith("https") ? profile : `${imageUrl}${profile}`;
   };
-  
+
 
   useEffect(() => {
     if (data?.data) {
       setUserData(data.data);
       setImgURL(getProfileImageUrl(data.data.profile));
     }
-  }, [data]); 
+  }, [data]);
 
   const showModal = () => {
     setIsModalOpen(true)
@@ -61,7 +60,35 @@ const Navbar: React.FC = () => {
 
   const toggleDrawer = () => {
     setIsDrawerVisible(!isDrawerVisible);
-  };
+  }; 
+
+  const profileDropdownRef = useRef<HTMLDivElement>(null);
+  const categoryDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Handle click outside dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        profileDropdownRef.current &&
+        !profileDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsProfileDropdownOpen(false);
+      }
+
+      if (
+        categoryDropdownRef.current &&
+        !categoryDropdownRef.current.contains(event.target as Node)
+      ) {
+        setOpenDropdown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []); 
+
 
   const navLinks = [
     { label: "Home", link: "/home" },
@@ -108,7 +135,8 @@ const Navbar: React.FC = () => {
 
             {/* profile  */}
             <div className="relative lg:hidden">
-              <div
+              <div 
+            
                 className="flex items-center space-x-2 cursor-pointer"
                 onClick={() =>
                   setIsProfileDropdownOpen(!isProfileDropdownOpen)
@@ -151,10 +179,11 @@ const Navbar: React.FC = () => {
             <div className="flex space-x-10">
               {navLinks.map((navItem, index) => (
                 <div key={index} className="relative group">
-                  <div
+                  <div 
+                
                     className={`flex items-center cursor-pointer text-[#4E4E4E] hover:text-primary font-[400px] ${activeLink === navItem.label
-                        ? "text-primary font-medium"
-                        : ""
+                      ? "text-primary font-medium"
+                      : ""
                       }`}
                     onClick={() => {
                       setActiveLink(navItem.label);
@@ -175,13 +204,13 @@ const Navbar: React.FC = () => {
                   </div>
 
                   {navItem.subOptions && openDropdown === index && (
-                    <div className="absolute left-0 mt-2 w-[200px] bg-white shadow-lg border rounded-md z-10">
+                    <div    ref={categoryDropdownRef} className="absolute left-0 mt-2 w-[200px] bg-white shadow-lg border rounded-md z-10">
                       {navItem.subOptions.map((option: { label: string, value: string }, subIndex: number) => (
                         <Link key={subIndex} href={`/subcategory?category=${option.value}`}>
                           <p
                             className={`py-2 px-4 text-sm text-[#4E4E4E] cursor-pointer hover:bg-primary hover:text-white rounded ${activeLink === option.value
-                                ? "bg-primary text-white"
-                                : ""
+                              ? "bg-primary text-white"
+                              : ""
                               }`}
                             onClick={() => setActiveLink(option.value)}
                           >
@@ -204,20 +233,21 @@ const Navbar: React.FC = () => {
               </div>
             </Link>
             <Link href="/notifications">
-      <div className="relative bg-[#E8EEFE]  w-[48px] h-[48px] rounded-full flex items-center justify-center">
-        <div className="text-[#4E4E4E] text-lg cursor-pointer ">
-          <IoNotificationsOutline size={24} color="#4E4E4E" /> 
-          {totalNotifications > 0 && (
-          <span className="absolute -top-2 -right-1 bg-red-500 text-white text-[10px] font-bold w-[26px] h-[26px] rounded-full flex items-center justify-center">
-            {totalNotifications > 9 ? "9+" : totalNotifications}
-          </span>
-        )}
-        </div>
-      </div>
-    </Link>
+              <div className="relative bg-[#E8EEFE]  w-[48px] h-[48px] rounded-full flex items-center justify-center">
+                <div className="text-[#4E4E4E] text-lg cursor-pointer ">
+                  <IoNotificationsOutline size={24} color="#4E4E4E" />
+                  {totalNotifications > 0 && (
+                    <span className="absolute -top-2 -right-1 bg-red-500 text-white text-[10px] font-bold w-[26px] h-[26px] rounded-full flex items-center justify-center">
+                      {totalNotifications > 9 ? "9+" : totalNotifications}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </Link>
             {/* Profile Dropdown */}
             <div className="relative">
-              {userData ? <div
+              {userData ? <div 
+            
                 className="flex items-center space-x-2 cursor-pointer"
                 onClick={() =>
                   setIsProfileDropdownOpen(!isProfileDropdownOpen)
@@ -232,7 +262,7 @@ const Navbar: React.FC = () => {
               </div> : <div><Link href={"/login"}><button className="bg-primary text-white px-6 py-3 rounded-lg text-[14px]">Login</button></Link></div>}
 
               {isProfileDropdownOpen && (
-                <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[200px] z-50">
+                <div   ref={profileDropdownRef} className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[200px] z-50">
                   <div className="p-4 flex flex-col gap-3 items-center">
                     <Image src={imgURL} alt="" height={55} width={55} style={{ borderRadius: "100%", width: "55px", height: "55px" }} />
                     <div className="font-bold">{userData?.firstName} {userData?.lastName}</div>
@@ -258,7 +288,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-   
+
 
         </div>
       </div>
@@ -305,17 +335,17 @@ const Navbar: React.FC = () => {
               </div>
             </Link>
             <Link href="/notifications">
-      <div className="relative bg-[#E8EEFE]  w-[48px] h-[48px] rounded-full flex items-center justify-center">
-        <div className="text-[#4E4E4E] text-lg cursor-pointer ">
-          <IoNotificationsOutline size={24} color="#4E4E4E" /> 
-          {totalNotifications > 0 && (
-          <span className="absolute -top-2 -right-1 bg-red-500 text-white text-[10px] font-bold w-[26px] h-[26px] rounded-full flex items-center justify-center">
-            {totalNotifications > 9 ? "9+" : totalNotifications}
-          </span>
-        )}
-        </div>
-      </div>
-    </Link>
+              <div className="relative bg-[#E8EEFE]  w-[48px] h-[48px] rounded-full flex items-center justify-center">
+                <div className="text-[#4E4E4E] text-lg cursor-pointer ">
+                  <IoNotificationsOutline size={24} color="#4E4E4E" />
+                  {totalNotifications > 0 && (
+                    <span className="absolute -top-2 -right-1 bg-red-500 text-white text-[10px] font-bold w-[26px] h-[26px] rounded-full flex items-center justify-center">
+                      {totalNotifications > 9 ? "9+" : totalNotifications}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </Link>
           </div>
 
         </div>

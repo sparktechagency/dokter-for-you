@@ -57,20 +57,26 @@ const PrescriptionDetails = ({ consultationId , onClose }: ConsultationDetailsPr
     </div>
   </div>
 
-  {/* Prescription Report */}
-  <div className="p-6 pb-11 mb-6 bg-white flex flex-col gap-4">
+  {/* Prescription Report */} 
+
+  {consultationId &&
+  (consultationId?.suggestedMedicine?.length > 0 || consultationId?.opinion) &&
+  consultationId?.status === "accepted" && (
+    <div className="p-6 pb-11 mb-6 bg-white flex flex-col gap-4">
     <h3 className="text-center font-medium text-2xl text-primary ">Prescription Report</h3>
     <p className="text-center text-green-600 text-sm font-medium ">
       Our doctor has sent your prescription, please download the file.
     </p>
     <p className="text-center text-red-500 text-sm ">
       Stating that it is valid for 7 days only and can be use once.
-    </p>
+    </p> 
     <a  href={`${imageUrl}api/v1/pdf/generate-pdf/${consultationId?._id}`} download className="mx-auto flex items-center justify-center gap-2 px-6 bg-primary text-white h-[48px]" >
          <Download className="h-4 w-4" size={24} color='white'/>
          Download now
        </a>
   </div>
+  )}
+
  </div>
 
 
