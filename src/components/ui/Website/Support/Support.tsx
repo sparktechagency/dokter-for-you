@@ -69,7 +69,9 @@ const Support = () => {
               <h3 className="text-center text-[24px] font-[500px] text-blue-900 mt-4">
                 Email
               </h3>
-              <p className="text-center text-gray-600 mt-2">support@dokterforyou.com</p>
+              <p className="text-center text-gray-600 mt-2">support@dokterforyou.com</p> 
+
+              <p className="text-center text-gray-600 mt-2 px-4">  Answer within 3 hours on Monday to Friday from 09:00h to 20:00h </p>
             
             </div>
 
@@ -83,7 +85,8 @@ const Support = () => {
               <h3 className="text-center text-[24px] font-semibold text-blue-900 mt-4">
                What&apos;s App
               </h3>
-              <p className="text-center text-gray-600 mt-2">+31 (0)85-7605234</p>
+              <p className="text-center text-gray-600 mt-2">+31 (0)85-7605234</p> 
+              <p className="text-center text-gray-600 mt-2 px-4"> Chat Available on Monday to Friday from 09:00h to 20:00h </p>
                 
             </div>
 
