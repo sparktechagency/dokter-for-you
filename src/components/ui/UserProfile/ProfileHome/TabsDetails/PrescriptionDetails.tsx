@@ -59,9 +59,7 @@ const PrescriptionDetails = ({ consultationId , onClose }: ConsultationDetailsPr
 
   {/* Prescription Report */} 
 
-  {consultationId &&
-  (consultationId?.suggestedMedicine?.length > 0 || consultationId?.opinion) &&
-  consultationId?.status === "accepted" && (
+
     <div className="p-6 pb-11 mb-6 bg-white flex flex-col gap-4">
     <h3 className="text-center font-medium text-2xl text-primary ">Prescription Report</h3>
     <p className="text-center text-green-600 text-sm font-medium ">
@@ -75,7 +73,7 @@ const PrescriptionDetails = ({ consultationId , onClose }: ConsultationDetailsPr
          Download now
        </a>
   </div>
-  )}
+
 
  </div>
 

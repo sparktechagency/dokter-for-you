@@ -29,8 +29,7 @@ const Navbar: React.FC = () => {
   const { data: category } = useGetAllCategoryQuery(undefined)
   const { data: notifications } = useGetAllNotificationQuery(undefined)
   const router = useRouter()
-
-  const totalNotifications = notifications?.data?.length
+  const totalNotifications = notifications?.data?.unreadCount
 
   const getProfileImageUrl = (profile: string): string => {
     return profile.startsWith("https") ? profile : `${imageUrl}${profile}`;

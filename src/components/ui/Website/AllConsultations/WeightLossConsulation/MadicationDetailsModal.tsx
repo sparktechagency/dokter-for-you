@@ -99,7 +99,7 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
           </div>
 
           <div className="mb-6">
-            <div className="text-gray-600 mb-3 text-sm font-medium">Contents of the Box</div>
+            <div className="text-gray-600 mb-3 text-sm font-medium">Quantity</div>
             <div className="flex lg:flex-row flex-col items-center gap-4">
               <div className="flex items-center gap-2">
                 <Button

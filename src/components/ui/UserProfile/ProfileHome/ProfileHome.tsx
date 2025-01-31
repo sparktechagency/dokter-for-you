@@ -11,6 +11,7 @@ import { useConsultationSuccessMutation, useEditProfileMutation, useGetProfileQu
 import Swal from 'sweetalert2';
 import { imageUrl } from '@/redux/base/baseApi';
 import { useSearchParams } from 'next/navigation';
+import { message } from 'antd';
 
 
 const tabs = [
@@ -35,7 +36,11 @@ const ProfileHome = () => {
   useEffect(() => {
     if (id && sessionId) {
       const data = { id, session_id: sessionId };
-      consultationSuccess(data)
+      consultationSuccess(data).then((res) => { 
+        if (res?.data?.success) {
+          message.success("Thank you! Please wait 24 hours for confirmation from the doctor and pharmacy.")
+        }
+      })
     }
   }, [id, sessionId , consultationSuccess]);
 

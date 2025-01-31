@@ -21,7 +21,8 @@ interface ConsultationDetailsProps {
       }
       subCategory: {
         name: string;
-      } 
+      }  
+      forwardToPartner: boolean;
       address:{
         streetAndHouseNo: string;
         postalCode: string;
@@ -41,7 +42,8 @@ interface ConsultationDetailsProps {
 const PrescriptionOrder = ({consultationId ,    onClose }: ConsultationDetailsProps) => { 
   
 const [BuyNow] = useBuyNowMutation()  
-const router = useRouter()
+const router = useRouter() 
+
 
 const handleBuyNow = async() =>{ 
     await BuyNow(consultationId._id).then((res) => {
@@ -96,9 +98,7 @@ const handleBuyNow = async() =>{
   </div>
 
   {/* Prescription Report */} 
-   {consultationId &&
-    (consultationId?.suggestedMedicine?.length > 0 || consultationId?.opinion) &&
-    consultationId?.status === "accepted" && (
+
       <div className="p-6 pb-11 mb-6 bg-white flex flex-col gap-4">
       <h3 className="text-center font-medium text-2xl text-primary ">Prescription Report</h3>
       <p className="text-center text-green-600 text-sm font-medium ">
@@ -112,7 +112,7 @@ const handleBuyNow = async() =>{
            Download now
          </a>
     </div>
-    )} 
+    
 
  </div>
 
@@ -165,7 +165,7 @@ const handleBuyNow = async() =>{
   {/* Medication List */}
   <div className="mb-6  bg-[#F7F7F7] px-4 py-5"> 
     {
-      consultationId?.medicins?.map((medication:{_id: {image: string, name: string, medicineType: string, _id: string, dosage: string[]} , count: number  }) => (
+      consultationId?.suggestedMedicine?.map((medication:{_id: {image: string, name: string, medicineType: string, _id: string, dosage: string[]} , count: number  }) => (
         <div className="flex items-center justify-between gap-4 p-4 " key={medication?._id?._id}>
           <div className="flex items-center gap-5"> 
             <Image
@@ -185,7 +185,7 @@ const handleBuyNow = async() =>{
             <p className='text-[#4E4E4E]'>{medication?._id?.dosage[0]}</p>
           </div>
           <div className="text-sm">
-            <p className='text-[#999999] pb-1'>Contents of the Box</p>
+            <p className='text-[#999999] pb-1'>Quantity</p>
             <p className='text-[#4E4E4E]'>{medication?.count}</p>
           </div>
          
@@ -194,11 +194,29 @@ const handleBuyNow = async() =>{
     }
   
   </div>
+ 
+ {
+  consultationId?.forwardToPartner === true ? (
+    <div className="flex justify-end mb-8 pt-6 gap-4"> 
 
-  {/* Buy Now Button */}
-  <div className="flex justify-end mb-8 pt-6" onClick={handleBuyNow}>
-    <button className="bg-[#1a237e] px-6 h-[48px] text-white">Buy Now</button>
-  </div>
+    {
+      consultationId?.status === "processing" && (
+        <div  >
+        <div className="bg-[#d9db4f] px-6 py-[13px] text-white text-center">Processing</div>
+      </div>
+      )
+    } 
+  
+  <div  onClick={handleBuyNow}>
+      <button className="bg-[#1a237e] px-6 h-[48px] text-white">Buy Now</button>
+    </div>   
+  
+    </div>
+  ):""
+ }
+  
+
+
 
 
 
