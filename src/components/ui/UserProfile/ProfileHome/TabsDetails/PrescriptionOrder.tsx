@@ -12,7 +12,8 @@ interface ConsultationDetailsProps {
       time: string;
       patient: string; 
       opinion: string;
-      doctor: string;
+      doctor: string; 
+      totalAmount: string;
       status: string;
       _id: string; 
       createdAt: string; 
@@ -39,7 +40,7 @@ interface ConsultationDetailsProps {
   } 
  
 
-const PrescriptionOrder = ({consultationId ,    onClose }: ConsultationDetailsProps) => { 
+const PrescriptionOrder = ({consultationId ,    onClose }: ConsultationDetailsProps) => {  
   
 const [BuyNow] = useBuyNowMutation()  
 const router = useRouter() 
@@ -162,10 +163,12 @@ const handleBuyNow = async() =>{
 
   </div>
 
-  {/* Medication List */}
-  <div className="mb-6  bg-[#F7F7F7] px-4 py-5"> 
+  {/* Medication List */} 
+  <div className='bg-[#F7F7F7] px-4 py-5 mb-6 '>
+
+  <div className="  border-b border-gray-400 "> 
     {
-      consultationId?.suggestedMedicine?.map((medication:{_id: {image: string, name: string, medicineType: string, _id: string, dosage: string[]} , count: number  }) => (
+      consultationId?.suggestedMedicine?.map((medication:{_id: {image: string, name: string, medicineType: string, _id: string,unitPerBox: string[],sellingPrice: string, dosage: string[]} , count: number  }) => (
         <div className="flex items-center justify-between gap-4 p-4 " key={medication?._id?._id}>
           <div className="flex items-center gap-5"> 
             <Image
@@ -187,12 +190,41 @@ const handleBuyNow = async() =>{
           <div className="text-sm">
             <p className='text-[#999999] pb-1'>Quantity</p>
             <p className='text-[#4E4E4E]'>{medication?.count}</p>
-          </div>
-         
+          </div> 
+
+          
+          <div className="text-sm">
+            <p className='text-[#999999] pb-1'>Price</p>
+            <p className='text-[#4E4E4E]'>€ { (Number(medication?._id?.sellingPrice) * Number(medication?._id?.unitPerBox[0]))}</p>
+          </div>   
         </div>
       ))
-    }
-  
+    } 
+  </div>  
+
+  <div className='flex justify-end p-4 '>  
+    <div>
+      
+    <div className=' flex flex-col gap-3'>
+  <div className='flex items-center justify-between gap-7'> 
+    <p className='text-gray-600 font-medium'> Subtotal- </p> 
+    <p className='text-gray-600 font-medium'> € {consultationId?.totalAmount} </p>
+  </div>  
+
+  <div className='flex items-center justify-between gap-7'> 
+    <p className='text-gray-600 font-medium'> Shipping Cost- </p> 
+    <p className='text-gray-600 font-medium'> € 20</p>
+  </div> 
+
+    <div className='flex items-center justify-between gap-7 '> 
+    <p className='text-gray-600 font-medium'> total- </p> 
+    <p className='text-gray-600 font-medium'> € {Number(consultationId?.totalAmount) + 20}</p>
+  </div>  
+    </div>
+      </div> 
+
+  </div>
+
   </div>
  
  {

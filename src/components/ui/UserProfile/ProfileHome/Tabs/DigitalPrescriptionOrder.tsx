@@ -22,7 +22,8 @@ const DigitalPrescriptionOrder = () => {
   const [selectedConsultation, setSelectedConsultation] = useState(null);
   const name = "medication"
   const { data: allConsultations } = useGetAllConsultationsQuery(name)
-  const DigitalPrescriptionOrderDetails = allConsultations?.data
+  const DigitalPrescriptionOrderDetails = allConsultations?.data 
+
   const columns: ColumnsType<ConsultationData> = [
     {
       title: 'S. No.',
