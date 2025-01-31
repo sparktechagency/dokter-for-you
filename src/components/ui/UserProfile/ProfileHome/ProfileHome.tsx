@@ -11,8 +11,6 @@ import { useConsultationSuccessMutation, useEditProfileMutation, useGetProfileQu
 import Swal from 'sweetalert2';
 import { imageUrl } from '@/redux/base/baseApi';
 import { useSearchParams } from 'next/navigation';
-import { message } from 'antd';
-
 
 const tabs = [
   { id: "1", label: "Profile Details", component: <ProfileDetails /> },
@@ -37,8 +35,14 @@ const ProfileHome = () => {
     if (id && sessionId) {
       const data = { id, session_id: sessionId };
       consultationSuccess(data).then((res) => { 
-        if (res?.data?.success) {
-          message.success("Thank you! Please wait 24 hours for confirmation from the doctor and pharmacy.")
+        if (res?.data?.success) { 
+           Swal.fire({
+                  
+                   text: "Dear customer, we thank you very much for your trust and payment. Your answers are sent to the doctor. Based on this, the doctor will decide what the best treatment is for you. If this results in a prescription, you will receive a message from the pharmacy that a prescription is ready for you with the next steps. If you have any questions in the meantime, please do not hesitate to ask us (support@dokterforyou.com). Kind regards, team Doctor For You",
+                   icon: "success",
+                   timer: 1500,
+                   showConfirmButton: false
+                 })
         }
       })
     }

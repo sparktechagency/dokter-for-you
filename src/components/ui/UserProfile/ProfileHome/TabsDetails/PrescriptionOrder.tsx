@@ -200,16 +200,18 @@ const handleBuyNow = async() =>{
     <div className="flex justify-end mb-8 pt-6 gap-4"> 
 
     {
-      consultationId?.status === "processing" && (
+      consultationId?.status === "processing" ? (
         <div  >
-        <div className="bg-[#d9db4f] px-6 py-[13px] text-white text-center">Processing</div>
+        <div className="bg-[#fdc529] px-6 py-[13px] text-white text-center">Processing</div>
       </div>
+      ): (
+        <div  onClick={handleBuyNow}>
+        <button className="bg-[#1a237e] px-6 h-[48px] text-white">Buy Now</button>
+      </div>   
       )
     } 
   
-  <div  onClick={handleBuyNow}>
-      <button className="bg-[#1a237e] px-6 h-[48px] text-white">Buy Now</button>
-    </div>   
+
   
     </div>
   ):""

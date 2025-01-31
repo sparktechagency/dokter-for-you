@@ -114,9 +114,8 @@ const Support = () => {
           <Title className=" mb-6 font-[500] lg:text-[48px] text-[32px] tracking-wide">
             SEND US A MESSAGE
           </Title>
-          <p className="text-[#6B6B6B] lg:text-[24px] text-[20px] lg:mb-8 mb-4 lg:tracking-wide ">
-            JUST LEAVE US YOUR DETAILS HERE AND WE WILL GET BACK TO YOU WITHIN A
-            FEW HOURS
+          <p className="text-[#6B6B6B] lg:text-[24px] text-[20px] lg:mb-8 mb-4 lg:tracking-wide uppercase ">
+          Just leave us your details here and we will get back to you within 3 hours on Monday to Friday from 09:00h to 20:00h
           </p>
         </div>
 
