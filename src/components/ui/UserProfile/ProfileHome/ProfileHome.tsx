@@ -73,7 +73,8 @@ const ProfileHome = () => {
             text: res?.data?.message,
             icon: "success",
             showConfirmButton: false,
-            timer: 1500,
+            timer: 5000,  
+            showCloseButton: true
           })
         } else {
           Swal.fire({

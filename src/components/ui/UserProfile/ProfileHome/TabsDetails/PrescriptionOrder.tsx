@@ -53,7 +53,12 @@ const handleBuyNow = async() =>{
         router.push(res?.data?.data)
       }
     })
-}
+} 
+
+const totalMedicinePrice = consultationId?.suggestedMedicine?.reduce((total, medication:{ count: number; _id: { sellingPrice: string; unitPerBox: string[]; };}) => {
+  const pricePerUnit = Number(medication?._id?.sellingPrice) * Number(medication?._id?.unitPerBox[0]);
+  return total + (pricePerUnit * Number(medication?.count));
+}, 0); 
 
     return (
       <div className=''>
@@ -169,7 +174,7 @@ const handleBuyNow = async() =>{
   <div className="  border-b border-gray-400 "> 
     {
       consultationId?.suggestedMedicine?.map((medication:{_id: {image: string, name: string, medicineType: string, _id: string,unitPerBox: string[],sellingPrice: string, dosage: string[]} , count: number  }) => (
-        <div className="flex items-center justify-between gap-4 p-4 " key={medication?._id?._id}>
+        <div className="flex lg:flex-row flex-col items-center justify-between lg:gap-0 gap-4 p-4 w-full " key={medication?._id?._id}>
           <div className="flex items-center gap-5"> 
             <Image
               src={medication?._id?.image?.startsWith("http") ? medication?._id?.image : `${imageUrl}${medication?._id?.image}`}
@@ -178,24 +183,27 @@ const handleBuyNow = async() =>{
               height={70}
               className="object-cover"
             />
-            <div className="flex-1">
+            
+            <div className="flex-1 w-full lg:w-[200px] items-start">
               <p className="font-medium text-[16px] pb-1">{medication?._id?.name}</p>  
               <p className="text-sm text-[#6B6B6B]">{medication?._id?.medicineType} {medication?._id?.dosage[0]}</p>
             </div>
           </div>
+
           <div className="text-sm">
             <p className='text-[#999999] pb-1'>Dosage</p>
             <p className='text-[#4E4E4E]'>{medication?._id?.dosage[0]}</p>
           </div>
+
           <div className="text-sm">
             <p className='text-[#999999] pb-1'>Quantity</p>
             <p className='text-[#4E4E4E]'>{medication?.count}</p>
           </div> 
 
           
-          <div className="text-sm">
+          <div className="text-sm w-full lg:w-[100px] items-center justify-center">
             <p className='text-[#999999] pb-1'>Price</p>
-            <p className='text-[#4E4E4E]'>€ { (Number(medication?._id?.sellingPrice) * Number(medication?._id?.unitPerBox[0]))}</p>
+            <p className='text-[#4E4E4E]'> € { (Number(medication?._id?.sellingPrice) * Number(medication?._id?.unitPerBox[0]))}</p>
           </div>   
         </div>
       ))
@@ -208,7 +216,7 @@ const handleBuyNow = async() =>{
     <div className=' flex flex-col gap-3'>
   <div className='flex items-center justify-between gap-7'> 
     <p className='text-gray-600 font-medium'> Subtotal- </p> 
-    <p className='text-gray-600 font-medium'> € {consultationId?.totalAmount} </p>
+    <p className='text-gray-600 font-medium'> € {totalMedicinePrice} </p>
   </div>  
 
   <div className='flex items-center justify-between gap-7'> 
@@ -218,7 +226,7 @@ const handleBuyNow = async() =>{
 
     <div className='flex items-center justify-between gap-7 '> 
     <p className='text-gray-600 font-medium'> total- </p> 
-    <p className='text-gray-600 font-medium'> € {Number(consultationId?.totalAmount) + 20}</p>
+    <p className='text-gray-600 font-medium'> € {Number(totalMedicinePrice) + 20}</p>
   </div>  
     </div>
       </div> 

@@ -23,7 +23,7 @@ const AboutDetails = () => {
           {/* Content Section */}
           <div className="lg:w-1/2 w-full">
           <Title className="pb-[24px]">{item?.title}</Title>
-            <p className="text-gray-600">  {item?.description?.slice(0, 550)}</p>
+            <p className="text-gray-600">  {item?.description?.split(" ").slice(0, 74).join(" ")}</p>
 
           </div>
 
@@ -39,7 +39,7 @@ const AboutDetails = () => {
         </div>
 
         <div className=' pb-[94px] text-gray-600 mt-3'>
-          {item?.description?.slice(551)}
+        {item?.description?.split(" ").slice(74).join(" ")}
         </div>
       </div>
 
