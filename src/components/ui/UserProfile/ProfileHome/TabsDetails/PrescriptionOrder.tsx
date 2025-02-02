@@ -5,6 +5,7 @@ import moment from 'moment';
 import { imageUrl } from '@/redux/base/baseApi';
 import { useBuyNowMutation } from '@/redux/features/profile/pdfAndBuySlice';
 import { useRouter } from 'next/navigation';
+import { useGetProfileQuery } from '@/redux/features/profile/getProfileSlice';
 interface ConsultationDetailsProps {
     consultationId: {
       trackingNo: string;
@@ -43,7 +44,10 @@ interface ConsultationDetailsProps {
 const PrescriptionOrder = ({consultationId ,    onClose }: ConsultationDetailsProps) => {  
   
 const [BuyNow] = useBuyNowMutation()  
-const router = useRouter() 
+const router = useRouter()  
+const { data } = useGetProfileQuery(undefined) 
+const userData = data?.data 
+
 
 
 const handleBuyNow = async() =>{ 
@@ -127,17 +131,16 @@ const totalMedicinePrice = consultationId?.suggestedMedicine?.reduce((total, med
     <div>
       <p className="text-sm font-medium mb-2">Address:</p>
       <p className="text-sm text-[#6B6B6B]">
-       {consultationId?.address?.firstname}  {consultationId?.address?.lastname}<br />
-       {consultationId?.address?.streetAndHouseNo}<br />
-      {consultationId?.address?.postalCode} {consultationId?.address?.place}<br />
+       {userData?.firstName}  {userData?.lastName}<br />
+       {userData?.city} - {userData?.postcode} <br /> {userData?.country}<br />
       </p>
     </div>
     <div>
       <p className="text-sm font-medium mb-2">Billing address:</p>
-      <p className="text-sm">
-        <span className="text-green-600">john david</span><br />
-        <span className="text-green-600">101 new house street 2957</span><br />
-        <span className="text-green-600">amsterdam, NL</span>
+      <p className="text-sm text-green-500">
+       {consultationId?.address?.firstname}  {consultationId?.address?.lastname}<br />
+       {consultationId?.address?.streetAndHouseNo}<br />
+      {consultationId?.address?.postalCode} {consultationId?.address?.place}<br />
       </p>
     </div> 
 
@@ -210,8 +213,8 @@ const totalMedicinePrice = consultationId?.suggestedMedicine?.reduce((total, med
     } 
   </div>  
 
-  <div className='flex justify-end p-4 '>  
-    <div>
+  <div className='flex items-center justify-end  p-4 w-full'>  
+    <div className=' lg:w-1/3 lg:pe-10'>
       
     <div className=' flex flex-col gap-3'>
   <div className='flex items-center justify-between gap-7'> 

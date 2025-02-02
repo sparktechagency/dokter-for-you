@@ -26,14 +26,14 @@ const InfoRow = ({ label, value }: InfoRowProps) => {
 
 const AccountDetails = ({setUserId}: {setUserId: React.Dispatch<React.SetStateAction<string|null>>}) => { 
   const {data} = useGetProfileQuery(undefined) 
-  const profileData = data?.data    
+  const profileData = data?.data     
 
   setUserId(profileData?._id)
 
   const userData = {
     firstName: profileData?.firstName,
     lastName: profileData?.lastName ,
-    dateOfBirth: profileData?.dateOfBirth,
+    dateOfBirth: profileData?.dateOfBirth ? profileData?.dateOfBirth : <p className='text-red-700'>Kindly update your date of birth in your profile.</p>,
     gender: profileData?.gender,
     email: profileData?.email,
     contactNumber: profileData?.contact

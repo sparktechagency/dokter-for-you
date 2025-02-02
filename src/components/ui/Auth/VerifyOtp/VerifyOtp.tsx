@@ -70,13 +70,11 @@ const VerifyOtp = () => {
 
           if (userType === "registerUser") {
             router.push("/login")
-          } else {
+          } else { 
+            SetLocalStorage("resetToken", res?.data?.data); 
             router.push("/reset-password")
           } 
 
-          if(res?.data){   
-            SetLocalStorage("resetToken", res?.data?.data); 
-          }
     
         });
       } else {
