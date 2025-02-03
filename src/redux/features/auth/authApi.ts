@@ -1,6 +1,7 @@
 import { baseApi } from "../../base/baseApi"; 
 import { GetLocalStorage } from "@/util/LocalStroage";
-const resetToken = GetLocalStorage("resetToken") 
+const resetToken = GetLocalStorage("resetToken")  
+console.log(resetToken);
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({ 
@@ -38,12 +39,12 @@ const authApi = baseApi.injectEndpoints({
       }),
     }), 
 
-    resetPassword: build.mutation({
+    resetPasswords: build.mutation({
       query:(value)=>({
           url:"/auth/reset-password" ,
           headers: {
             // "Content-Type": "application/json", 
-            Authorization: `Bearer ${resetToken}`,
+            authorization: `Bearer ${resetToken}`,
           },
           method:"POST" ,
           body: value
@@ -66,6 +67,6 @@ export const {
   useLoginUserMutation,
   useChangePasswordMutation,
   useForgetPasswordMutation,
-  useResetPasswordMutation,
+  useResetPasswordsMutation,
   useVerifyEmailMutation,
 } = authApi;

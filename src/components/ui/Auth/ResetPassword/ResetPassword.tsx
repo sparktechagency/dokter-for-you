@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import { useResetPasswordMutation } from "@/redux/features/auth/authApi";
+
+import { useResetPasswordsMutation } from "@/redux/features/auth/authApi";
 import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
@@ -9,7 +10,7 @@ import Swal from "sweetalert2";
 
 const ResetPassword = () => {
   const router = useRouter()
-  const [resetPassword , {isError ,isLoading , isSuccess , error ,data}] = useResetPasswordMutation()  
+  const [resetPasswords , {isError ,isLoading , isSuccess , error ,data}] = useResetPasswordsMutation()  
 
 
 
@@ -39,7 +40,7 @@ const ResetPassword = () => {
 
 
   const onFinish = async(values:{ newPassword: string , confirmPassword: string}) => {   
-    await resetPassword(values)
+    await resetPasswords(values)
   }  
 
   return (

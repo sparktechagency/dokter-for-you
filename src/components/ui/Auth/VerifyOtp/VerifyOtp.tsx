@@ -59,7 +59,7 @@ const VerifyOtp = () => {
     }
 
     await verifyEmail(data).then((res) => {
-
+ console.log(res);
       if (res?.data?.success) {
         Swal.fire({
           text: res?.data?.message,
