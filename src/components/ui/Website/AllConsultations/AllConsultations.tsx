@@ -57,6 +57,8 @@ const AllConsultations = () => {
     const total = allDynamicQuestions?.length
     const [form] = Form.useForm();
     const newConsultationType = consultationType ? consultationType === "video" ? "video" : "regular" : "regular" 
+ 
+
 
     const data = {
         "QNA": qnaData ,  

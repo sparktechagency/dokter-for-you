@@ -4,26 +4,46 @@
 // import { netherlandsCities } from "@/components/shared/AllCity"; 
 import InputField from "@/components/shared/InputField";
 import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
-import { Form, Radio, Checkbox } from "antd";
+import { Form, Radio, Checkbox, Input } from "antd";
 import { useEffect } from "react";
 
 const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | null, setAddress: (address: { firstname: string; lastname: string; streetAndHouseNo: string; postalCode: string; place: string; country: string; }) => void }) => {
   const [form] = Form.useForm(); 
   const { data } = useGetProfileQuery(undefined) 
-  const userData = data?.data  
+  const userData = data?.data   
+
 
   useEffect(() => {
     if (userData) {
-        form.setFieldsValue({
-            firstName: userData?.firstName,
-            lastName: userData?.lastName,
-            gender: userData?.gender,
-            location: userData?.location,
-            city: userData?.city,
-            postcode: userData?.postcode,
+      form.setFieldsValue({
+        firstName: userData?.firstName,
+        lastName: userData?.lastName,
+        gender: userData?.gender,
+        location: userData?.location,
+        city: userData?.city,
+        postcode: userData?.postcode, 
+        country: userData?.country,
+      });
+  
+      if (
+        userData?.firstName &&
+        userData?.lastName &&
+        userData?.location &&
+        userData?.city &&
+        userData?.postcode &&
+        userData?.country
+      ) {
+        setAddress({
+          firstname: userData.firstName,
+          lastname: userData.lastName,
+          streetAndHouseNo: userData.location,
+          postalCode: userData.postcode,
+          place: userData.city,
+          country: userData.country,
         });
+      }
     }
-}, [userData, form]);
+  }, [userData, form, setAddress]);
 
 
  
@@ -34,7 +54,7 @@ const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | nu
         streetAndHouseNo: allValues.location || userData?.location, 
         postalCode: allValues.postcode || userData?.postcode, 
         place: allValues.city || userData?.city,
-        country: allValues.country || "Netherlands",
+        country: allValues.country || userData?.country,
       };
       setAddress(formattedData);
     };
@@ -59,14 +79,7 @@ const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | nu
           </div>
 
           <Form form={form} layout="vertical" onValuesChange={handleFormChange} 
-          initialValues={{
-              firstName: userData?.firstName,
-              lastName: userData?.lastName,
-              gender: userData?.gender,
-              location: userData?.location,
-              city: userData?.city,
-              postcode: userData?.postcode,
-            }} >
+       >
            
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-6">
 
@@ -87,7 +100,37 @@ const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | nu
  
             <InputField name="city" label="City Name" /> 
       
-              <InputField name='gender' label='Gender' />
+              <InputField name='gender' label='Gender' />  
+
+<div className="mt-8"> 
+
+               <Form.Item
+      name="country"
+      
+      label={<p className="text-[#4E4E4E] text-[16px]">Country</p>}
+      rules={[
+        {
+          required: true,
+          message: `Please enter your country`,
+        },
+      ]}  
+
+      
+    > 
+      <Input
+        placeholder={`Enter your country`}
+        style={{
+            height: 48,
+            border: "1px solid #d9d9d9",
+            outline: "none",
+            boxShadow: "none",
+            backgroundColor: "white",
+          }} 
+
+          readOnly
+      /> 
+    </Form.Item> 
+</div>
             </div>
 
 
