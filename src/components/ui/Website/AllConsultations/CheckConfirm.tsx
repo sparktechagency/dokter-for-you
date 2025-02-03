@@ -9,6 +9,7 @@ import React from 'react';
 const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selectedMedicines: any, SubCategoryName: string | null, address: { firstname: string; lastname: string; streetAndHouseNo: string; postalCode: string; place: string; country: string; } }) => {
     const { data: userProfile } = useGetProfileQuery(undefined)
     const profileData = userProfile?.data
+
     return (
         <div>
             <div className="">
@@ -27,7 +28,7 @@ const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selecte
 
                 <div className="bg-[#F3F6FF]  shadow-sm mb-4">
                     {
-                        selectedMedicines?.map((medicine: { name: string, medicineType: string, dosage: string, image: string, form: string, total: string }, index: number) => (
+                        selectedMedicines?.map((medicine: { name: string, medicineType: string, dosage: string, image: string, form: string, count: string }, index: number) => (
                             <div key={index} className=" grid lg:grid-cols-4 grid-cols-2 justify-items-stretch gap-4 p-4 border-b">
                                 <div className='flex items-center gap-2'>
                                     <Image src={`${imageUrl}${medicine?.image}`} alt="Ceevit" width={80} height={80} className="mr-4" />
@@ -46,7 +47,7 @@ const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selecte
                                 </div>
                                 <div className="text-right ml-8">
                                     <p className="text-sm text-[#999999] pb-1 font-medium">Quantity of medicine</p>
-                                    <p className="text-sm">{medicine?.total}</p>
+                                    <p className="text-sm">{medicine?.count}</p>
                                 </div>
                             </div>
                         ))
@@ -57,16 +58,16 @@ const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selecte
                 <div className="bg-[#F3F6FF] p-4  shadow-sm mb-4 grid lg:grid-cols-4 grid-cols-1 lg:gap-4 gap-6">
                     <div>
                         <h3 className="font-semibold mb-2">Address:</h3>
-                        <p className='text-[#6B6B6B]'>{address?.firstname} {address?.lastname}</p>
-                        <p className='text-[#6B6B6B]'>{address?.streetAndHouseNo}</p>
-                        <p className='text-[#6B6B6B]'>{address?.country}</p>
+                        <p className="text-sm text-[#6B6B6B]">
+                            {profileData?.firstName}  {profileData?.lastName}<br />
+                            {profileData?.city} - {profileData?.postcode} <br /> {profileData?.country}<br />
+                        </p>
                     </div>
                     <div>
                         <h3 className="font-semibold mb-2">Billing address:</h3>
-                        <p className='text-[#6B6B6B]'>john david</p>
-                        <p className="text-green-500">101 new house street</p>
-                        <p className="text-green-500">2957</p>
-                        <p className="text-green-500">amsterdam, NL</p>
+                        <p className='text-[#6B6B6B]'>{address?.firstname} {address?.lastname}</p>
+                        <p className='text-[#6B6B6B]'>{address?.streetAndHouseNo}</p>
+                        <p className='text-[#6B6B6B]'>{address?.country}</p>
                     </div>
                     <div>
                         <h3 className="font-semibold mb-2">Contact details:</h3>
@@ -87,7 +88,7 @@ const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selecte
                     <div className="bg-green-50 py-7 px-[24px] ">
                         <h3 className="font-semibold mb-2">What happens after confirming this request?</h3>
                         <p className="text-sm">
-                        The doctor checks your request and writes a prescription if necessary. Your prescription will be forwarded to an affiliated pharmacy. After checking and approving the prescription, the affiliated pharmacy will send you a payment link by email for the prescribed medicine. After payment, you will receive your medicine at home the next working day via express delivery.
+                            The doctor checks your request and writes a prescription if necessary. Your prescription will be forwarded to an affiliated pharmacy. After checking and approving the prescription, the affiliated pharmacy will send you a payment link by email for the prescribed medicine. After payment, you will receive your medicine at home the next working day via express delivery.
                         </p>
                     </div>
                     <div className="bg-[#E8EEFE] p-4  px-8 shadow-sm">

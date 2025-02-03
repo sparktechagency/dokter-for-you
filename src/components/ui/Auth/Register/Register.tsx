@@ -116,6 +116,10 @@ const Register = () => {
                                 {
                                     required: true,
                                     message: "Please confirm your password!",
+                                }, 
+                                {
+                                    min: 8,
+                                    message: "Password must be at least 8 characters",
                                 },
 
                             ]}
@@ -176,7 +180,7 @@ const Register = () => {
                 </div>
 
                 <div className="flex items-center justify-between">
-                    <Form.Item style={{ marginBottom: 0 }} name="agree" valuePropName="checked">
+                    <Form.Item style={{ marginBottom: 0 }} name="agree" valuePropName="checked" rules={[{ required: true }]}>
                         <Checkbox>I agree with terms of service and privacy policy</Checkbox>
                     </Form.Item>
 

@@ -18,7 +18,7 @@ const Footer = () => {
         
           <div className="lg:w-1/3 w-full">
           
-            <p className="text-[#999999] w-[450px]">
+            <p className="text-[#999999] lg:w-[450px] w-full">
             When it comes to your health, we believe you have the right to decide what to do with your body. That’s why we offer you the opportunity to consult a licensed and registered physician and receive your prescribed medication at home without leaving your home. All within 24 hours.
             </p>
           
@@ -72,7 +72,7 @@ const Footer = () => {
       
       {/* Copyright Section */}
       <div className="bg-gray-900 text-white py-4 text-center text-sm">
-        <p>© Copyright  2024 Dokter For You</p>
+        <p>© Copyright  {new Date().getFullYear()}  Dokter For You</p>
       </div>
     </footer>
   );

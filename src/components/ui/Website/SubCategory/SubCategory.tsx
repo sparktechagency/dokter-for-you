@@ -52,7 +52,7 @@ const SubCategory = () => {
               </div>
               <div className="">
                 <h3 className="text-[24px] font-medium text-[#11D279] my-2">{subCategory?.name}</h3>
-                <p className="text-[#6B6B6B] mb-2">{subCategory?.details}</p>
+                <p className="text-[#6B6B6B] mb-2">{subCategory?.details?.split(" ").slice(0,20).join(" ")}</p>
                 <Link
                   href={`/subcategory-details?category=${categoryData?.name}&&subcategory=${subCategory._id}`}
                   className="text-[#1854F9] underline "

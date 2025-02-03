@@ -1,9 +1,9 @@
 "use client"
 import { usePathname } from 'next/navigation';
 import React from 'react';
-import Navbar from '@/components/shared/Navbar';
+import Navbar from '@/components/shared/Navbar'; 
 import { Poppins } from 'next/font/google';
-import Footer from '@/components/shared/Footer';
+import Footer from '@/components/shared/Footer'; 
 import Subscribe from '@/components/ui/Website/home/Subscribar';
 const poppins = Poppins({
     subsets: ['latin'],
@@ -19,7 +19,7 @@ const ClientNavbar = ({ children }: { children: React.ReactNode }) => {
         <div  >
             {
                 pathname !== "/" && (
-                    <Navbar />
+                    <Navbar /> 
                 )
             }
 
@@ -29,8 +29,8 @@ const ClientNavbar = ({ children }: { children: React.ReactNode }) => {
 
             {
                 pathname !== "/" && (<div>
-                    <Subscribe />
-                    <Footer />
+                    <Subscribe /> 
+                    <Footer />  
                 </div>)
             }
 

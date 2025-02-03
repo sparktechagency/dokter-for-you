@@ -21,7 +21,10 @@ interface ConsultationData {
 const DigitalPrescriptionOrder = () => {
   const [selectedConsultation, setSelectedConsultation] = useState(null);
   const name = "medication"
-  const { data: allConsultations } = useGetAllConsultationsQuery(name)
+  const { data: allConsultations , isLoading } = useGetAllConsultationsQuery(name) 
+  if(isLoading){
+    return <div>Loading...</div>
+  }
   const DigitalPrescriptionOrderDetails = allConsultations?.data 
 
   const columns: ColumnsType<ConsultationData> = [

@@ -1,7 +1,7 @@
 import { baseApi } from "../../base/baseApi"; 
 import { GetLocalStorage } from "@/util/LocalStroage";
 const resetToken = GetLocalStorage("resetToken")  
-console.log(resetToken);
+
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({ 

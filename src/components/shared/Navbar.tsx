@@ -32,14 +32,14 @@ const Navbar: React.FC = () => {
   const totalNotifications = notifications?.data?.unreadCount
 
   const getProfileImageUrl = (profile: string): string => {
-    return profile.startsWith("https") ? profile : `${imageUrl}${profile}`;
+    return profile.startsWith("http") ? profile : `${imageUrl}${profile}`;
   };
 
 
   useEffect(() => {
     if (data?.data) {
-      setUserData(data.data);
-      setImgURL(getProfileImageUrl(data.data.profile));
+      setUserData(data?.data);
+      setImgURL(getProfileImageUrl(data?.data?.profile));
     }
   }, [data]);
 
@@ -141,34 +141,41 @@ const Navbar: React.FC = () => {
                   setIsProfileDropdownOpen(!isProfileDropdownOpen)
                 }
               >
-                <Image src={imgURL} alt="" height={45} width={45} style={{ borderRadius: "100%", width: "45px", height: "45px" }} className="object-cover" />
+             { 
+             userData ? <Image src={imgURL} alt="" height={45} width={45} style={{ borderRadius: "100%", width: "45px", height: "45px" }} className="object-cover" /> :
+               <div><Link href={"/login"}><button className="bg-primary text-white px-6 py-3 rounded-lg text-[14px]">Login</button></Link></div>
+             }   
 
-              </div>
+              </div> 
 
-              {isProfileDropdownOpen && (
-                <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[170px] z-50">
-                  <div className="p-4 flex flex-col gap-3 items-center">
-                    <Image src={imgURL} alt="" height={55} width={55} style={{ borderRadius: "100%", width: "55px", height: "55px" }} />
-                    <div className="font-bold">{userData?.firstName} {userData?.lastName}</div>
-                    <Link href="/profile">
-                      <button className="text-white bg-primary w-full lg:px-6 px-3 py-2 rounded-lg text-[14px]" onClick={showModal}>
-                        Visit Your Profile
+              {
+                 userData && isProfileDropdownOpen && (
+                  <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[170px] z-50" >
+                    <div className="p-4 flex flex-col gap-3 items-center">
+                      <Image src={imgURL} alt="" height={55} width={55} style={{ borderRadius: "100%", width: "55px", height: "55px" }} />
+                      <div className="font-bold">{userData?.firstName} {userData?.lastName}</div>
+                      <Link href="/profile">
+                        <button className="text-white bg-primary w-full lg:px-6 px-3 py-2 rounded-lg text-[14px]" onClick={showModal}>
+                          Visit Your Profile
+                        </button>
+                      </Link>
+  
+                      <button className="flex items-center justify-center border border-[#6B6B6B] w-full  gap-2 my-2 lg:px-6 px-3 py-2 rounded-lg text-[14px] ">
+                        <span> <GoStar size={14} color="#6B6B6B" /> </span>
+                        <span className=" text-[#6B6B6B] text-[14px] font-medium"> Review </span>
                       </button>
-                    </Link>
+                    </div>
+                    <div className="border-t ">
+                      <button onClick={handleLogout} className="flex items-center py-2 px-4 gap-2 ">
+                        <IoIosLogOut size={24} />
+                        <p>Log Out</p>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              
 
-                    <button className="flex items-center justify-center border border-[#6B6B6B] w-full  gap-2 my-2 lg:px-6 px-3 py-2 rounded-lg text-[14px] ">
-                      <span> <GoStar size={14} color="#6B6B6B" /> </span>
-                      <span className=" text-[#6B6B6B] text-[14px] font-medium"> Review </span>
-                    </button>
-                  </div>
-                  <div className="border-t">
-                    <button onClick={handleLogout}>
-                      <IoIosLogOut size={24} />
-                      <p>Log Out</p>
-                    </button>
-                  </div>
-                </div>
-              )}
+             
             </div>
 
           </div>
@@ -303,7 +310,7 @@ const Navbar: React.FC = () => {
           {navLinks.map((navItem, index) => (
             <div key={index}>
               {navItem.link ? (
-                <Link href={navItem.link}>
+                <Link href={navItem.link}  onClick={toggleDrawer}>
                   <p className="text-[#4E4E4E] hover:text-primary font-medium text-[20px]">
                     {navItem.label}
                   </p>
@@ -316,7 +323,7 @@ const Navbar: React.FC = () => {
               {navItem.subOptions && (
                 <div className="pl-2 pt-3">
                   {navItem.subOptions.map((option: { value: string, label: string }, subIndex: number) => (
-                    <Link key={subIndex} href={`/subcategory?category=${option.value}`}>
+                    <Link key={subIndex} href={`/subcategory?category=${option.value}`} onClick={toggleDrawer}>
                       <p className=" text-[#4E4E4E] hover:text-primary pb-2 text-[18px] font-[400]">
                         {option.label}
                       </p>

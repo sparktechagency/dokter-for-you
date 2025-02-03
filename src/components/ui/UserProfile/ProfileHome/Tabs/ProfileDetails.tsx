@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 
 const ProfileDetails = () => {
     const [form] = Form.useForm();
-    const { data } = useGetProfileQuery(undefined)
+    const { data , refetch } = useGetProfileQuery(undefined)
     const [editProfile] = useEditProfileMutation()
     const userData = data?.data 
 
@@ -50,6 +50,8 @@ const ProfileDetails = () => {
                                 icon: "success",
                                 showConfirmButton: false,
                                 timer: 1500,
+                            }).then(() => {
+                                refetch()
                             })
                         } else {
                             Swal.fire({

@@ -119,7 +119,7 @@ const ProfileHome = () => {
 
             <div className=' flex flex-col gap-1'>
               <p className='text-primary text-[22px] font-medium'>{userData?.firstName} {userData?.lastName}</p>
-              <p className='text-[#11D279] text-[16px] font-[400]'>{userData?.location}</p>
+              <p className='text-[#11D279] text-[16px] font-[400]'>{userData?.city}</p>
             </div>
 
           </div>
