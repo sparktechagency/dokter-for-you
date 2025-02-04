@@ -90,7 +90,7 @@ const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | nu
             </div>
 
             {/* Street and House Number */}
-            <div className="grid grid-cols-2 gap-x-4 lg:mb-8">
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:mb-8">
               <InputField name="location" label="Street and house number" />
               <InputField name="postcode" label="Postal code" />
             </div>

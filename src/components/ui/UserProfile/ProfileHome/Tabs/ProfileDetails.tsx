@@ -1,8 +1,7 @@
 "use client"
-import { netherlandsCities } from '@/components/shared/AllCity';
 import InputField from '@/components/shared/InputField';
 import { useEditProfileMutation, useGetProfileQuery } from '@/redux/features/profile/getProfileSlice';
-import { Form, Input, Select } from 'antd';
+import { Form, Input } from 'antd';
 import React, { useEffect } from 'react';
 import Swal from 'sweetalert2';
 
@@ -120,22 +119,7 @@ const ProfileDetails = () => {
                           /> 
                         </Form.Item> 
                         <InputField name='postcode' label='Postcode' /> 
-                        <Form.Item name="city" 
-                         label={<p className='text-[#4E4E4E] text-[16px]'>City</p>} 
-                         rules={[
-                            {
-                              required: true,
-                              message: `Please enter your city name`,
-                            },
-                          ]} 
-                          >
-                            <Select
-                             
-                                style={{ width: "100%", height: "48px" }}
-                                options={netherlandsCities} 
-                                placeholder="Select your city name"
-                            />
-                        </Form.Item>
+                        <InputField name='city' label='City' /> 
                  
                 </div>
 

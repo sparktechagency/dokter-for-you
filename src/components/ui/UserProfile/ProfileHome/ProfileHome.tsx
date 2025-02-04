@@ -40,7 +40,7 @@ const ProfileHome = () => {
                   
                    text: "Dear customer, we thank you very much for your trust and payment. Your answers are sent to the doctor. Based on this, the doctor will decide what the best treatment is for you. If this results in a prescription, you will receive a message from the pharmacy that a prescription is ready for you with the next steps. If you have any questions in the meantime, please do not hesitate to ask us (support@dokterforyou.com). Kind regards, team Doctor For You",
                    icon: "success",
-                   timer: 1500,
+                   timer: 5000,
                    showConfirmButton: false
                  })
         }

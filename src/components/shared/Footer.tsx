@@ -59,10 +59,10 @@ const Footer = () => {
             <p className="mb-4 text-[#6B6B6B] text-[16px] font-semibold">Follow Us</p>
             <div className="flex gap-4">
   <a href="https://www.facebook.com/DokterForYou" target="_blank" className="text-blue-600 hover:text-blue-700">
-    <Image src={fb} alt="Facebook" width={32} height={32} />
+    <Image src={fb} alt="Facebook" width={40} height={40} />
   </a>
   <a href="https://www.instagram.com/dokterforyou?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" className="text-pink-600 hover:text-pink-700">
-    <Image src={insta} alt="Instagram" width={32} height={32} />
+    <Image src={insta} alt="Instagram" width={40} height={40} />
   </a>
 
 </div>
