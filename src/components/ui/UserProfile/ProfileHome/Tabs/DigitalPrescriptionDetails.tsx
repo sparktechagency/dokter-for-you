@@ -32,7 +32,6 @@ const DigitalPrescriptionDetails = () => {
     (consultation) => consultation?.suggestedMedicine?.length >= 1 || consultation?.opinion?.trim().length > 1
   );
 
-  console.log("DigitalPrescriptionDetails",DigitalPrescriptionDetails);  
 
   //console.log(allConsultations);
   const columns: ColumnsType<ConsultationData> = [
