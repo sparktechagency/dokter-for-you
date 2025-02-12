@@ -133,7 +133,7 @@ const Navbar: React.FC = () => {
 
 
             {/* profile  */}
-            <div className="relative lg:hidden">
+            {/* <div className="relative lg:hidden">
               <div 
             
                 className="flex items-center space-x-2 cursor-pointer"
@@ -149,34 +149,34 @@ const Navbar: React.FC = () => {
               </div> 
 
               {
-                 userData && isProfileDropdownOpen && (
-                  <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[170px] z-50" >
-                    <div className="p-4 flex flex-col gap-3 items-center">
-                      <Image src={imgURL} alt="" height={55} width={55} style={{ borderRadius: "100%", width: "55px", height: "55px" }} />
-                      <div className="font-bold">{userData?.firstName} {userData?.lastName}</div>
-                      <Link href="/profile">
-                        <button className="text-white bg-primary w-full lg:px-6 px-3 py-2 rounded-lg text-[14px]" onClick={showModal}>
-                          Visit Your Profile
-                        </button>
-                      </Link>
-  
-                      <button className="flex items-center justify-center border border-[#6B6B6B] w-full  gap-2 my-2 lg:px-6 px-3 py-2 rounded-lg text-[14px] ">
-                        <span> <GoStar size={14} color="#6B6B6B" /> </span>
-                        <span className=" text-[#6B6B6B] text-[14px] font-medium"> Review </span>
+                 isProfileDropdownOpen && (
+                  <div   ref={profileDropdownRef} className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[200px] z-50">
+                  <div className="p-4 flex flex-col gap-3 items-center">
+                    <Image src={imgURL} alt="" height={55} width={55} style={{ borderRadius: "100%", width: "55px", height: "55px" }} />
+                    <div className="font-bold">{userData?.firstName} {userData?.lastName}</div>
+                    <Link href="/profile">
+                      <button className="text-white bg-primary w-full px-6 py-2 rounded-lg text-[14px]" >
+                        Visit Your Profile
                       </button>
-                    </div>
-                    <div className="border-t ">
-                      <button onClick={handleLogout} className="flex items-center py-2 px-4 gap-2 ">
-                        <IoIosLogOut size={24} />
-                        <p>Log Out</p>
-                      </button>
-                    </div>
+                    </Link>
+
                   </div>
+                  <p className="flex items-center justify-start px-4 pb-2 w-full  gap-2  rounded-lg mt-2 text-[16px] text-gray-700 cursor-pointer" onClick={showModal}>
+                    <span> <GoStar size={16} /> </span>
+                    <span className="  text-[16px] font-medium"> Review </span>
+                  </p>
+                  <div className="border-t">
+                    <button className="px-4 py-3 text-primary hover:bg-gray-100 cursor-pointer flex items-center gap-2" onClick={handleLogout}>
+                      <IoIosLogOut size={24} />
+                      <p>Log Out</p>
+                    </button>
+                  </div>
+                </div>
                 )}
               
 
              
-            </div>
+            </div> */}
 
           </div>
 
@@ -232,13 +232,13 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Right Section */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <Link href="/search">
+          <div className=" lg:flex items-center space-x-4">
+            <Link href="/search" className="hidden lg:block">
               <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
                 <LuSearch size={24} color="#4E4E4E" />
               </div>
             </Link>
-            <Link href="/notifications">
+            <Link href="/notifications" className="hidden lg:block">
               <div className="relative bg-[#E8EEFE]  w-[48px] h-[48px] rounded-full flex items-center justify-center">
                 <div className="text-[#4E4E4E] text-lg cursor-pointer ">
                   <IoNotificationsOutline size={24} color="#4E4E4E" />
@@ -251,7 +251,7 @@ const Navbar: React.FC = () => {
               </div>
             </Link>
             {/* Profile Dropdown */}
-            <div className="relative">
+            <div className="relative w-full">
               {userData ? <div 
             
                 className="flex items-center space-x-2 cursor-pointer"
@@ -260,18 +260,19 @@ const Navbar: React.FC = () => {
                 }
               >
                 <Image src={imgURL} alt="" height={45} width={45} style={{ borderRadius: "100%", width: "45px", height: "45px" }} className="rounded-full" />
-                <span className="text-[#4E4E4E] font-medium">{userData?.firstName} {userData?.lastName}</span>
-                <DownOutlined
-                  className={`transition-transform ${isProfileDropdownOpen ? "rotate-180" : "rotate-0"
+                <p className="text-[#4E4E4E] font-medium hidden lg:block">{userData?.firstName} {userData?.lastName}</p> 
+                <p className="hidden lg:block">  <DownOutlined
+                  className={`transition-transform hidden lg:block ${isProfileDropdownOpen ? "rotate-180" : "rotate-0"
                     }`}
-                />
+                /> </p>
+               
               </div> : <div><Link href={"/login"}><button className="bg-primary text-white px-6 py-3 rounded-lg text-[14px]">Login</button></Link></div>}
 
               {isProfileDropdownOpen && (
                 <div   ref={profileDropdownRef} className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[200px] z-50">
                   <div className="p-4 flex flex-col gap-3 items-center">
                     <Image src={imgURL} alt="" height={55} width={55} style={{ borderRadius: "100%", width: "55px", height: "55px" }} />
-                    <div className="font-bold">{userData?.firstName} {userData?.lastName}</div>
+                    <div className="font-bold ">{userData?.firstName} {userData?.lastName}</div>
                     <Link href="/profile">
                       <button className="text-white bg-primary w-full px-6 py-2 rounded-lg text-[14px]" >
                         Visit Your Profile
