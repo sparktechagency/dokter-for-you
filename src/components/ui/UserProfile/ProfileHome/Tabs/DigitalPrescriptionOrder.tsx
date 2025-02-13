@@ -26,8 +26,7 @@ const DigitalPrescriptionOrder = () => {
     return <div>Loading...</div>
   }
 
-  
-  console.log(allConsultations?.data);  
+
 
   const DigitalPrescriptionOrderDetails = allConsultations?.data?.filter(
     (consultation:{ forwardToPartner: boolean; }) => consultation?.forwardToPartner === true   

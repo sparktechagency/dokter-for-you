@@ -63,8 +63,7 @@ const totalMedicinePrice = consultationId?.suggestedMedicine?.reduce((total, med
   const pricePerUnit = Number(medication?._id?.sellingPrice) * Number(medication?._id?.unitPerBox[0]);
   return total + (pricePerUnit * Number(medication?.count));
 }, 0); 
- 
-console.log(consultationId); 
+
 
     return (
       <div className=''>

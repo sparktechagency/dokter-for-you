@@ -35,7 +35,6 @@ const consultationsData = consultations?.data?.filter(
   (consultation) => consultation.consultationType === "regular" || consultation.consultationType === "video"
 );
 
-  console.log("kghdf",consultationsData); 
       const columns: ColumnsType<ConsultationData> = [
         {
           title: 'S. No.',
@@ -46,13 +45,13 @@ const consultationsData = consultations?.data?.filter(
         },
         
         {
-          title: 'Consult for:',
+          title: 'Consult for',
           dataIndex: ["subCategory", "name"],
           key: 'consultFor',
           width: 250,
         },
         {
-          title: 'Consultant:',
+          title: 'Consultant',
           dataIndex: "doctorId",
           key: 'consultant',
           width: 180,
