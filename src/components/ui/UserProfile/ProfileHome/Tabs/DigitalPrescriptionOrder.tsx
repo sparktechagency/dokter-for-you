@@ -20,12 +20,18 @@ interface ConsultationData {
 
 const DigitalPrescriptionOrder = () => {
   const [selectedConsultation, setSelectedConsultation] = useState(null);
-  const name = "medication"
-  const { data: allConsultations , isLoading } = useGetAllConsultationsQuery(name) 
+  // const name = "medication" 
+  const { data: allConsultations , isLoading } = useGetAllConsultationsQuery(undefined) 
   if(isLoading){
     return <div>Loading...</div>
   }
-  const DigitalPrescriptionOrderDetails = allConsultations?.data 
+
+  
+  console.log(allConsultations?.data);  
+
+  const DigitalPrescriptionOrderDetails = allConsultations?.data?.filter(
+    (consultation:{ forwardToPartner: boolean; }) => consultation?.forwardToPartner === true   
+  ); 
 
   const columns: ColumnsType<ConsultationData> = [
     {

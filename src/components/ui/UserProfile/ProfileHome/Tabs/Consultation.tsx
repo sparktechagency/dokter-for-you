@@ -24,16 +24,18 @@ const Consultation = () => {
   const [selectedConsultation, setSelectedConsultation] = useState<string | null>(null); 
   
 
-  const name = "video"  
-  const {data: consultations, isLoading} = useGetAllConsultationsQuery(name) 
+  // const name = "video"  
+  const {data: consultations, isLoading} = useGetAllConsultationsQuery() 
   
 if(isLoading){
   return <div>Loading...</div>
 }
 
-const consultationsData = consultations?.data
+const consultationsData = consultations?.data?.filter(
+  (consultation) => consultation.consultationType === "regular" || consultation.consultationType === "video"
+);
 
-  //console.log("kghdf",consultationsData);
+  console.log("kghdf",consultationsData); 
       const columns: ColumnsType<ConsultationData> = [
         {
           title: 'S. No.',

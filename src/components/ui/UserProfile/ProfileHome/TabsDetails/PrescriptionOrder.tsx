@@ -83,7 +83,7 @@ console.log(consultationId);
   {/* Tracking Info */}
   <div className="bg-[#E7FBF2] p-4 rounded-none mb-6">
     <div className="text-[16px] flex flex-col gap-2">
-   <p className="text-[#4E4E4E]">Tracking No. {consultationId?.trackingNo}</p>
+
         <p className="text-[#4E4E4E]">{consultationId?.category?.name} / {consultationId?.subCategory?.name}</p>
         <p className="text-[#4E4E4E]">{ moment(consultationId?.createdAt).format('DD/MM/YYYY , hh:mm a')}</p>
     </div>

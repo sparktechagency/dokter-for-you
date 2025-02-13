@@ -21,16 +21,21 @@ interface ConsultationData {
 
 const DigitalPrescriptionDetails = () => {
   const [selectedConsultation, setSelectedConsultation] = useState(null);
-  const name = "regular"
-  const { data: allConsultations, isLoading } = useGetAllConsultationsQuery(name)
+  // const name = "all"
+  const { data: allConsultations, isLoading } = useGetAllConsultationsQuery()
 
   if (isLoading) {
     return <div>Loading...</div>
   }
 
+
   const DigitalPrescriptionDetails = allConsultations?.data?.filter(
-    (consultation) => consultation?.suggestedMedicine?.length >= 1 || consultation?.opinion?.trim().length > 1
-  );
+    (consultation) => consultation?.forwardToPartner === false   
+  ); 
+
+  // const DigitalPrescriptionDetails = allConsultations?.data?.filter(
+  //   (consultation) => consultation?.suggestedMedicine?.length >= 1 || consultation?.opinion?.trim().length > 1
+  // );
 
 
   //console.log(allConsultations);
