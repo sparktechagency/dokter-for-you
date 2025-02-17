@@ -49,7 +49,6 @@ const { data } = useGetProfileQuery(undefined)
 const userData = data?.data 
 
 
-
 const handleBuyNow = async() =>{ 
     await BuyNow(consultationId._id).then((res) => {
 
@@ -248,16 +247,17 @@ const totalMedicinePrice = consultationId?.suggestedMedicine?.reduce((total, med
         <div  >
         <div className="bg-[#fdc529] px-6 py-[13px] text-white text-center">Processing</div>
       </div>
-      ): (
+      ): consultationId?.status === "delivered" ? (
+        <div  >
+        <div className="bg-green-700 px-6 py-[13px] text-white text-center">Delivered</div>
+      </div>
+      ):(
         <div  onClick={handleBuyNow}>
         <button className="bg-[#1a237e] px-6 h-[48px] text-white">Buy Now</button>
       </div>   
       )
     } 
-  
-
-  
-    </div>
+ </div>
   ):""
  }
   
