@@ -1,8 +1,7 @@
 "use client"
 import {  store } from "../store";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { Provider } from "react-redux";
-
 
 const ReduxProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
