@@ -32,7 +32,7 @@ if(isLoading){
 }
 
 const consultationsData = consultations?.data?.filter(
-  (consultation) => consultation.consultationType === "regular" || consultation.consultationType === "video"
+  (consultation) => consultation.consultationType === "video"
 );
 
       const columns: ColumnsType<ConsultationData> = [
