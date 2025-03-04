@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 // Extend window type to avoid TypeScript error
 declare global {
@@ -14,29 +15,29 @@ declare global {
 }
 
 export default function GTranslateWrapper() {
-  const [loaded, setLoaded] = useState(false);
+  const pathname = usePathname(); // Get current route
 
   useEffect(() => {
-    if (loaded) return; // Prevent multiple loads
+    // Remove old script if exists
+    document.querySelectorAll("script[src*='gtranslate.net']").forEach((s) => s.remove());
 
+    // Define gtranslateSettings
+    window.gtranslateSettings = {
+      default_language: "en",
+      languages: ["en", "fr", "it", "es"],
+      wrapper_selector: ".gtranslate_wrapper",
+    };
+
+    // Load the script dynamically after a 3-second delay
     const timeout = setTimeout(() => {
-      // Define gtranslateSettings
-      window.gtranslateSettings = {
-        default_language: "en",
-        languages: ["en", "fr", "it", "es"],
-        wrapper_selector: ".gtranslate_wrapper",
-      };
-
-      // Load the script dynamically
       const script = document.createElement("script");
       script.src = "https://cdn.gtranslate.net/widgets/latest/float.js";
       script.async = true;
-      script.onload = () => setLoaded(true); // Mark script as loaded
       document.body.appendChild(script);
     }, 3000); // Delay of 3 seconds
 
-    return () => clearTimeout(timeout); // Cleanup if component unmounts
-  }, [loaded]); // Only runs once
+    return () => clearTimeout(timeout); // Cleanup previous timeout
+  }, [pathname]); // Run on route change
 
   return <div className="gtranslate_wrapper"></div>;
 }
