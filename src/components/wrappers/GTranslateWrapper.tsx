@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // Extend window type to avoid TypeScript error
 declare global {
@@ -14,28 +14,26 @@ declare global {
 }
 
 export default function GTranslateWrapper() {
-  useEffect(() => {
-    // Function to reinitialize GTranslate
-    const loadGTranslate = () => {
-      if (typeof window !== "undefined") {
-        // Ensure gtranslateSettings exists
-        window.gtranslateSettings = {
-          default_language: "en",
-          languages: ["en", "fr", "it", "es"],
-          wrapper_selector: ".gtranslate_wrapper",
-        };
+  const [loaded, setLoaded] = useState(false);
 
-        // Load the script dynamically
-        const script = document.createElement("script");
-        script.src = "https://cdn.gtranslate.net/widgets/latest/float.js";
-        script.async = true;
-        document.body.appendChild(script);
-      }
+  useEffect(() => {
+    if (loaded) return; // Prevent multiple loads
+
+    // Define gtranslateSettings
+    window.gtranslateSettings = {
+      default_language: "en",
+      languages: ["en", "fr", "it", "es"],
+      wrapper_selector: ".gtranslate_wrapper",
     };
 
-    // Delay execution to ensure content is loaded
-    setTimeout(loadGTranslate, 1500);
-  }, []);
+    // Load the script dynamically
+    const script = document.createElement("script");
+    script.src = "https://cdn.gtranslate.net/widgets/latest/float.js";
+    script.async = true;
+    script.onload = () => setLoaded(true); // Mark script as loaded
+    document.body.appendChild(script);
+
+  }, [loaded]); // Only runs once
 
   return <div className="gtranslate_wrapper"></div>;
 }
