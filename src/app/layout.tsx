@@ -21,8 +21,9 @@ export default function RootLayout({
         
         {/* GTranslate Settings */}
         <Script id="gtranslate-settings" strategy="afterInteractive">
-          {`window.gtranslateSettings = {"default_language":"en","languages":["en","fr","it","es"],"wrapper_selector":".gtranslate_wrapper"}`}
+          {`window.gtranslateSettings = {"default_language":"en","languages":["en","fr","it","es","bn","nl","hi","ja","ko","da","la","el"],"wrapper_selector":".gtranslate_wrapper"}`}
         </Script>
+        
 
         {/* GTranslate Script */}
         <Script 
