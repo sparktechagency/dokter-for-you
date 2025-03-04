@@ -27,9 +27,7 @@ export default function RootLayout({
           {children}
         </AntdRegistry>
       </ReduxProvider>
-      <div class="gtranslate_wrapper"></div>
-<script>window.gtranslateSettings = {"default_language":"en","languages":["en","fr","it","es"],"wrapper_selector":".gtranslate_wrapper"}</script>
-<script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+
       </body>
       
     </html>
