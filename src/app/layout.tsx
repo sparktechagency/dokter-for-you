@@ -3,7 +3,7 @@
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry"; 
 import ReduxProvider from "@/redux/lib/ReduxProvider";
-import GTranslateWrapper from "@/components/wrappers/GTranslateWrapper";
+// import GTranslateWrapper from "@/components/wrappers/GTranslateWrapper";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ReduxProvider> 
           <AntdRegistry>
             {children}
-            <GTranslateWrapper /> 
+            {/* <GTranslateWrapper />  */}
           </AntdRegistry>
         </ReduxProvider>
       </body>
