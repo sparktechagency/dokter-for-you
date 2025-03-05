@@ -1,13 +1,17 @@
 "use client";
 
 import "./globals.css";
-import { AntdRegistry } from "@ant-design/nextjs-registry"; 
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import ReduxProvider from "@/redux/lib/ReduxProvider";
-// import GTranslateWrapper from "@/components/wrappers/GTranslateWrapper";
+import GTranslateWrapper from "@/components/wrappers/GTranslateWrapper";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en"> 
+    <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" href="/favicon.ico" />
@@ -16,13 +20,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `window.gtranslateSettings = {"default_language":"en","languages":["en","fr","it","es"],"wrapper_selector":".gtranslate_wrapper"}`,
           }}
         />
-      </head> 
+      </head>
 
-      <body className="antialiased"> 
-        <ReduxProvider> 
+      <body className="antialiased">
+        <ReduxProvider>
           <AntdRegistry>
             {children}
-            {/* <GTranslateWrapper />  */}
+            <GTranslateWrapper />
           </AntdRegistry>
         </ReduxProvider>
       </body>
