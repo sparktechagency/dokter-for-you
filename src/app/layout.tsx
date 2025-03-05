@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ReduxProvider> 
           <AntdRegistry>
             {children}
-            {/* <GTranslateWrapper />  */}
+            <GTranslateWrapper /> 
           </AntdRegistry>
         </ReduxProvider>
       </body>
