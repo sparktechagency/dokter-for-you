@@ -6,10 +6,12 @@ import { DownOutlined, MenuOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import Image from "next/image";
 import { LuSearch } from "react-icons/lu";
-import { IoNotificationsOutline } from "react-icons/io5";
+import { IoChevronDownOutline, IoNotificationsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 import { GoStar } from "react-icons/go";
-import { Drawer } from "antd";
+import { HiOutlineTranslate } from "react-icons/hi";
+import { Drawer } from "antd"; 
+import Cookies from "js-cookie";
 import AddReviewModal from "../ui/Website/home/AddReviewModal";
 import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
 import { imageUrl } from "@/redux/base/baseApi";
@@ -17,11 +19,25 @@ import { useGetAllCategoryQuery } from "@/redux/features/website/categorySlice";
 import { useRouter } from "next/navigation";
 import { useGetAllNotificationQuery } from "@/redux/features/website/notificationSlice";
 
+const languages = [
+  { label: "English", value: "en" },
+  { label: "Dutch", value: "nl" },
+  { label: "German", value: "de" },
+  { label: "French", value: "fr" },
+  { label: "Polish", value: "pl" },
+  { label: "Portuguese", value: "pt" },
+  { label: "Spanish", value: "es" },
+  { label: "Swedish", value: "sv" },
+];
+
 const Navbar: React.FC = () => {
   const [activeLink, setActiveLink] = useState("");
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  //language 
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false); 
+  const [selectedLanguage, setSelectedLanguage] = useState("") 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [userData, setUserData] = useState<any>(null);
   const { data } = useGetProfileQuery(undefined)
@@ -59,7 +75,7 @@ const Navbar: React.FC = () => {
 
   const toggleDrawer = () => {
     setIsDrawerVisible(!isDrawerVisible);
-  }; 
+  };
 
   const profileDropdownRef = useRef<HTMLDivElement>(null);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
@@ -86,8 +102,47 @@ const Navbar: React.FC = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []); 
+  }, []);
 
+    useEffect(() => {
+    const storedLanguage = Cookies.get("currentLanguage");
+    if (storedLanguage) {
+      setSelectedLanguage(storedLanguage);
+    }
+  }, []);
+
+
+  // Switch Language Function
+  const switchLanguage = (lang: string) => {
+    // Store selected language in cookies
+    Cookies.set("currentLanguage", lang, { expires: 30 });
+
+    // Correctly set the Google Translate cookie (googtrans)
+    const googleTransValue = `/en/${lang}`;
+
+    // Remove any existing "googtrans" cookies before setting a new one
+    document.cookie =
+      "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+
+    // after add domain 
+    // document.cookie =
+    //   "googtrans=; domain=.1plus1dating.com; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;"; // Replace with your actual domain
+
+    // Now, set the new "googtrans" cookie
+    document.cookie = `googtrans=${googleTransValue}; path=/; max-age=${30 * 24 * 60 * 60
+      }`;
+
+    // for domain 
+    // document.cookie = `googtrans=${googleTransValue}; domain=.1plus1dating.com; path=/; max-age=${
+    //   30 * 24 * 60 * 60
+    // };`;
+
+    // Update state
+    setSelectedLanguage(lang);
+
+    // Reload the page to apply the translation
+    window.location.reload();
+  }; 
 
   const navLinks = [
     { label: "Home", link: "/home" },
@@ -102,6 +157,8 @@ const Navbar: React.FC = () => {
     { label: "Blogs", link: "/blogs" },
     { label: "Support", link: "/support" },
   ];
+
+
 
   return (
     <>
@@ -185,8 +242,8 @@ const Navbar: React.FC = () => {
             <div className="flex space-x-10">
               {navLinks.map((navItem, index) => (
                 <div key={index} className="relative group">
-                  <div 
-                
+                  <div
+
                     className={`flex items-center cursor-pointer text-[#4E4E4E] hover:text-primary font-[400px] ${activeLink === navItem.label
                       ? "text-primary font-medium"
                       : ""
@@ -210,7 +267,7 @@ const Navbar: React.FC = () => {
                   </div>
 
                   {navItem.subOptions && openDropdown === index && (
-                    <div    ref={categoryDropdownRef} className="absolute left-0 mt-2 w-[200px] bg-white shadow-lg border rounded-md z-10">
+                    <div ref={categoryDropdownRef} className="absolute left-0 mt-2 w-[200px] bg-white shadow-lg border rounded-md z-10">
                       {navItem.subOptions.map((option: { label: string, value: string }, subIndex: number) => (
                         <Link key={subIndex} href={`/subcategory?category=${option.value}`}>
                           <p
@@ -249,27 +306,57 @@ const Navbar: React.FC = () => {
                   )}
                 </div>
               </div>
-            </Link>
+            </Link> 
+
+            {/* language  */}
+            <div className=" relative w-full ">
+              <button
+                onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+                className="w-12 h-12 bg-transparent  text-xl cursor-pointer flex items-center justify-center gap-0"
+              >
+                <span> <HiOutlineTranslate /> </span> <span><IoChevronDownOutline /> </span>
+              </button>
+              {isLanguageDropdownOpen && (
+                <div  ref={profileDropdownRef}  className="absolute -right-6 py-2  mt-2 w-[210px] bg-white border border-gray-300 rounded shadow-lg z-10">
+                  {languages.map((lang, index) => (
+                    <div
+                      key={index}
+                      className={`px-4 py-2 h-10 hover:bg-[#e8eefe] cursor-pointer text-[#6B6B6B] ${selectedLanguage === lang?.value ? "bg-[#e8eefe] " : ""}`}
+                      onClick={() => {
+                        setIsLanguageDropdownOpen(false); 
+                        switchLanguage(lang?.value);
+                      }}
+                    >
+                      {lang?.label}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+
             {/* Profile Dropdown */}
             <div className="relative w-full">
-              {userData ? <div 
-            
+              {userData ? <div
+
                 className="flex items-center space-x-2 cursor-pointer"
                 onClick={() =>
                   setIsProfileDropdownOpen(!isProfileDropdownOpen)
                 }
               >
                 <Image src={imgURL} alt="" height={45} width={45} style={{ borderRadius: "100%", width: "45px", height: "45px" }} className="rounded-full" />
-                <p className="text-[#4E4E4E] font-medium hidden lg:block">{userData?.firstName} {userData?.lastName}</p> 
+                <p className="text-[#4E4E4E] font-medium hidden lg:block">{userData?.firstName} {userData?.lastName}</p>
                 <p className="hidden lg:block">  <DownOutlined
                   className={`transition-transform hidden lg:block ${isProfileDropdownOpen ? "rotate-180" : "rotate-0"
                     }`}
                 /> </p>
-               
-              </div> : <div><Link href={"/login"}><button className="bg-primary text-white px-6 py-3 rounded-lg text-[14px]">Login</button></Link></div>}
+
+              </div>
+                :
+                <div><Link href={"/login"}><button className="bg-primary text-white px-6 py-3 rounded-lg text-[14px]">Login</button></Link></div>}
 
               {isProfileDropdownOpen && (
-                <div   ref={profileDropdownRef} className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[200px] z-50">
+                <div ref={profileDropdownRef} className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[200px] z-50">
                   <div className="p-4 flex flex-col gap-3 items-center">
                     <Image src={imgURL} alt="" height={55} width={55} style={{ borderRadius: "100%", width: "55px", height: "55px" }} />
                     <div className="font-bold ">{userData?.firstName} {userData?.lastName}</div>
@@ -311,7 +398,7 @@ const Navbar: React.FC = () => {
           {navLinks.map((navItem, index) => (
             <div key={index}>
               {navItem.link ? (
-                <Link href={navItem.link}  onClick={toggleDrawer}>
+                <Link href={navItem.link} onClick={toggleDrawer}>
                   <p className="text-[#4E4E4E] hover:text-primary font-medium text-[20px]">
                     {navItem.label}
                   </p>

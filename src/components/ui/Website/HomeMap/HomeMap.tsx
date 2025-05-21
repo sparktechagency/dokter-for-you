@@ -6,6 +6,8 @@ import { ConfigProvider, Select } from "antd";
 import dynamic from "next/dynamic";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+// import { LuGalleryHorizontal } from "react-icons/lu";
 // import { ReactSimpleMap } from "react-simple-maps"; 
 
 const ComposableMap = dynamic(
@@ -80,22 +82,31 @@ const countries = [
 ];
 
 interface Country {
-  value: string;
-  label: string;
+  value: string | undefined;
+  label: string | undefined;
 }
 
 const HomeMap = () => {
   const router = useRouter();
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
-  const [mounted, setMounted] = useState(false); 
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-  }, []); 
+  }, []);
 
   const handleCountryChange = (value: string) => {
     const country = countries.find((c) => c.value === value);
     setSelectedCountry(country || null);
+  }; 
+
+  const handleCountryClick = () => { 
+
+    if (selectedCountry) {
+      Cookies.set("country", selectedCountry.value || "", { expires: 15, path: "/" });
+      router.push("/home");
+    } 
+
   };
 
   return (
@@ -141,11 +152,10 @@ const HomeMap = () => {
 
         <div>
           <button
-            disabled={!selectedCountry}
-            onClick={() => router.push("/home")}
-            className={`bg-[#007F91] text-white h-[48px] flex gap-1 items-center justify-center px-5 mb-2 ${
-              !selectedCountry ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            disabled={!selectedCountry} 
+            onClick={handleCountryClick}
+            className={`bg-[#007F91] text-white h-[48px] flex gap-1 items-center justify-center px-5 mb-2 ${!selectedCountry ? "opacity-50 cursor-not-allowed" : ""
+              }`}
           >
             <span>Go to Doktor For You</span>
             <span>
@@ -155,7 +165,7 @@ const HomeMap = () => {
         </div>
 
         <div className="relative w-full lg:w-[700px] lg:h-auto flex items-center justify-center">
-          {mounted  && (
+          {mounted && (
             <ComposableMap
               projection="geoMercator"
               projectionConfig={{

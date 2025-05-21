@@ -43,4 +43,51 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #6b5ecc34;
+}  
+
+
+/* for Google Translate   */   
+
+/* Hide the Google Translate banner */
+
+.antialiased{
+    position: inherit ! important;
+}
+
+/* Hide the Google Translate toolbar */
+.goog-te-gadget {
+  display: none !important;
 } 
+/* Hide the Google Translate banner */
+.goog-te-banner-frame {
+  display: none !important;
+}
+/* Remove pop-up preview */
+.goog-te-balloon-frame {
+  display: none !important;
+}
+ 
+/* Hide the floating dropdown */
+.goog-te-menu-frame {
+  display: none !important;
+}
+ 
+/* Hide Google Translate Top Bar */
+.skiptranslate {
+  display: none !important;
+}
+ 
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf.VIpgJd-ZVi9od-aZ2wEe-wOHMyf-ti6hGc {
+  display: none !important;
+}
+ 
+.VIpgJd-ZVi9od-aZ2wEe {
+  display: none !important;
+} 
+
+/* ::selection {
+  background: #e8eefe !important;
+  color: white !important;
+} */
+
+/* finish there  */

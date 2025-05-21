@@ -11,7 +11,8 @@ import React from 'react';
 const BlogDetails = () => { 
   const {id} = useParams();  
   const {data} = useGetSingleArticleQuery(id)  
-  const article = data?.data
+  const article = data?.data 
+
 
     return (
         <div className='bg-[#F7F7F7]'>
