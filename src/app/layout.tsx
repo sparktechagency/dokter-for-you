@@ -4,6 +4,7 @@ import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import ReduxProvider from "@/redux/lib/ReduxProvider";
 import Script from "next/script";
+import { CountryProvider } from "./(website)/CountryContext";
 
 
 export default function RootLayout({
@@ -47,10 +48,12 @@ export default function RootLayout({
       </head> 
 
       <body className="antialiased">
-        <ReduxProvider>
+        <ReduxProvider> 
+            <CountryProvider> 
           <AntdRegistry>
             {children}      
-          </AntdRegistry>
+          </AntdRegistry> 
+          </CountryProvider>
         </ReduxProvider>
       </body>
     </html>

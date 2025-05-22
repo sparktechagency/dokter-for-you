@@ -9,15 +9,16 @@ import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import { useGetSubCategoryByIdQuery } from '@/redux/features/website/categorySlice';
 import { imageUrl } from '@/redux/base/baseApi';
 import { useGetProfileQuery } from '@/redux/features/profile/getProfileSlice';
+import BuyMedicine from '@/components/europe/buyMedicine/BuyMedicine';
 
 const SubCategoryDetails = () => {
   const searchParams = useSearchParams();
   const category = searchParams.get('category');
   const SubCategory = searchParams.get('subcategory');
   const { data: subCategory } = useGetSubCategoryByIdQuery(SubCategory)
-  const subCategoryData = subCategory?.data 
-  const {data:profile} = useGetProfileQuery(undefined) 
-  const profileData = profile?.data 
+  const subCategoryData = subCategory?.data
+  const { data: profile } = useGetProfileQuery(undefined)
+  const profileData = profile?.data
 
   //console.log(subCategoryData);
 
@@ -52,7 +53,7 @@ const SubCategoryDetails = () => {
           </p>
 
 
-          <div className="pt-4">
+          <div className="pt-4 pb-10 border-b border-[#D1D1D1]">
             <p className="font-medium mb-4">Do you need help with selecting the right Consultation?</p>
             <Link href={`${profileData ? `/consultations?category=${subCategoryData?.category}&subcategory=${subCategoryData?._id}&name=${subCategoryData?.name}` : "/login"}`} className=' w-full ' >
               <CommonBtn className={` flex gap-1 items-center justify-center px-6  h-[56px] `}>
@@ -60,6 +61,18 @@ const SubCategoryDetails = () => {
                 <span><MdOutlineKeyboardArrowRight size={22} /></span>
               </CommonBtn>
             </Link>
+          </div> 
+
+          <BuyMedicine  subcategoryId={subCategoryData?._id} SubCategoryName={subCategoryData?.name} />
+
+          <div className=' text-[#6B6B6B] text-[16px] pt-6'>
+            Being overweight, or obese, refers to carrying excess body fat. Doctors typically use Body Mass Index (BMI) to assess whether someone’s weight is suitable for their height. This calculation is based on weight in kilograms divided by the square of height in meters.
+
+            Healthy weight: BMI between 18 and 25
+            Overweight: BMI of 26 or higher
+            Obesity: BMI above 30
+            Severe obesity: BMI of 35 or higher
+            Waist circumference is another important factor. Excess fat around the abdomen poses more health risks than fat stored around the hips or thighs. For men, a waist measurement above 102 cm indicates an elevated risk of health issues related to excess body fat.
           </div>
         </div>
       </div>

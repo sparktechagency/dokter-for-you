@@ -1,7 +1,6 @@
 "use client"
 import { usePathname } from 'next/navigation';
 import React from 'react';
-import Cookies from "js-cookie";
 import Navbar from '@/components/shared/Navbar';
 import { Poppins } from 'next/font/google';
 import Footer from '@/components/shared/Footer';
@@ -12,12 +11,9 @@ const poppins = Poppins({
     display: 'swap',
 });
 
-export   const country = Cookies.get("country"); 
 
 const ClientNavbar = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname()
-  
-
     return (
         <div  >
             {
