@@ -29,7 +29,8 @@ interface MedicationModalProps {
 
 const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelected }: MedicationModalProps) => {
   const [quantity, setQuantity] = useState(1);
-  const [packSize, setPackSize] = useState('');
+  const [packSize, setPackSize] = useState(''); 
+  const [dosage , setDosage] = useState('')
 
   const handleSubmit = () => { 
 
@@ -40,7 +41,8 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
     handleAddToSelected({
       _id: medicineData?._id,
       count: quantity,
-      total: `${packSize} pcs`,
+      total: `${packSize} pcs`,  
+
     }) 
 
     setQuantity(1);
@@ -55,7 +57,7 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
       centered
       footer={null}
       width={850}
-      title="Medication Details"
+      title={<p className='text-2xl font-medium text-[#222222]'>Medication Details</p>}
       className="medication-modal"
     >
       <div className="flex flex-col md:flex-row gap-8 mt-4">
@@ -75,19 +77,23 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
           e.preventDefault();
           handleSubmit();
         }}>
-          {/* <div className="uppercase text-[#1854F9] text-sm font-semibold mb-2">
-            {medicineData?.company}
-          </div> */}
+          <div className="uppercase text-[#1854F9] text-sm font-semibold mb-2">
+           Square
+          </div>
 
-          <h2 className="text-2xl font-medium mb-2 text-[#222222]">{medicineData?.name}</h2>
-          <p className="text-[#6B6B6B] font-[400] text-[16px] mb-2">{medicineData?.medicineType}</p>
+          <h2 className="text-2xl font-medium mb-1 text-[#222222]">{medicineData?.name}</h2>
+          <p className="text-[#6B6B6B] font-[400] text-[16px] mb-3"> Vitamin C </p>  
+
+          <p className="text-[#00B3CC] font-[400] text-[16px] mb-0.5"> Tablet </p> 
+          <p className="text-[#1854F9] font-[400] text-2xl mb-2"> €20 </p> 
+
 
           <p className="text-[#999999] font-[400] text-[14px] mb-4">
             {medicineData?.description === "undefined" ? "" : medicineData?.description}
           </p>
 
-          <div className="flex items-center gap-5 mb-4">
-            <div>
+          <div className="flex flex-col items-start gap-5 mb-4">
+            {/* <div>
               <div className="text-gray-600 mb-2">Form</div>
               <button className='px-4 py-1 font-[400] text-[16px] bg-primary text-white'>{medicineData?.form}</button>
             </div>
@@ -95,11 +101,39 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
             <div>
               <div className="text-gray-600 mb-2">Dosage</div>
               <button className='px-4 py-1 font-[400] text-[16px] bg-primary text-white'>{medicineData?.dosage}</button>
-            </div>
+            </div> */} 
+
+            <div className="flex flex-col gap-2"> 
+              <p className="text-[#999999] ">Dosage</p>
+                {medicineData?.unitPerBox?.map((size) => (
+                  <div
+                    key={size}
+                    onClick={() => setDosage(size)} 
+                    className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${dosage === size ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
+                  >
+                    {size} gm
+                  </div>
+                ))}
+              </div>   
+
+            <div className="flex flex-col gap-2"> 
+              <p className="text-[#999999] ">Select Units per Box</p>
+                {medicineData?.unitPerBox?.map((size) => (
+                  <div
+                    key={size}
+                    onClick={() => setPackSize(size)} 
+                    className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${packSize === size ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
+                  >
+                    {size} Pcs
+                  </div>
+                ))}
+              </div>   
+
+
           </div>
 
           <div className="mb-6">
-            <div className="text-gray-600 mb-3 text-sm font-medium">Quantity</div>
+            <div className="text-[#999999] mb-3 text-sm font-normal">Contents of the Box</div>
             <div className="flex lg:flex-row flex-col items-center gap-4">
               <div className="flex items-center gap-2">
                 <Button
@@ -119,18 +153,6 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
                   className="w-8 h-8 flex items-center justify-center bg-gray-200 border-none shadow-sm"
                 />
               </div>
-
-              <div className="flex gap-2">
-                {medicineData?.unitPerBox?.map((size) => (
-                  <div
-                    key={size}
-                    onClick={() => setPackSize(size)}
-                    className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${packSize === size ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
-                  >
-                    {size} Pcs
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
 
@@ -141,7 +163,12 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
             Select
           </button>
         </form>
-      </div>
+      </div> 
+
+      <p className=' text-[#999999] text-sm font-normal py-4'> Where your health is concerned, we believe you have the right to decide what to do with your body. That is why we offer you the opportunity to consult a licensed and registered EU   </p> 
+
+       <h2 className="text-[16px] font-medium mb-2 mt-2 text-[#0A2369]">Description</h2>  
+       <p className=' text-[#999999] text-sm font-normal'>this is description part . waiting for backend..</p>
     </Modal>
   );
 };

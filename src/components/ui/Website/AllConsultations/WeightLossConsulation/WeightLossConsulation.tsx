@@ -23,13 +23,21 @@ const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedi
   const { data } = useGetAllMedicinesQuery({search , id:SubCategory});
   const [detailedSelectedMeds, setDetailedSelectedMeds] = useState([]);
   const medications = data?.data;
-  const [showMore, setShowMore] = useState(false);
-  setMedicines(selectedMeds)  
-  setSelectedMedicines(detailedSelectedMeds) 
+  const [showMore, setShowMore] = useState(false); 
+
+useEffect(() => {
+  setMedicines(selectedMeds);
+}, [selectedMeds, setMedicines]);
+
+useEffect(() => {
+  setSelectedMedicines(detailedSelectedMeds);
+}, [detailedSelectedMeds, setSelectedMedicines]);
 
   const { data: medicineById } = useGetMedicineByIdQuery(singleMedicineId, {
     skip: !singleMedicineId,
-  });
+  }); 
+
+
 
   useEffect(() => {
     if (medicineById?.data && singleMedicineId) {
@@ -120,10 +128,9 @@ const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedi
 
 
   const isSelected = (id) =>
-    selectedMeds.some((selectedMed) => selectedMed?._id === id);
+    detailedSelectedMeds.some((selectedMed) => selectedMed?._id === id);
 
   const displayedMeds = showMore ? filteredMeds : filteredMeds?.slice(0, 12); 
-
 
 
   return (
@@ -154,7 +161,7 @@ const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedi
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
         {displayedMeds?.map((med) => (
           <div
-            key={med._id}
+            key={`${med._id}-${isSelected(med._id)}`}
             className={`border relative rounded-lg p-4 shadow hover:shadow-lg cursor-pointer ${isSelected(med._id) ? "bg-[#E7FBF2]" : ""
               }`}
             onClick={() => handleSelect(med)}

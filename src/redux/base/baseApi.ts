@@ -4,8 +4,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "https://api.dokterforyou.com/api/v1", 
-      baseUrl: "http://10.0.70.208:5002/api/v1" ,
+    baseUrl: "https://api.dokterforyou.com/api/v1", 
+      // baseUrl: "http://10.0.70.208:5002/api/v1" ,
     prepareHeaders: (headers) => {
       const token = GetLocalStorage("DokterToken");
       if (token) {
@@ -18,5 +18,5 @@ export const baseApi = createApi({
   tagTypes: ["profile"],
 });
 
-// export const imageUrl = "https://api.dokterforyou.com/"; 
-export const imageUrl = "http://10.0.70.208:5002/";  
+export const imageUrl = "https://api.dokterforyou.com/"; 
+// export const imageUrl = "http://10.0.70.208:5002/";  

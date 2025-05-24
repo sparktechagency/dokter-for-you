@@ -10,6 +10,7 @@ import { useGetSubCategoryByIdQuery } from '@/redux/features/website/categorySli
 import { imageUrl } from '@/redux/base/baseApi';
 import { useGetProfileQuery } from '@/redux/features/profile/getProfileSlice';
 import BuyMedicine from '@/components/europe/buyMedicine/BuyMedicine';
+import { useCountry } from '@/app/(website)/CountryContext';
 
 const SubCategoryDetails = () => {
   const searchParams = useSearchParams();
@@ -18,7 +19,8 @@ const SubCategoryDetails = () => {
   const { data: subCategory } = useGetSubCategoryByIdQuery(SubCategory)
   const subCategoryData = subCategory?.data
   const { data: profile } = useGetProfileQuery(undefined)
-  const profileData = profile?.data
+  const profileData = profile?.data 
+  const { country } = useCountry();
 
   //console.log(subCategoryData);
 
@@ -55,7 +57,7 @@ const SubCategoryDetails = () => {
 
           <div className="pt-4 pb-10 border-b border-[#D1D1D1]">
             <p className="font-medium mb-4">Do you need help with selecting the right Consultation?</p>
-            <Link href={`${profileData ? `/consultations?category=${subCategoryData?.category}&subcategory=${subCategoryData?._id}&name=${subCategoryData?.name}` : "/login"}`} className=' w-full ' >
+            <Link href={`${profileData ?  country !== "Netherlands"? `/medical-consultations?category=${subCategoryData?.category}&subcategory=${subCategoryData?._id}&name=${subCategoryData?.name}` :`/consultations?category=${subCategoryData?.category}&subcategory=${subCategoryData?._id}&name=${subCategoryData?.name}` : "/login"}`} className=' w-full ' >
               <CommonBtn className={` flex gap-1 items-center justify-center px-6  h-[56px] `}>
                 <span>Start Your Consultation</span>
                 <span><MdOutlineKeyboardArrowRight size={22} /></span>
@@ -63,7 +65,10 @@ const SubCategoryDetails = () => {
             </Link>
           </div> 
 
-          <BuyMedicine  subcategoryId={subCategoryData?._id} SubCategoryName={subCategoryData?.name} />
+{
+  country !== "Netherlands" &&  <BuyMedicine  subcategoryId={subCategoryData?._id} SubCategoryName={subCategoryData?.name} />
+}
+         
 
           <div className=' text-[#6B6B6B] text-[16px] pt-6'>
             Being overweight, or obese, refers to carrying excess body fat. Doctors typically use Body Mass Index (BMI) to assess whether someone’s weight is suitable for their height. This calculation is based on weight in kilograms divided by the square of height in meters.
