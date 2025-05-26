@@ -4,32 +4,9 @@
 import { useState } from 'react';
 import { Form, Progress } from 'antd'
 import { Poppins } from 'next/font/google';
-
-// import MedicalQuestion13 from './MedicalQuestions/MedicalQuestion13';
-// import MedicalQuestion1 from './MedicalQuestions/MedicalQuestion1';
-// import MedicalQuestion2 from './MedicalQuestions/MedicalQuestion2';
-// import MedicalQuestion3 from './MedicalQuestions/MedicalQuestion3';
-// import MedicalQuestion4 from './MedicalQuestions/MedicalQuestion4';
-// import MedicalQuestion5 from './MedicalQuestions/MedicalQuestion5';
-// import MedicalQuestion6 from './MedicalQuestions/MedicalQuestion6';
-// import MedicalQuestion7 from './MedicalQuestions/MedicalQuestion7';
-// import MedicalQuestion8 from './MedicalQuestions/MedicalQuestion8';
-// import MedicalQuestion9 from './MedicalQuestions/MedicalQuestion9';
-// import MedicalQuestion10 from './MedicalQuestions/MedicalQuestion10';
-// import MedicalQuestion11 from './MedicalQuestions/MedicalQuestion11';
-// import MedicalQuestion14 from './MedicalQuestions/MedicalQuestion14'; 
-
-// import AdditionalQuestions2 from './AdditionalQuestions/AdditionalQuestions2';
-// import AdditionalQuestions3 from './AdditionalQuestions/AdditionalQuestions3';
-// import AdditionalQuestions4 from './AdditionalQuestions/AdditionalQuestions4';
-
-// import DeliveryPayment from './DeliveryPayment'; 
-
 import { useSearchParams } from 'next/navigation';
-// import MedicalQuestion12 from './MedicalQuestions/MedicalQuestion12';
 import { useGetDynamicQuestionsQuery } from '@/redux/features/website/consultationSlice';
 import AccountDetails from '@/components/ui/Website/AllConsultations/AccountDetails';
-import StepsFooterBtn from '@/components/ui/Website/AllConsultations/StepsFooterBtn';
 import MedicationPreference from '@/components/ui/Website/AllConsultations/MedicationPreference';
 import WeightLossConsultation from '@/components/ui/Website/AllConsultations/WeightLossConsulation/WeightLossConsulation';
 import ConsultationType from '@/components/ui/Website/AllConsultations/ConsultationType';
@@ -37,6 +14,10 @@ import AdditionalQuestions1 from '@/components/ui/Website/AllConsultations/Addit
 import Delivery from '@/components/ui/Website/AllConsultations/Delivery';
 import Address from '@/components/ui/Website/AllConsultations/Address';
 import CheckConfirm from '@/components/ui/Website/AllConsultations/CheckConfirm';
+import MedicalQuestion1 from '@/components/ui/Website/AllConsultations/MedicalQuestions/MedicalQuestion1';
+import MedicalQuestion2 from '@/components/ui/Website/AllConsultations/MedicalQuestions/MedicalQuestion2';
+import StepsFooter from './StepsFooter';
+import DynamicMedicalQuestion from './DynamicMedicalQuestion';
 
 const poppins = Poppins({ weight: ['400', '500', '600', '700'], subsets: ['latin'] });
 
@@ -76,7 +57,7 @@ const MedicalConsultations = () => {
         "consultationType": newConsultationType,
     }   
 
-   
+   console.log(data);
     const updateQNA = (question: string, answer: string) => {
         setQnaData((prev) => {
             const existing = prev.find((qna) => qna.question === question);
@@ -109,71 +90,21 @@ const MedicalConsultations = () => {
             content: <AccountDetails setUserId={setUserId} /> ,
             skippable: false,
         },
-        // {
-        //     title: "Medical Question 1/13",
-        //     content: <MedicalQuestion1 updateQNA={updateQNA} /> ,
-        //     skippable: false,
-        // },
-        // {
-        //     title: "Medical Question 2/13",
-        //     content: <MedicalQuestion2 updateQNA={updateQNA} /> ,
-        //     skippable: false,
-        // },
-        // {
-        //     title: "Medical Question 3/13",
-        //     content: <MedicalQuestion3 updateQNA={updateQNA} /> ,
-        //     skippable: false,
-        // },
-        // {
-        //     title: "Medical Question 4/13",
-        //     content: <MedicalQuestion4 updateQNA={updateQNA} /> ,
-        //     skippable: false,
-        // },
-        // {
-        //     title: "Medical Question 5/13",
-        //     content: <MedicalQuestion5 updateQNA={updateQNA}/> ,
-        //     skippable: false,
-        // },
-        // {
-        //     title: "Medical Question 6/13",
-        //     content: <MedicalQuestion6 updateQNA={updateQNA} /> ,
-        //     skippable: false,
-        // },
-        // {
-        //     title: "Medical Question 7/13",
-        //     content: <MedicalQuestion7 updateQNA={updateQNA} /> ,
-        //     skippable: false,
-        // },
-        // {
-        //     title: "Medical Question 8/13",
-        //     content: <MedicalQuestion8 updateQNA={updateQNA} /> ,
-        //     skippable: false,
-        // },
-        // {
-        //     title: "Medical Question 9/13",
-        //     content: <MedicalQuestion9 updateQNA={updateQNA} /> ,
-        //     skippable: false,
-        // },
-        // {
-        //     title: "Medical Question 10/13",
-        //     content: <MedicalQuestion10 updateQNA={updateQNA} /> ,
-        //     skippable: false,
-        // },
-        // {
-        //     title: "Medical Question 11/13",
-        //     content: <MedicalQuestion11 updateQNA={updateQNA} /> ,
-        //     skippable: false,
-        // },
-        // {
-        //     title: "Medical Question 12/13",
-        //     content: <MedicalQuestion12 updateQNA={updateQNA} /> ,
-        //     skippable: false,
-        // },
-        // {
-        //     title: "Medical Question 13/13",
-        //     content: <MedicalQuestion13 updateQNA={updateQNA} /> ,
-        //     skippable: false,
-        // },
+        {
+            title: "Medical Question 1/13",
+            content: <MedicalQuestion1 updateQNA={updateQNA} /> ,
+            skippable: false,
+        },
+        {
+            title: "Medical Question 2/13",
+            content: <MedicalQuestion2 updateQNA={updateQNA} /> ,
+            skippable: false,
+        },
+        {
+            title: "Medical Question 3/13",
+            content: <DynamicMedicalQuestion updateQNA={updateQNA} /> ,
+            skippable: false,
+        },
         {
             title: "",
             content: <MedicationPreference setHasPreference={setHasPreference} updateQNA={updateQNA} /> ,
@@ -282,7 +213,7 @@ const MedicalConsultations = () => {
                 </div>
 
                 {/* footer buttons   */}
-                <StepsFooterBtn current={current} setCurrent={setCurrent} steps={steps} data={data} hasPreference={hasPreference} medicines={medicines} consultationType={consultationType} allDynamicQuestions={allDynamicQuestions} form={form} />
+                <StepsFooter current={current} setCurrent={setCurrent} steps={steps} />
 
             </div>
         </div>
