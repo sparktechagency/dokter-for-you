@@ -4,31 +4,42 @@
 import CommonBtn from "@/components/shared/CommonBtn";
 import WeightLossConsultation from "@/components/ui/Website/AllConsultations/WeightLossConsulation/WeightLossConsulation";
 import { imageUrl } from "@/redux/base/baseApi";
+import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
 import { Checkbox } from "antd";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { setAllSelectedMedicines } from "@/redux/features/website/selectedMedicineSlice";
 
-const BuyMedicine = ({ SubCategoryName, subcategoryId }: { SubCategoryName: string | null, subcategoryId: string | null }) => {
+
+const BuyMedicine = ({ SubCategoryName, subcategoryId, category }: { SubCategoryName: string | null, subcategoryId: string | null, category: string | null }) => {
     const [medicines, setMedicines] = useState([])
     const [selectedMedicines, setSelectedMedicines] = useState([])
-   console.log(medicines);
+    const { data: profile } = useGetProfileQuery(undefined)
+    const profileData = profile?.data
+    const dispatch = useDispatch();
+    const handleContinue = () => {
+        dispatch(setAllSelectedMedicines(selectedMedicines));
+    }
+    console.log(medicines);
     return (
         <div className="bg-white p-5">
 
             <div className="">
-                <WeightLossConsultation SubCategoryName={SubCategoryName} setMedicines={setMedicines} setSelectedMedicines={setSelectedMedicines} SubCategory={subcategoryId}  />
+                <WeightLossConsultation SubCategoryName={SubCategoryName} setMedicines={setMedicines} setSelectedMedicines={setSelectedMedicines} SubCategory={subcategoryId} />
 
-                <div className="mb-4 mt-10 ">  
+                <div className="mb-4 mt-10 ">
                     {
                         selectedMedicines?.length >= 1 && <p className=" text-2xl font-medium text-[#222222] pb-4"> Selected medication </p>
                     }
-           
+
                     <div className="bg-[#e7fbf2]  shadow-sm ">
 
                         {
                             selectedMedicines?.map((medicine: { name: string, medicineType: string, dosage: string, image: string, form: string, count: string, total: string, sellingPrice: number }, index: number) => (
-                                <div key={index} className=" flex lg:flex-row flex-wrap items-center  justify-between gap-4 px-4 py-1 border-b">
+                                <div key={index} className=" flex lg:flex-row flex-wrap items-center  justify-between gap-4 px-4 py-2 border-b">
                                     <div className='flex items-center gap-2 '>
                                         <Image src={`${imageUrl}${medicine?.image}`} alt="Ceevit" width={80} height={80} className="mr-4" />
                                         <div className="flex-grow">
@@ -74,11 +85,27 @@ const BuyMedicine = ({ SubCategoryName, subcategoryId }: { SubCategoryName: stri
                             </span>
                         </Checkbox>
                     </div>
-                    <div >
-                        <CommonBtn className={` flex gap-1 items-center justify-center px-6  h-[56px]  ${selectedMedicines?.length >= 1 ? "" : "cursor-not-allowed opacity-75"}`}>
-                            <span> Continue to Buy </span>
-                            <span><MdOutlineKeyboardArrowRight size={22} /></span>
-                        </CommonBtn>
+
+                    <div>
+
+                        <Link  
+                        href={`${profileData ? `/medical-consultations?category=${category}&subcategory=${subcategoryId}&name=${SubCategoryName}` : "/login"}`}   
+                        
+                        className={` ${selectedMedicines?.length >= 1 ? "" : "cursor-not-allowed opacity-75"} w-full `}   
+
+                        onClick={(e) => {
+                            if (selectedMedicines?.length < 1) {
+                                e.preventDefault();
+                                return;
+                            }
+                            handleContinue();
+                        }} >
+                            <CommonBtn className={` flex gap-1 items-center justify-center px-6  h-[56px]  ${selectedMedicines?.length >= 1 ? "" : "cursor-not-allowed opacity-75"}`}>
+                                <span> Continue to Buy </span>
+                                <span><MdOutlineKeyboardArrowRight size={22} /></span>
+                            </CommonBtn>
+                        </Link>
+
                     </div>
                 </div>
             </div>

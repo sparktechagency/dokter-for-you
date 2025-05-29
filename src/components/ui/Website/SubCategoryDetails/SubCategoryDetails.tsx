@@ -66,7 +66,8 @@ const SubCategoryDetails = () => {
           </div> 
 
 {
-  country !== "Netherlands" &&  <BuyMedicine  subcategoryId={subCategoryData?._id} SubCategoryName={subCategoryData?.name} />
+  country !== "Netherlands" &&  <BuyMedicine  subcategoryId={subCategoryData?._id} SubCategoryName={subCategoryData?.name}  
+  category={subCategoryData?.category}  />
 }
          
 

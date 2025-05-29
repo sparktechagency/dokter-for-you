@@ -1,18 +1,28 @@
 'use client';
 
-import { ConfigProvider, Form, Input, message, Radio, Space } from 'antd';
-import React, { useState } from 'react';
+import { ConfigProvider, Form, Input, message, Radio, Space, FormInstance } from 'antd';
+import React, { useEffect, useState } from 'react';
 
-const questions = [
-  {
-    title: 'Do you have any existing medical conditions?',
-    options: ['Yes', 'No'],
-  },
-];
 
-const DynamicMedicalQuestion = ({ updateQNA }: { updateQNA: (question: string, answer: string) => void }) => {
+const DynamicMedicalQuestion = ({ updateQNA, question , form , current}: { updateQNA: (question: string, answer: string) => void, question: string , form: FormInstance, current: number }) => { 
+
+    const questions = [
+    {
+      title: question,
+      options: [
+        "Yes",
+        "No"
+      ],
+    }
+  ]; 
+
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [additionalInfo, setAdditionalInfo] = useState<string>('');
+  const [additionalInfo, setAdditionalInfo] = useState<string>(''); 
+
+    useEffect(() => {
+    setSelectedAnswer(null); 
+    setAdditionalInfo("");
+  }, [current]);  
 
   const handleOptionChange = (question: string, answer: string) => {
     setSelectedAnswer(answer);
@@ -42,7 +52,7 @@ const DynamicMedicalQuestion = ({ updateQNA }: { updateQNA: (question: string, a
   };
 
   return (
-    <Form>
+    <Form form={form}>
       {questions.map((question, index) => (
         <div key={index}>
           {/* Main Question */}
