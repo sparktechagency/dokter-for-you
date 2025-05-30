@@ -4,13 +4,13 @@ import { useState } from 'react';
 
 type DeliveryOption = 'forward' | 'digital' | 'video';
 
-const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus , setDeliveryType , medicineLength }: { updateQNA: (question: string, answer: string) => void  , SubCategoryName:string|null , setForwardStatus: React.Dispatch<React.SetStateAction<boolean | null>> , setDeliveryType: React.Dispatch<React.SetStateAction<string | null>> ,  medicineLength?: number | undefined}) => {
+const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus , setDeliveryType , medicineLength }: { updateQNA: (question: string, answer: string) => void  , SubCategoryName:string|null , setForwardStatus: React.Dispatch<React.SetStateAction<string | null>> , setDeliveryType: React.Dispatch<React.SetStateAction<string | null>> ,  medicineLength?: number | undefined}) => {
   const [selectedOption, setSelectedOption] = useState<DeliveryOption | null>(null);
 
   const handleOptionChange = (option: DeliveryOption) => {
     setSelectedOption(option); 
     setDeliveryType(option);
-    setForwardStatus(option === 'forward' ? true : false );
+    setForwardStatus(option);
     const question = 'Delivery Prescription';
     const answer =
       option === 'forward'
@@ -35,7 +35,7 @@ const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus 
           className={`relative flex flex-col p-4 py-7 border cursor-pointer transition-all duration-200 ${
             selectedOption === 'forward'
               ? 'border-emerald-500 bg-emerald-50'
-              : 'border-gray-200 hover:border-gray-300'
+              : 'border-gray-200 hover:border-gray-300 bg-[#f3f6ff]'
           }`}
         >
           <div className="flex items-start space-x-3">
@@ -70,7 +70,7 @@ const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus 
           className={` ${(medicineLength ?? 0) >= 1 ? 'hidden' : ''} relative flex flex-col p-4 border py-7 cursor-pointer transition-all duration-200 ${
             selectedOption === 'video'
               ? 'border-emerald-500 bg-emerald-50'
-              : 'border-gray-200 hover:border-gray-300'
+              : 'border-gray-200 hover:border-gray-300 bg-[#f3f6ff]'
           }`}
         >
           <div className="flex items-start space-x-3">
@@ -86,7 +86,7 @@ const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus 
                 Video Consultation
               </span>
               <span className="mt-1 block text-[16px] text-[#999999]">
-                We will send you a prescription and buy your medication at your own pharmacy
+               Your video call will connect you with a registered doctor who will assess your symptoms and prescribe the right treatment. The prescription will be sent to a registered pharmacy, and they will contact you about your medication.
               </span>
               
             </div>
@@ -99,7 +99,7 @@ const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus 
           className={`relative flex flex-col p-4 border py-7 cursor-pointer transition-all duration-200 ${
             selectedOption === 'digital'
               ? 'border-emerald-500 bg-emerald-50'
-              : 'border-gray-200 hover:border-gray-300'
+              : 'border-gray-200 hover:border-gray-300 bg-[#f3f6ff]'
           }`}
         >
           <div className="flex items-start space-x-3">
@@ -123,11 +123,11 @@ const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus 
         </label>
       </div>
 
-      <div className="border-t border-gray-200 pt-4">
+      <div className="border-t border-gray-200 py-4 bg-[#e8eefe] px-12">
         <h3 className="font-medium text-gray-900 text-[16px]">Overview</h3>
-        <div className="flex lg:flex-row flex-col gap-3 justify-between items-center text-[16px]">
+        <div className="flex lg:flex-row flex-col gap-3 pt-2 justify-between items-center text-[16px]">
           <div>
-            <p className="text-gray-500 pt-4">
+            <p className="text-gray-500 ">
               Consultation for {SubCategoryName} - €25.00
             </p>
           </div>

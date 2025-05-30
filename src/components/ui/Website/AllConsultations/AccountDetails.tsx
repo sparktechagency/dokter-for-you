@@ -24,7 +24,7 @@ const InfoRow = ({ label, value }: InfoRowProps) => {
 
 
 
-const AccountDetails = ({setUserId}: {setUserId: React.Dispatch<React.SetStateAction<string|null>>}) => { 
+const AccountDetails = ({setUserId}: {setUserId: React.Dispatch<React.SetStateAction<string|null|undefined>>}) => { 
   const {data} = useGetProfileQuery(undefined) 
   const profileData = data?.data     
 

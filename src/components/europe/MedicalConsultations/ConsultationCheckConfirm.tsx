@@ -7,16 +7,17 @@ import { Checkbox } from 'antd';
 import Image from 'next/image';
 import React from 'react';
 
-const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selectedMedicines: any, SubCategoryName: string | null, address: AddressType | null | undefined }) => {
+const ConsultationCheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selectedMedicines?: any, SubCategoryName: string | null, address: AddressType | null | undefined }) => {
     const { data: userProfile } = useGetProfileQuery(undefined)
     const profileData = userProfile?.data
+    console.log("Selected Medicines:", selectedMedicines);
 
     return (
         <div>
             <div className="">
                 <h1 className="lg:text-2xl text-[20px] font-semibold mb-6 text-gray-800">Check and Confirm</h1>
 
-                <div className="bg-[#F3F6FF] p-4  shadow-sm mb-4">
+                <div className={`bg-[#F3F6FF] p-4  shadow-sm mb-4 ${selectedMedicines?.length >= 1 ? 'hidden' : ''}`}>
                     <h2 className="font-semibold pb-2 text-[16px]">Consultation for {SubCategoryName} problem</h2>
                     <div className="flex justify-between items-start">
 
@@ -27,11 +28,11 @@ const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selecte
                 </div>
 
 
-                <div className="bg-[#F3F6FF]  shadow-sm mb-4">
+                <div className={`bg-[#F3F6FF]  shadow-sm mb-4 ${selectedMedicines?.length === 0 ? 'hidden' : ''}`}>
                     {
-                        selectedMedicines?.map((medicine: { name: string, medicineType: string, dosage: string, image: string, form: string, count: string }, index: number) => (
-                            <div key={index} className=" grid lg:grid-cols-4 grid-cols-2 justify-items-stretch gap-4 p-4 border-b">
-                                <div className='flex items-center gap-2'>
+                        selectedMedicines?.map((medicine: { name: string, medicineType: string, dosage: string, image: string, form: string, count: string, total: string, sellingPrice: number }, index: number) => (
+                            <div key={index} className=" flex lg:flex-row flex-wrap items-center  justify-between gap-4 px-4 py-3 border-b">
+                                <div className='flex items-center gap-2 '>
                                     <Image src={`${imageUrl}${medicine?.image}`} alt="Ceevit" width={80} height={80} className="mr-4" />
                                     <div className="flex-grow">
                                         <h3 className="font-semibold">{medicine?.name}</h3>
@@ -42,13 +43,22 @@ const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selecte
                                     <p className="text-sm text-[#999999] pb-1 font-medium">From</p>
                                     <p className="text-sm">{medicine?.form}</p>
                                 </div>
-                                <div className="text-right ml-8">
+
+                                <div className="lg:text-right text-center">
+                                    <p className="text-sm text-[#999999] pb-1 font-medium">Select Units per Box</p>
+                                    <p className="text-sm text-center">{medicine?.total}</p>
+                                </div>
+                                <div className="text-right">
                                     <p className="text-sm text-[#999999] pb-1 font-medium">Dosage</p>
                                     <p className="text-sm">{medicine?.dosage}</p>
                                 </div>
-                                <div className="text-right ml-8">
+                                <div className="lg:text-right text-center">
                                     <p className="text-sm text-[#999999] pb-1 font-medium">Quantity of medicine</p>
-                                    <p className="text-sm">{medicine?.count}</p>
+                                    <p className="text-sm text-center">{medicine?.count}</p>
+                                </div>
+                                <div className="text-right ">
+                                    <p className="text-sm text-[#999999] pb-1 font-medium">Price</p>
+                                    <p className="text-sm">€{medicine?.sellingPrice}</p>
                                 </div>
                             </div>
                         ))
@@ -56,7 +66,7 @@ const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selecte
 
                 </div>
 
-                <div className="bg-[#F3F6FF] p-4  shadow-sm mb-4 grid lg:grid-cols-4 grid-cols-1 lg:gap-4 gap-6">
+                <div className={`bg-[#F3F6FF] p-4  shadow-sm mb-4 grid lg:grid-cols-4 grid-cols-1 lg:gap-4 gap-6 ${selectedMedicines?.length === 0 ? 'hidden' : ''}`}>
                     <div>
                         <h3 className="font-semibold mb-2">Address:</h3>
                         <p className="text-sm text-[#6B6B6B]">
@@ -117,4 +127,4 @@ const CheckConfirm = ({ selectedMedicines, SubCategoryName, address }: { selecte
     );
 };
 
-export default CheckConfirm;
+export default ConsultationCheckConfirm;

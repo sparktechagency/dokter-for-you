@@ -309,7 +309,7 @@ const Navbar: React.FC = () => {
             </Link> 
 
             {/* language  */}
-            <div className=" relative w-full ">
+            <div className=" relative  ">
               <button
                 onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
                 className="w-12 h-12 bg-transparent  text-xl cursor-pointer flex items-center justify-center gap-0"

@@ -1,6 +1,6 @@
 
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Progress } from 'antd'
 import { Poppins } from 'next/font/google';
 import { useSearchParams } from 'next/navigation';
@@ -8,7 +8,6 @@ import { useGetDynamicQuestionsQuery } from '@/redux/features/website/consultati
 import AccountDetails from '@/components/ui/Website/AllConsultations/AccountDetails';
 import AdditionalQuestions1 from '@/components/ui/Website/AllConsultations/AdditionalQuestions/AdditionalQuestions1';
 import Address from '@/components/ui/Website/AllConsultations/Address';
-import CheckConfirm from '@/components/ui/Website/AllConsultations/CheckConfirm';
 import MedicalQuestion1 from '@/components/ui/Website/AllConsultations/MedicalQuestions/MedicalQuestion1';
 import MedicalQuestion2 from '@/components/ui/Website/AllConsultations/MedicalQuestions/MedicalQuestion2';
 import StepsFooter from './StepsFooter';
@@ -16,8 +15,45 @@ import DynamicMedicalQuestion from './DynamicMedicalQuestion';
 import ConsultationsDelivery from './ConsultationsDelivery';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
+import ConsultationCheckConfirm from './ConsultationCheckConfirm';
 
 const poppins = Poppins({ weight: ['400', '500', '600', '700'], subsets: ['latin'] });
+
+export type AddressType = {
+    firstname: string | null;
+    lastname: string | null;
+    streetAndHouseNo: string | null;
+    postalCode: string | null;
+    place: string | null;
+    country: string | null;
+};
+
+export type Medicine = {
+    _id: string;
+    name: string;
+    company: string;
+    form: string;
+    dosage: string[];
+    unitPerBox: string[];
+    total: string;
+    description: string;
+    image: string;
+    purchaseCost: number;
+    sellingPrice: number;
+    tax: number;
+    externalExpenses: number;
+    addedBy: string;
+    createdAt: string;
+    updatedAt: string;
+    subCategory: {
+        _id: string;
+        name: string;
+        category: string;
+        image: string;
+        details: string;
+    };
+    country: string;
+};
 
 const MedicalConsultations = () => {
     const [current, setCurrent] = useState(0);
@@ -26,9 +62,9 @@ const MedicalConsultations = () => {
     const [dynamicQnaData, setDynamicQnaData] = useState<{ question: string; answer: string }[]>([]);
     const [userId, setUserId] = useState<string | null>()
     const [selectedMedicines, setSelectedMedicines] = useState([])
-    const [forwardStatus, setForwardStatus] = useState(false)
+    const [forwardStatus, setForwardStatus] = useState<string | null>(null)
     const [medicines, setMedicines] = useState([])
-    const [address, setAddress] = useState<string | null>()
+    const [address, setAddress] = useState<AddressType | null>()
     const searchParams = useSearchParams();
     const category = searchParams.get('category');
     const SubCategory = searchParams.get('subcategory');
@@ -38,10 +74,15 @@ const MedicalConsultations = () => {
     const additionalTotal = allDynamicQuestions?.length || 0;
     const total = allDynamicQuestions?.length + 2
     const [form] = Form.useForm();
-    const allSelectedMedicines = useSelector((state: RootState) => state.selectedMedicines); 
+    const allSelectedMedicines = useSelector((state: RootState) => state.selectedMedicines);
     const medicineLength = allSelectedMedicines?.length || 0;
 
-  console.log("Selected from Redux:", allSelectedMedicines); 
+console.log("dsfds", qnaData);
+    useEffect(() => {
+        if (allSelectedMedicines?.length > 0) {
+            setSelectedMedicines(allSelectedMedicines);
+        }
+    }, [allSelectedMedicines]);
 
     const data = {
         "QNA": qnaData,
@@ -54,7 +95,6 @@ const MedicalConsultations = () => {
         "forwardToPartner": forwardStatus,
     }
 
-    console.log(data);
     const updateQNA = (question: string, answer: string) => {
         setQnaData((prev) => {
             const existing = prev.find((qna) => qna.question === question);
@@ -155,7 +195,7 @@ const MedicalConsultations = () => {
         },
         {
             title: "",
-            content: <CheckConfirm selectedMedicines={selectedMedicines} SubCategoryName={SubCategoryName} address={address} />,
+            content: <ConsultationCheckConfirm selectedMedicines={selectedMedicines} SubCategoryName={SubCategoryName} address={address} />,
             skippable: true,
         },
 
@@ -167,6 +207,7 @@ const MedicalConsultations = () => {
 
     return (
         <div className={`bg-[#F7F7F7]  min-h-[calc(100vh-85px)] transition-all duration-1000 delay-500 ease-in-out opacity-100 translate-x-0 pt-[85px] ${poppins.className}`}>
+            <p className=' text-end container text-primary text-lg font-medium'> {current + 1}/{steps.length} </p>
             <div className='container px-4'>
                 {/* Progress bar */}
                 <Progress
@@ -185,7 +226,7 @@ const MedicalConsultations = () => {
                 </div>
 
                 {/* footer buttons   */}
-                <StepsFooter current={current} setCurrent={setCurrent} steps={steps} />
+                <StepsFooter current={current} setCurrent={setCurrent} steps={steps} form={form} data={data} allMedicalDynamicQuestions={allDynamicQuestions} allAdditionalDynamicQuestions={allDynamicQuestions}  />
 
             </div>
         </div>

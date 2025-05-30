@@ -7,7 +7,7 @@ import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
 import { Form, Radio, Checkbox, Input } from "antd";
 import { useEffect } from "react";
 
-const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | null, setAddress: (address: { firstname: string; lastname: string; streetAndHouseNo: string; postalCode: string; place: string; country: string; }) => void }) => {
+const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | null, setAddress: (address: { firstname: string | null; lastname: string | null; streetAndHouseNo: string| null; postalCode: string|null; place: string|null; country: string|null; }) => void }) => {
   const [form] = Form.useForm(); 
   const { data } = useGetProfileQuery(undefined) 
   const userData = data?.data   
