@@ -1,10 +1,12 @@
 import MedicalConsultations from '@/components/europe/MedicalConsultations/MedicalConsultations';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 const MedicalConsultationsPage = () => {
     return (
         <div>
-           <MedicalConsultations />
+            <Suspense fallback={<div>Loading...</div>}>
+                <MedicalConsultations />
+            </Suspense>
         </div>
     );
 };
