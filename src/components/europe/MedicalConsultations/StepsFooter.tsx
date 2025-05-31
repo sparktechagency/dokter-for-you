@@ -1,7 +1,9 @@
+
 'use client';
 
-import { message } from 'antd';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { FormInstance, message } from 'antd';
+import { useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 
 export interface Qna {
@@ -34,7 +36,7 @@ interface Props {
     current: number;
     setCurrent: Dispatch<SetStateAction<number>>;
     steps: Step[];
-    form: any;
+    form: FormInstance;
     data: {
         QNA: Qna[];
         DinamicQNA: Qna[];
@@ -45,15 +47,15 @@ interface Props {
         address?: Address;
         forwardToPartner?: string | null;
     };
-    allMedicalDynamicQuestions?: Qna[];
-    allAdditionalDynamicQuestions?: Qna[];
+    allMedicalDynamicQuestions?: Qna[] | undefined;
+    allAdditionalDynamicQuestions?: Qna[] | undefined;
 }
 
 const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamicQuestions, allAdditionalDynamicQuestions }: Props) => {
-    console.log("StepsFooter data:", data?.QNA);
     const medicalQuestionsEnd = 3 + (allMedicalDynamicQuestions?.length || 0);
-    const [validationErrors, setValidationErrors] = useState<{ [key: number]: boolean }>({});
-    const dynamicEnd = (medicalQuestionsEnd + 2) + (allAdditionalDynamicQuestions?.length || 0);
+    // const [validationErrors, setValidationErrors] = useState<{ [key: number]: boolean }>({}); 
+    const dynamicEnd = (medicalQuestionsEnd + 2) + (allAdditionalDynamicQuestions?.length || 0); 
+    const route = useRouter();
  
 
     const next = () => {
@@ -66,7 +68,7 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
 
             // for QNA  QUESTIONS  
             if (current >= 3 && current < medicalQuestionsEnd) {
-                const medicalQuestion = allMedicalDynamicQuestions[current - 3];
+                const medicalQuestion = allMedicalDynamicQuestions?.[current - 3];
                 if (!medicalQuestion) {
                     return false;
                 }
@@ -91,14 +93,14 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
 
             // for additional questions  
             if (data?.forwardToPartner !== "video" && current >= medicalQuestionsEnd + 2 && current < dynamicEnd) {
-                const dynamicQuestion = allAdditionalDynamicQuestions[current -(medicalQuestionsEnd + 2)];
+                const dynamicQuestion = allAdditionalDynamicQuestions?.[current -(medicalQuestionsEnd + 2)];
                 if (!dynamicQuestion) {
                     return false;
                 }
 
                 const isAnswered = !!data.DinamicQNA.find((qna) => qna.question === dynamicQuestion.question);
                 if (!isAnswered) {
-                    message.error(`Please answer the question: "${dynamicQuestion.question}"`);
+                    // message.error(`Please answer the question: "${dynamicQuestion.question}"`);
                     return false;
                 }
                 return true;
@@ -153,19 +155,23 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
         };
 
         if (!validateCurrentStep()) {
-            setValidationErrors((prev) => ({ ...prev, [current]: true }));
+            // setValidationErrors((prev) => ({ ...prev, [current]: true }));
             message.error("Please select an option to move forward.");
             return;
         }
 
 
-        setValidationErrors((prev) => ({ ...prev, [current]: false }));
+        // setValidationErrors((prev) => ({ ...prev, [current]: false })); 
         setCurrent((prev) => Math.min(prev + 1, steps.length - 1));
     };
 
     const prev = () => {
         setCurrent((prev) => Math.max(prev - 1, 0));
-    };
+    }; 
+
+    const handleSubmit = ()=>{
+            route.push('/profile');
+    }
 
     return (
         <div className="steps-action flex items-center justify-end gap-3 pb-5">
@@ -189,7 +195,7 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
             )}
 
             {current === steps.length - 1 && (
-                <button className="mt-6 px-5 py-[10px] bg-primary text-white">
+                <button className="mt-6 px-5 py-[10px] bg-primary text-white" onClick={() => handleSubmit()}>
                     Done
                 </button>
             )}

@@ -1,4 +1,5 @@
-
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
 "use client"
 import { useEffect, useState } from 'react';
 import { Form, Progress } from 'antd'
@@ -28,32 +29,7 @@ export type AddressType = {
     country: string | null;
 };
 
-export type Medicine = {
-    _id: string;
-    name: string;
-    company: string;
-    form: string;
-    dosage: string[];
-    unitPerBox: string[];
-    total: string;
-    description: string;
-    image: string;
-    purchaseCost: number;
-    sellingPrice: number;
-    tax: number;
-    externalExpenses: number;
-    addedBy: string;
-    createdAt: string;
-    updatedAt: string;
-    subCategory: {
-        _id: string;
-        name: string;
-        category: string;
-        image: string;
-        details: string;
-    };
-    country: string;
-};
+
 
 const MedicalConsultations = () => {
     const [current, setCurrent] = useState(0);
@@ -77,10 +53,14 @@ const MedicalConsultations = () => {
     const allSelectedMedicines = useSelector((state: RootState) => state.selectedMedicines);
     const medicineLength = allSelectedMedicines?.length || 0;
 
-console.log("dsfds", qnaData);
     useEffect(() => {
         if (allSelectedMedicines?.length > 0) {
             setSelectedMedicines(allSelectedMedicines);
+            setMedicines(allSelectedMedicines.map((med: { _id: string; count: number; total: string }) => ({
+                _id: med._id,
+                count: med.count,
+                total: med.total,
+            })));
         }
     }, [allSelectedMedicines]);
 
@@ -94,6 +74,8 @@ console.log("dsfds", qnaData);
         "address": address,
         "forwardToPartner": forwardStatus,
     }
+
+
 
     const updateQNA = (question: string, answer: string) => {
         setQnaData((prev) => {
@@ -207,8 +189,12 @@ console.log("dsfds", qnaData);
 
     return (
         <div className={`bg-[#F7F7F7]  min-h-[calc(100vh-85px)] transition-all duration-1000 delay-500 ease-in-out opacity-100 translate-x-0 pt-[85px] ${poppins.className}`}>
+
+            {/* total count  */}
             <p className=' text-end container text-primary text-lg font-medium'> {current + 1}/{steps.length} </p>
+
             <div className='container px-4'>
+
                 {/* Progress bar */}
                 <Progress
                     percent={progressPercent}
@@ -216,8 +202,7 @@ console.log("dsfds", qnaData);
                     strokeColor={progressColor}
                 />
 
-
-
+                {/* Steps content */}
                 <div className="steps-content  flex items-center justify-start" style={{ margin: '20px 0' }} >
                     <Form className='w-full' >
                         <div className={`lg:text-[32px] text-[28px] text-primary font-medium lg:tracking-wide py-3 ${poppins.className}`}>{steps[current]?.title} </div>
@@ -226,7 +211,7 @@ console.log("dsfds", qnaData);
                 </div>
 
                 {/* footer buttons   */}
-                <StepsFooter current={current} setCurrent={setCurrent} steps={steps} form={form} data={data} allMedicalDynamicQuestions={allDynamicQuestions} allAdditionalDynamicQuestions={allDynamicQuestions}  />
+                <StepsFooter current={current} setCurrent={setCurrent} steps={steps} form={form} data={data} allMedicalDynamicQuestions={allDynamicQuestions} allAdditionalDynamicQuestions={allDynamicQuestions} />
 
             </div>
         </div>

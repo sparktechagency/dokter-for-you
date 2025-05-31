@@ -12,14 +12,10 @@ import Swal from 'sweetalert2';
 import { imageUrl } from '@/redux/base/baseApi';
 import { useSearchParams } from 'next/navigation';
 import { message } from 'antd';
+import { useCountry } from '@/app/(website)/CountryContext';
+import BuyMedicineTab from '@/components/europe/ProfileForEurope/BuyMedicine/BuyMedicineTab';
 
-const tabs = [
-  { id: "1", label: "Profile Details", component: <ProfileDetails /> },
-  { id: "2", label: "Dr. Consultation", component: <Consultation /> },
-  { id: "3", label: "Digital Prescription Details", component: <DigitalPrescriptionDetails /> },
-  { id: "4", label: "Digital Prescription With Order", component: <DigitalPrescriptionOrder /> },
-  { id: "5", label: "Change Password", component: <ChangePassword /> },
-];
+
 
 const ProfileHome = () => {
   const { data } = useGetProfileQuery(undefined)
@@ -28,11 +24,22 @@ const ProfileHome = () => {
   const [imgURL, setImgURL] = useState("");
   const [activeTab, setActiveTab] = useState("1");   
   const searchParams = useSearchParams(); 
-  const isSuccess = searchParams.get('isSuccess'); 
+  const isSuccess = searchParams.get('isSuccess');  
+  const {country} = useCountry(); 
+  console.log(country); 
+
+
+  const tabs = [
+  { id: "1", label: "Profile Details", component: <ProfileDetails /> },
+  { id: "2", label: "Dr. Consultation", component: <Consultation /> },
+  { id: "3", label: "Digital Prescription Details", component: <DigitalPrescriptionDetails /> },
+  { id: "4", label: "Digital Prescription With Order", component: <DigitalPrescriptionOrder /> }, 
+  ...(country === "Netherlands" ? [] : [{ id: "6", label: "Buy Medicine", component: <BuyMedicineTab /> }] ),
+  { id: "5", label: "Change Password", component: <ChangePassword /> },
+]; 
 
 
   useEffect(() => { 
-
     if(isSuccess){
       if (isSuccess === "true") {
         Swal.fire({              
@@ -47,14 +54,19 @@ const ProfileHome = () => {
     }
 
 }, [isSuccess]); 
+ 
+
 
   useEffect(() => {
     setImgURL(userData?.profile?.startsWith("https")? userData?.profile : `${imageUrl}${userData?.profile}`);
-  }, [userData]);
+  }, [userData]); 
+
+
 
   const handleTabClick = (id: string) => {
     setActiveTab(id);
-  };
+  }; 
+
 
   const onChange = async (e: any) => {
     const file = e.target.files[0]; 
