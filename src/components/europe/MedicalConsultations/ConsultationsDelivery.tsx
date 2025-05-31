@@ -1,5 +1,6 @@
 'use client';
 
+import { message } from 'antd';
 import { useState } from 'react';
 
 type DeliveryOption = 'forward' | 'digital' | 'video';
@@ -17,7 +18,11 @@ const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus 
         ? 'Forward Prescription to our Partner'
         : option === 'digital' ? 'Receive Digital Prescription' : 'Video Consultation';
 
-    updateQNA(question, answer);
+    updateQNA(question, answer);  
+
+          if (option === 'video') {
+          message.success('The doctor will send the video consultation appointment to your email within 24 hours.');
+      } 
   };
 
   return (
@@ -123,7 +128,7 @@ const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus 
         </label>
       </div>
 
-      <div className="border-t border-gray-200 py-4 bg-[#e8eefe] px-12">
+      <div className={`border-t border-gray-200 py-4 bg-[#e8eefe] px-12  ${(medicineLength ?? 0) >= 1 ? 'hidden' : ''}`}>
         <h3 className="font-medium text-gray-900 text-[16px]">Overview</h3>
         <div className="flex lg:flex-row flex-col gap-3 pt-2 justify-between items-center text-[16px]">
           <div>

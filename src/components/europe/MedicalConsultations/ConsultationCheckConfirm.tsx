@@ -123,6 +123,10 @@ const ConsultationCheckConfirm = ({ selectedMedicines, SubCategoryName, address 
                                 <span>Subtotal -</span>
                                 <span className="font-semibold">€25.00</span>
                             </div>
+                            <div className="flex justify-between mb-4 text-xl text-[#6B6B6B]">
+                                <span>Shipping Cost  -</span>
+                                <span className="font-semibold">€10.00</span>
+                            </div>
                             <div className="flex justify-between text-xl font-semibold text-primary mb-4">
                                 <span>Total -</span>
                                 <span className="">€25.00</span>

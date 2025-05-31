@@ -52,11 +52,11 @@ interface Props {
 }
 
 const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamicQuestions, allAdditionalDynamicQuestions }: Props) => {
-    const medicalQuestionsEnd = 3 + (allMedicalDynamicQuestions?.length || 0);
+    const medicalQuestionsEnd = 4 + (allMedicalDynamicQuestions?.length || 0);
     // const [validationErrors, setValidationErrors] = useState<{ [key: number]: boolean }>({}); 
-    const dynamicEnd = (medicalQuestionsEnd + 2) + (allAdditionalDynamicQuestions?.length || 0); 
+    const dynamicEnd = (medicalQuestionsEnd + 2) + (allAdditionalDynamicQuestions?.length || 0);
     const route = useRouter();
- 
+
 
     const next = () => {
         form.resetFields();
@@ -67,8 +67,8 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
             if (currentStep?.skippable) return true;
 
             // for QNA  QUESTIONS  
-            if (current >= 3 && current < medicalQuestionsEnd) {
-                const medicalQuestion = allMedicalDynamicQuestions?.[current - 3];
+            if (current >= 4 && current < medicalQuestionsEnd) {
+                const medicalQuestion = allMedicalDynamicQuestions?.[current - 4];
                 if (!medicalQuestion) {
                     return false;
                 }
@@ -93,7 +93,7 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
 
             // for additional questions  
             if (data?.forwardToPartner !== "video" && current >= medicalQuestionsEnd + 2 && current < dynamicEnd) {
-                const dynamicQuestion = allAdditionalDynamicQuestions?.[current -(medicalQuestionsEnd + 2)];
+                const dynamicQuestion = allAdditionalDynamicQuestions?.[current - (medicalQuestionsEnd + 2)];
                 if (!dynamicQuestion) {
                     return false;
                 }
@@ -111,9 +111,9 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
                     return false;
                 }
                 return true;
-            } 
+            }
 
-            if( data?.forwardToPartner === "video" && current === medicalQuestionsEnd + 1) {
+            if (data?.forwardToPartner === "video" && current === medicalQuestionsEnd + 1) {
                 if (!data.address) {
                     return false;
                 }
@@ -128,14 +128,16 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
                     }
                     return true;
                 case 1:
+                    return true;
+                case 2:
                     return !!data.QNA.find(qna => qna.question === "What is your weight?");
 
-                case 2:
+                case 3:
                     return !!data.QNA.find(qna => qna.question === "What is your Height?");
 
-                case 3:
+                case 4:
                     if (allMedicalDynamicQuestions) {
-                        const dynamicQuestion = allMedicalDynamicQuestions[current - 3];
+                        const dynamicQuestion = allMedicalDynamicQuestions[current - 4];
                         if (!dynamicQuestion) {
                             return false;
                         }
@@ -167,10 +169,10 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
 
     const prev = () => {
         setCurrent((prev) => Math.max(prev - 1, 0));
-    }; 
+    };
 
-    const handleSubmit = ()=>{
-            route.push('/profile');
+    const handleSubmit = () => {
+        route.push('/profile');
     }
 
     return (

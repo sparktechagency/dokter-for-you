@@ -110,6 +110,19 @@ const MedicalConsultations = () => {
             skippable: false,
         },
         {
+            title: "",
+            content: <div>
+                <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                   Questions about your medical Questions
+                </h2>
+
+                <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
+                   We have some additional questions about the product you selected
+                </h2>
+            </div>,
+            skippable: true,
+        },
+        {
             title: `Medical Question 1/${total}`,
             content: <MedicalQuestion1 updateQNA={updateQNA} />,
             skippable: false,

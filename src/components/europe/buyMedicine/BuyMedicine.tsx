@@ -78,7 +78,7 @@ const BuyMedicine = ({ SubCategoryName, subcategoryId, category }: { SubCategory
 
                 <div className=" flex items-center justify-between text-[#FF3B28] ">
                     <div className="w-2/4">
-                        <Checkbox >
+                        <Checkbox defaultChecked={true} >
                             <span className="text-[#FF3B28] text-sm block">
                                 I declare that I have filled in everything truthfully, completely and without reservation.
                                 If I receive medication based on false information, this is harmful and I am liable to prosecution.
