@@ -28,6 +28,11 @@ const languages = [
   { label: "Portuguese", value: "pt" },
   { label: "Spanish", value: "es" },
   { label: "Swedish", value: "sv" },
+  { label: "Danish", value: "da" },
+  { label: "Romanian", value: "ro" },
+  { label: "Finnish", value: "fi" },
+  { label: "Lithuanian", value: "lt" },
+  { label: "Arabic", value: "ar" },
 ];
 
 const Navbar: React.FC = () => {

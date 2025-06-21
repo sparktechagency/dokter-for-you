@@ -28,57 +28,21 @@ const Geography = dynamic(
 const europeGeoUrl = "/geo/europe.json";
 
 const countries = [
-  { label: "Azerbaijan", value: "Azerbaijan" },
-  { label: "Albania", value: "Albania" },
-  { label: "Armenia", value: "Armenia" },
-  { label: "Bosnia and Herzegovina", value: "Bosnia and Herzegovina" },
-  { label: "Bulgaria", value: "Bulgaria" },
-  { label: "Cyprus", value: "Cyprus" },
-  { label: "Denmark", value: "Denmark" },
-  { label: "Ireland", value: "Ireland" },
-  { label: "Estonia", value: "Estonia" },
-  { label: "Austria", value: "Austria" },
-  { label: "Czech Republic", value: "Czech Republic" },
-  { label: "Finland", value: "Finland" },
+  { label: "Belgium", value: "Belgium" },         // Belgie/Belgique
+  { label: "Denmark", value: "Denmark" },         // Danmark
+  { label: "Germany", value: "Germany" },         // Deutschland
   { label: "France", value: "France" },
-  { label: "Georgia", value: "Georgia" },
-  { label: "Germany", value: "Germany" },
-  { label: "Greece", value: "Greece" },
-  { label: "Croatia", value: "Croatia" },
-  { label: "Hungary", value: "Hungary" },
-  { label: "Iceland", value: "Iceland" },
-  { label: "Israel", value: "Israel" },
-  { label: "Italy", value: "Italy" },
-  { label: "Latvia", value: "Latvia" },
-  { label: "Belarus", value: "Belarus" },
-  { label: "Lithuania", value: "Lithuania" },
-  { label: "Slovakia", value: "Slovakia" },
-  { label: "Liechtenstein", value: "Liechtenstein" },
-  { label: "The former Yugoslav Republic of Macedonia", value: "The former Yugoslav Republic of Macedonia" },
-  { label: "Malta", value: "Malta" },
-  { label: "Belgium", value: "Belgium" },
-  { label: "Faroe Islands", value: "Faroe Islands" },
-  { label: "Andorra", value: "Andorra" },
-  { label: "Luxembourg", value: "Luxembourg" },
-  { label: "Monaco", value: "Monaco" },
-  { label: "Montenegro", value: "Montenegro" },
-  { label: "Netherlands", value: "Netherlands" },
-  { label: "Norway", value: "Norway" },
-  { label: "Poland", value: "Poland" },
+  { label: "Luxembourg", value: "Luxembourg" },   // Luxemburg/Luxembourg
+  { label: "Netherlands", value: "Netherlands" }, // nederland
+  { label: "Austria", value: "Austria" },         // Osterreich
+  { label: "Poland", value: "Poland" },           // Polska
   { label: "Portugal", value: "Portugal" },
   { label: "Romania", value: "Romania" },
-  { label: "Republic of Moldova", value: "Republic of Moldova" },
-  { label: "Slovenia", value: "Slovenia" },
-  { label: "Spain", value: "Spain" },
-  { label: "Sweden", value: "Sweden" },
-  { label: "Switzerland", value: "Switzerland" },
-  { label: "Turkey", value: "Turkey" },
-  { label: "United Kingdom", value: "United Kingdom" },
-  { label: "Ukraine", value: "Ukraine" },
-  { label: "San Marino", value: "San Marino" },
-  { label: "Serbia", value: "Serbia" },
-  { label: "Holy See (Vatican City)", value: "Holy See (Vatican City)" },
-  { label: "Russia", value: "Russia" }
+  { label: "Switzerland", value: "Switzerland" }, // Schweiz/Suisse
+  { label: "Finland", value: "Finland" },         // Suomi
+  { label: "Sweden", value: "Sweden" },           // Sverige
+  { label: "Lithuania", value: "Lithuania" },     // Lietuva
+  { label: "Spain", value: "Spain" }
 ];
 
 interface Country {

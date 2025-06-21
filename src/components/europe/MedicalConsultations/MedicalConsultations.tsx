@@ -157,14 +157,32 @@ const MedicalConsultations = () => {
             ? [
                 {
                     title: "",
-                    content: <div>
+                    content: <div>  
+                        {
+                            medicineLength > 0 ? (
+                                <div> 
                         <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                            Questions about your medication preference
+                           Questions about your health 
                         </h2>
 
                         <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
-                            We have some additional questions about the product you selected
+                            Your health is very important to us. Please take 3 minutes to answer the following  questions. 
                         </h2>
+                        </div>
+                            ) :
+                             (
+                                <div> 
+                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                          Additional questions regarding the consultation or medication you have chosen
+                        </h2>
+
+                        <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
+                           Please answer these last questions and your consultation will be sent to the doctor. 
+                        </h2>
+                                </div>
+                            )
+                             }
+
                     </div>,
                     skippable: true,
                 },

@@ -36,7 +36,7 @@ export default function RootLayout({
                 new google.translate.TranslateElement(
                   {
                     pageLanguage: 'en',
-                    includedLanguages: 'en,nl,de,fr,pl,pt,es,sv',
+                    includedLanguages: 'en,nl,de,fr,pl,pt,es,sv,da,ro,fi,lt,ar',
                     layout: google.translate.TranslateElement.InlineLayout.SIMPLE
                   },
                   'google_translate_element'
