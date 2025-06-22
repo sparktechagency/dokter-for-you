@@ -19,6 +19,7 @@ const About = () => {
                     const words = item?.description?.split(" ") || [];
                     const truncatedText = words.slice(0, wordLimit).join(" ");
                     const hasMore = words.length > wordLimit;
+                    
 
                     return (
                         <div
