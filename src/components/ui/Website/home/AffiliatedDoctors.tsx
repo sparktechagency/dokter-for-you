@@ -1,35 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 import Title from "@/components/shared/Title";
-
-const data = [
-    {
-        id: "1",
-        image: "/doctor1.png",
-        name: "Dr. E. Maescu",
-        designation: "MD General practitioner / emergency medicine"
-    },
-    {
-        id: "2",
-        image: "/doctor1.png",
-        name: "Dr. E. Maescu",
-        designation: "MD General practitioner / emergency medicine"
-    },
-    {
-        id: "3",
-        image: "/doctor1.png",
-        name: "Dr. E. Maescu",
-        designation: "MD General practitioner / emergency medicine"
-    },
-    {
-        id: "4",
-        image: "/doctor1.png",
-        name: "Dr. E. Maescu",
-        designation: "MD General practitioner / emergency medicine"
-    }
-];
-
+import { imageUrl } from "@/redux/base/baseApi";
+import { useGetAffiliatedDoctorsQuery } from "@/redux/features/europe/affiliatedDoctorSlice";
 
 const AffiliatedDoctors = () => {
+    const { data: allAffiliatedDoctors } = useGetAffiliatedDoctorsQuery(undefined);
+    console.log(allAffiliatedDoctors);
+
+    const data = allAffiliatedDoctors?.data?.filter((item: { active: boolean }) => item.active)?.map((item: { _id: string; image: string; name: string; specialization: string; active: boolean }) => ({
+        id: item._id, 
+        status: item?.active,
+        image: item?.image?.startsWith("http") ? item?.image : `${imageUrl}${item?.image}`,
+        name: item?.name,
+        designation: item?.specialization
+    }))
+
     return (
         <div className=" h-[620px] w-full "
             style={{
@@ -42,14 +27,14 @@ const AffiliatedDoctors = () => {
             <div className=" container pt-10 ">
                 <Title className=""> Affiliated doctors </Title>
                 <p className=" w-[63%] pb-10 text-[#6B6B6B] text-[15px] pt-3"> You know perfectly well what&apos;s good and what isn&apos;t good for you. Nevertheless, making the right choice can be difficult. We are Doctoronline. We believe in self-management when it comes to your health.
-                </p> 
+                </p>
 
-                <div className=" grid grid-cols-4 gap-10 items-center">  
+                <div className=" grid grid-cols-4 gap-10 items-center">
                     {
-                        data.map((item) => (
+                        data?.map((item:{ id: string; image: string; name: string; designation: string}) => (
                             <div key={item.id} className=" flex flex-col items-center gap-0">
-                                <div className=" flex-shrink-0  flex items-center "> 
-                                    <img src={item.image} alt="Other" style={{  borderRadius: '8px' , height:"230px", width:"250px"}} /> 
+                                <div className=" flex-shrink-0  flex items-center ">
+                                    <img src={item.image} alt="Other" style={{ borderRadius: '8px', height: "230px", width: "250px" }} />
                                 </div>
                                 <div className="bg-white w-full p-4 flex flex-col items-center rounded-lg shadow-md">
                                     <h2 className="text-xl font-medium text-[#1A1A1A] mb-2">

@@ -36,9 +36,19 @@ const consultationSlice = baseApi.injectEndpoints({
             url: `/question?${params.toString()}`,
           }
         }
-    })
+    }) ,
+
+    getMedicalDynamicQuestions: build.query({
+        query: (id) => { 
+          const params = new URLSearchParams(); 
+          if(id) params.append("subCategory", id)
+          return{ 
+            url: `/medical-question?${params.toString()}`,
+          }
+        }
+    }) ,
 
   }) 
 })  
 
-export const {useGetAllMedicinesQuery , useGetMedicineByIdQuery , useCreateConsultationMutation , useGetDynamicQuestionsQuery} =  consultationSlice
+export const {useGetAllMedicinesQuery , useGetMedicineByIdQuery , useCreateConsultationMutation , useGetDynamicQuestionsQuery , useGetMedicalDynamicQuestionsQuery} =  consultationSlice

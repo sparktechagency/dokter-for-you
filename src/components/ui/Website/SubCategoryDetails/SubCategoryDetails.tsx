@@ -22,7 +22,7 @@ const SubCategoryDetails = () => {
   const profileData = profile?.data 
   const { country } = useCountry();
 
-  //console.log(subCategoryData);
+  console.log(subCategoryData); 
 
   return (
     <div className=' bg-[#F7F7F7] pb-[64px]'>
@@ -71,14 +71,8 @@ const SubCategoryDetails = () => {
 }
          
 
-          <div className=' text-[#6B6B6B] text-[16px] pt-6'>
-            Being overweight, or obese, refers to carrying excess body fat. Doctors typically use Body Mass Index (BMI) to assess whether someone’s weight is suitable for their height. This calculation is based on weight in kilograms divided by the square of height in meters.
-
-            Healthy weight: BMI between 18 and 25
-            Overweight: BMI of 26 or higher
-            Obesity: BMI above 30
-            Severe obesity: BMI of 35 or higher
-            Waist circumference is another important factor. Excess fat around the abdomen poses more health risks than fat stored around the hips or thighs. For men, a waist measurement above 102 cm indicates an elevated risk of health issues related to excess body fat.
+          <div className=' text-[#6B6B6B] text-[16px] pt-6'> 
+            <div dangerouslySetInnerHTML={{ __html: subCategoryData?.introduction }} /> 
           </div>
         </div>
       </div>

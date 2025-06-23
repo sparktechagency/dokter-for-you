@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Form, Progress } from 'antd'
 import { Poppins } from 'next/font/google';
 import { useSearchParams } from 'next/navigation';
-import { useGetDynamicQuestionsQuery } from '@/redux/features/website/consultationSlice';
+import { useGetDynamicQuestionsQuery, useGetMedicalDynamicQuestionsQuery } from '@/redux/features/website/consultationSlice';
 import AccountDetails from '@/components/ui/Website/AllConsultations/AccountDetails';
 import AdditionalQuestions1 from '@/components/ui/Website/AllConsultations/AdditionalQuestions/AdditionalQuestions1';
 import Address from '@/components/ui/Website/AllConsultations/Address';
@@ -45,10 +45,12 @@ const MedicalConsultations = () => {
     const category = searchParams.get('category');
     const SubCategory = searchParams.get('subcategory');
     const SubCategoryName = searchParams.get('name');
-    const { data: dynamicQuestions } = useGetDynamicQuestionsQuery(SubCategory)
-    const allDynamicQuestions = dynamicQuestions?.data
-    const additionalTotal = allDynamicQuestions?.length || 0;
-    const total = allDynamicQuestions?.length + 2
+    const { data: dynamicQuestions } = useGetDynamicQuestionsQuery(SubCategory) 
+    const { data: medicalQuestions } = useGetMedicalDynamicQuestionsQuery(SubCategory) 
+    const allDynamicQuestions = dynamicQuestions?.data 
+    const allMedicalQuestions = medicalQuestions?.data
+    const additionalTotal = allDynamicQuestions?.length || 0; 
+    const total = allMedicalQuestions?.length + 2
     const [form] = Form.useForm();
     const allSelectedMedicines = useSelector((state: RootState) => state.selectedMedicines);
     const medicineLength = allSelectedMedicines?.length || 0;
@@ -133,7 +135,7 @@ const MedicalConsultations = () => {
             skippable: false,
         },
 
-        ...(allDynamicQuestions?.map((question: { question: string }, index: number) => ({
+        ...(allMedicalQuestions?.map((question: { question: string }, index: number) => ({
             title: `Medical Question ${index + 3}/${total}`,
             content: (
                 <DynamicMedicalQuestion
