@@ -23,7 +23,8 @@ const WeightLossConsultation = ({ SubCategoryName, setMedicines ,setSelectedMedi
   const { data } = useGetAllMedicinesQuery({search , id:SubCategory});
   const [detailedSelectedMeds, setDetailedSelectedMeds] = useState([]);
   const medications = data?.data;
-  const [showMore, setShowMore] = useState(false); 
+  const [showMore, setShowMore] = useState(false);  
+
 
 useEffect(() => {
   setMedicines(selectedMeds);

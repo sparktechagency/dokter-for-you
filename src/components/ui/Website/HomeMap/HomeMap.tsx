@@ -7,8 +7,6 @@ import dynamic from "next/dynamic";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-// import { LuGalleryHorizontal } from "react-icons/lu";
-// import { ReactSimpleMap } from "react-simple-maps"; 
 
 const ComposableMap = dynamic(
   () => import("react-simple-maps").then((mod) => mod.ComposableMap),

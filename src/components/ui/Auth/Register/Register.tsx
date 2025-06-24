@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
+import { useCountry } from "@/app/(website)/CountryContext";
 import InputField from "@/components/shared/InputField";
 import { useRegisterUserMutation } from "@/redux/features/auth/authApi";
 import { SetLocalStorage } from "@/util/LocalStroage";
@@ -12,11 +13,17 @@ import Swal from 'sweetalert2';
 
 const Register = () => {
     const router = useRouter()   
-    const [registerUser , { isLoading }] = useRegisterUserMutation()
+    const [registerUser , { isLoading }] = useRegisterUserMutation() 
+      const { country } = useCountry(); 
+      console.log(country);
 
-    const onFinish = async (values: any) => {
+    const onFinish = async (values: any) => { 
+        const totalData = {
+          ...values,
+          country: country,
+        };
        
-        await registerUser(values).then((res) => {
+        await registerUser(totalData).then((res) => {
     
             if (res?.data?.success) {
               Swal.fire({

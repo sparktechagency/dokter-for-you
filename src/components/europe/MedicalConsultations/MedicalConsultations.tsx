@@ -30,7 +30,6 @@ export type AddressType = {
 };
 
 
-
 const MedicalConsultations = () => {
     const [current, setCurrent] = useState(0);
     const [deliveryType, setDeliveryType] = useState<string | null>(null);
@@ -53,7 +52,8 @@ const MedicalConsultations = () => {
     const total = allMedicalQuestions?.length + 2
     const [form] = Form.useForm();
     const allSelectedMedicines = useSelector((state: RootState) => state.selectedMedicines);
-    const medicineLength = allSelectedMedicines?.length || 0;
+    const medicineLength = allSelectedMedicines?.length || 0; 
+    console.log(medicalQuestions);
 
     useEffect(() => {
         if (allSelectedMedicines?.length > 0) {
@@ -77,7 +77,7 @@ const MedicalConsultations = () => {
         "forwardToPartner": forwardStatus,
     }
 
-
+console.log(data);
 
     const updateQNA = (question: string, answer: string) => {
         setQnaData((prev) => {

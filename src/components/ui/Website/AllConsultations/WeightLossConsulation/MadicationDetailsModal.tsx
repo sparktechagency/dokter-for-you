@@ -15,14 +15,15 @@ interface MedicationModalProps {
     company: string; 
     description: string; 
     form: string; 
-    dosage: string; 
+    dosage: string[]; 
     image: string; 
     medicineType: string; 
     packSize: string; 
     price: string; 
     quantity: string|number|null; 
     strength: string;  
-    unitPerBox: string[];
+    unitPerBox: string[]; 
+    sellingPrice: number
   };
   handleAddToSelected: (selectedItem: { _id: string; count: number; total: string }) => void;
 }
@@ -30,7 +31,9 @@ interface MedicationModalProps {
 const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelected }: MedicationModalProps) => {
   const [quantity, setQuantity] = useState(1);
   const [packSize, setPackSize] = useState(''); 
-  const [dosage , setDosage] = useState('')
+  const [dosage , setDosage] = useState('') 
+
+  console.log("medicineData", medicineData);
 
   const handleSubmit = () => { 
 
@@ -85,7 +88,7 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
           <p className="text-[#6B6B6B] font-[400] text-[16px] mb-3"> Vitamin C </p>  
 
           <p className="text-[#00B3CC] font-[400] text-[16px] mb-0.5"> Tablet </p> 
-          <p className="text-[#1854F9] font-[400] text-2xl mb-2"> €20 </p> 
+          <p className="text-[#1854F9] font-[400] text-2xl mb-2"> €{medicineData?.sellingPrice} </p> 
 
 
           <p className="text-[#999999] font-[400] text-[14px] mb-4">
@@ -104,20 +107,24 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
             </div> */} 
 
             <div className="flex flex-col gap-2"> 
-              <p className="text-[#999999] ">Dosage</p>
-                {medicineData?.unitPerBox?.map((size) => (
+              <p className="text-[#999999] ">Dosage</p> 
+              <div className='flex items-center gap-2'> 
+                {medicineData?.dosage?.map((size) => (
                   <div
                     key={size}
                     onClick={() => setDosage(size)} 
                     className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${dosage === size ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
                   >
-                    {size} gm
+                    {size}
                   </div>
                 ))}
+              </div>
               </div>   
 
             <div className="flex flex-col gap-2"> 
-              <p className="text-[#999999] ">Select Units per Box</p>
+              <p className="text-[#999999] ">Select Units per Box</p> 
+              <div className=' flex items-center gap-2'> 
+
                 {medicineData?.unitPerBox?.map((size) => (
                   <div
                     key={size}
@@ -126,7 +133,9 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
                   >
                     {size} Pcs
                   </div>
-                ))}
+                ))} 
+
+              </div>
               </div>   
 
 
