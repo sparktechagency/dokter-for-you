@@ -37,22 +37,23 @@ const MedicalConsultations = () => {
     const [dynamicQnaData, setDynamicQnaData] = useState<{ question: string; answer: string }[]>([]);
     const [userId, setUserId] = useState<string | null>()
     const [selectedMedicines, setSelectedMedicines] = useState([])
-    const [forwardStatus, setForwardStatus] = useState<string | null>(null)
+    const [forwardStatus, setForwardStatus] = useState<boolean>(false)
+    const [consultationType, setConsultationType] = useState<string | null>()
     const [medicines, setMedicines] = useState([])
     const [address, setAddress] = useState<AddressType | null>()
     const searchParams = useSearchParams();
     const category = searchParams.get('category');
     const SubCategory = searchParams.get('subcategory');
     const SubCategoryName = searchParams.get('name');
-    const { data: dynamicQuestions } = useGetDynamicQuestionsQuery(SubCategory) 
-    const { data: medicalQuestions } = useGetMedicalDynamicQuestionsQuery(SubCategory) 
-    const allDynamicQuestions = dynamicQuestions?.data 
+    const { data: dynamicQuestions } = useGetDynamicQuestionsQuery(SubCategory)
+    const { data: medicalQuestions } = useGetMedicalDynamicQuestionsQuery(SubCategory)
+    const allDynamicQuestions = dynamicQuestions?.data
     const allMedicalQuestions = medicalQuestions?.data
-    const additionalTotal = allDynamicQuestions?.length || 0; 
+    const additionalTotal = allDynamicQuestions?.length || 0;
     const total = allMedicalQuestions?.length + 2
     const [form] = Form.useForm();
     const allSelectedMedicines = useSelector((state: RootState) => state.selectedMedicines);
-    const medicineLength = allSelectedMedicines?.length || 0; 
+    const medicineLength = allSelectedMedicines?.length || 0;
     console.log(medicalQuestions);
 
     useEffect(() => {
@@ -75,9 +76,10 @@ const MedicalConsultations = () => {
         "subCategory": SubCategory,
         "address": address,
         "forwardToPartner": forwardStatus,
+        "consultationType": consultationType,
     }
 
-console.log(data);
+    console.log(data, "all data ");
 
     const updateQNA = (question: string, answer: string) => {
         setQnaData((prev) => {
@@ -115,11 +117,11 @@ console.log(data);
             title: "",
             content: <div>
                 <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                   Questions about your medical Questions
+                    Questions about your medical Questions
                 </h2>
 
                 <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
-                   We have some additional questions about the product you selected
+                    We have some additional questions about the product you selected
                 </h2>
             </div>,
             skippable: true,
@@ -149,7 +151,7 @@ console.log(data);
         })) || []),
         {
             title: "",
-            content: <ConsultationsDelivery updateQNA={updateQNA} SubCategoryName={SubCategoryName} setForwardStatus={setForwardStatus} setDeliveryType={setDeliveryType} medicineLength={medicineLength} />,
+            content: <ConsultationsDelivery updateQNA={updateQNA} SubCategoryName={SubCategoryName} setForwardStatus={setForwardStatus} setDeliveryType={setDeliveryType} medicineLength={medicineLength} setConsultationType={setConsultationType} />,
             skippable: false,
         },
 
@@ -159,31 +161,31 @@ console.log(data);
             ? [
                 {
                     title: "",
-                    content: <div>  
+                    content: <div>
                         {
                             medicineLength > 0 ? (
-                                <div> 
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                           Questions about your health 
-                        </h2>
+                                <div>
+                                    <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                                        Questions about your health
+                                    </h2>
 
-                        <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
-                            Your health is very important to us. Please take 3 minutes to answer the following  questions. 
-                        </h2>
-                        </div>
-                            ) :
-                             (
-                                <div> 
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                          Additional questions regarding the consultation or medication you have chosen
-                        </h2>
-
-                        <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
-                           Please answer these last questions and your consultation will be sent to the doctor. 
-                        </h2>
+                                    <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
+                                        Your health is very important to us. Please take 3 minutes to answer the following  questions.
+                                    </h2>
                                 </div>
-                            )
-                             }
+                            ) :
+                                (
+                                    <div>
+                                        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                                            Additional questions regarding the consultation or medication you have chosen
+                                        </h2>
+
+                                        <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
+                                            Please answer these last questions and your consultation will be sent to the doctor.
+                                        </h2>
+                                    </div>
+                                )
+                        }
 
                     </div>,
                     skippable: true,
@@ -244,7 +246,7 @@ console.log(data);
                 </div>
 
                 {/* footer buttons   */}
-                <StepsFooter current={current} setCurrent={setCurrent} steps={steps} form={form} data={data} allMedicalDynamicQuestions={allDynamicQuestions} allAdditionalDynamicQuestions={allDynamicQuestions} />
+                <StepsFooter current={current} setCurrent={setCurrent} steps={steps} form={form} data={data} allMedicalDynamicQuestions={allMedicalQuestions} allAdditionalDynamicQuestions={allDynamicQuestions} />
 
             </div>
         </div>

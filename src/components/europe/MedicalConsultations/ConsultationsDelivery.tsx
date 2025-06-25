@@ -5,24 +5,26 @@ import { useState } from 'react';
 
 type DeliveryOption = 'forward' | 'digital' | 'video';
 
-const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus , setDeliveryType , medicineLength }: { updateQNA: (question: string, answer: string) => void  , SubCategoryName:string|null , setForwardStatus: React.Dispatch<React.SetStateAction<string | null>> , setDeliveryType: React.Dispatch<React.SetStateAction<string | null>> ,  medicineLength?: number | undefined}) => {
+const ConsultationsDelivery = ({ updateQNA, SubCategoryName, setForwardStatus, setDeliveryType, medicineLength, setConsultationType }: { updateQNA: (question: string, answer: string) => void, SubCategoryName: string | null, setForwardStatus: React.Dispatch<React.SetStateAction<boolean | null>>, setDeliveryType: React.Dispatch<React.SetStateAction<string | null>>, medicineLength?: number | undefined, setConsultationType: React.Dispatch<React.SetStateAction<string | null>> }) => {
   const [selectedOption, setSelectedOption] = useState<DeliveryOption | null>(null);
 
   const handleOptionChange = (option: DeliveryOption) => {
-    setSelectedOption(option); 
+    setSelectedOption(option);
     setDeliveryType(option);
-    setForwardStatus(option);
+    setForwardStatus(option === 'forward' ? true : false);
+    setConsultationType(option === 'video' ? 'video' : null);
+
     const question = 'Delivery Prescription';
     const answer =
       option === 'forward'
         ? 'Forward Prescription to our Partner'
         : option === 'digital' ? 'Receive Digital Prescription' : 'Video Consultation';
 
-    updateQNA(question, answer);  
+    updateQNA(question, answer);
 
-          if (option === 'video') {
-          message.success('The doctor will send the video consultation appointment to your email within 24 hours.');
-      } 
+    if (option === 'video') {
+      message.success('The doctor will send the video consultation appointment to your email within 24 hours.');
+    }
   };
 
   return (
@@ -37,11 +39,10 @@ const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Forward Prescription Option */}
         <label
-          className={`relative flex flex-col p-4 py-7 border cursor-pointer transition-all duration-200 ${
-            selectedOption === 'forward'
+          className={`relative flex flex-col p-4 py-7 border cursor-pointer transition-all duration-200 ${selectedOption === 'forward'
               ? 'border-emerald-500 bg-emerald-50'
               : 'border-gray-200 hover:border-gray-300 bg-[#f3f6ff]'
-          }`}
+            }`}
         >
           <div className="flex items-start space-x-3">
             <input
@@ -59,7 +60,7 @@ const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus 
                 We will send your medication and your prescription is delivered to your home by a
                 partner pharmacy
               </span>
-              
+
             </div>
           </div>
 
@@ -69,14 +70,13 @@ const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus 
             </p>
           </div>
         </label>
- 
+
         {/* Video Consultation Option */}
         <label
-          className={` ${(medicineLength ?? 0) >= 1 ? 'hidden' : ''} relative flex flex-col p-4 border py-7 cursor-pointer transition-all duration-200 ${
-            selectedOption === 'video'
+          className={` ${(medicineLength ?? 0) >= 1 ? 'hidden' : ''} relative flex flex-col p-4 border py-7 cursor-pointer transition-all duration-200 ${selectedOption === 'video'
               ? 'border-emerald-500 bg-emerald-50'
               : 'border-gray-200 hover:border-gray-300 bg-[#f3f6ff]'
-          }`}
+            }`}
         >
           <div className="flex items-start space-x-3">
             <input
@@ -91,21 +91,20 @@ const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus 
                 Video Consultation
               </span>
               <span className="mt-1 block text-[16px] text-[#999999]">
-               Your video call will connect you with a registered doctor who will assess your symptoms and prescribe the right treatment. The prescription will be sent to a registered pharmacy, and they will contact you about your medication.
+                Your video call will connect you with a registered doctor who will assess your symptoms and prescribe the right treatment. The prescription will be sent to a registered pharmacy, and they will contact you about your medication.
               </span>
-              
+
             </div>
           </div>
-        </label> 
+        </label>
 
 
         {/* Digital Prescription Option */}
         <label
-          className={`relative flex flex-col p-4 border py-7 cursor-pointer transition-all duration-200 ${
-            selectedOption === 'digital'
+          className={`relative flex flex-col p-4 border py-7 cursor-pointer transition-all duration-200 ${selectedOption === 'digital'
               ? 'border-emerald-500 bg-emerald-50'
               : 'border-gray-200 hover:border-gray-300 bg-[#f3f6ff]'
-          }`}
+            }`}
         >
           <div className="flex items-start space-x-3">
             <input
@@ -122,7 +121,7 @@ const ConsultationsDelivery = ({ updateQNA , SubCategoryName , setForwardStatus 
               <span className="mt-1 block text-[16px] text-[#999999]">
                 We will send you a prescription and buy your medication at your own pharmacy
               </span>
-              
+
             </div>
           </div>
         </label>

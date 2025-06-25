@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal, InputNumber, Button, message } from 'antd';
 import Image from 'next/image';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
@@ -8,45 +8,73 @@ import { imageUrl } from '@/redux/base/baseApi';
 
 interface MedicationModalProps {
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>; 
-  medicineData: { 
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  medicineData: {
     _id: string;
-    name: string; 
-    company: string; 
-    description: string; 
-    form: string; 
+    name: string;
+    company: string;
+    description: string;
+    form: string;
     dosage: string[]; 
-    image: string; 
-    medicineType: string; 
-    packSize: string; 
-    price: string; 
-    quantity: string|number|null; 
-    strength: string;  
-    unitPerBox: string[]; 
+    variations: variationsType[];
+    image: string;
+    medicineType: string;
+    packSize: string;
+    price: string;
+    quantity: string | number | null;
+    strength: string;
+    unitPerBox: string[];
     sellingPrice: number
   };
   handleAddToSelected: (selectedItem: { _id: string; count: number; total: string }) => void;
 }
 
+interface unitType {
+  unitPerBox: string | null,
+  sellingPrice: number,
+  _id: string
+}
+interface variationsType {
+  _id: string;
+  units: unitType[];
+  dosage: string
+}
+
 const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelected }: MedicationModalProps) => {
   const [quantity, setQuantity] = useState(1);
-  const [packSize, setPackSize] = useState(''); 
-  const [dosage , setDosage] = useState('') 
+  const [packSize, setPackSize] = useState<string|null>('');
+  const [dosage, setDosage] = useState('')
+  const [unitPerBox, setUnitPerBox] = useState<unitType[]>([])  
+  const [medicinePrice, setMedicinePrice] = useState<number>(0)
 
-  console.log("medicineData", medicineData);
+  console.log("medicineData", medicineData); 
 
-  const handleSubmit = () => { 
+  useEffect(() => {
+  if (medicineData?.variations?.length > 0) {
+    const firstVariation = medicineData.variations[0];
+    setDosage(firstVariation.dosage);
+    setUnitPerBox(firstVariation.units);
+
+    // Set default packSize and price if units exist
+    if (firstVariation.units?.length > 0) {
+      setPackSize(firstVariation.units[0].unitPerBox);
+      setMedicinePrice(firstVariation.units[0].sellingPrice);
+    }
+  }
+}, [medicineData]); 
+
+  const handleSubmit = () => {
 
     if (!packSize) {
       return message.error("Please select a pcs before proceeding.");
-    } 
+    }
 
     handleAddToSelected({
       _id: medicineData?._id,
       count: quantity,
-      total: `${packSize} pcs`,  
+      total: `${packSize} pcs`,
 
-    }) 
+    })
 
     setQuantity(1);
     setPackSize('');
@@ -81,14 +109,14 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
           handleSubmit();
         }}>
           <div className="uppercase text-[#1854F9] text-sm font-semibold mb-2">
-           Square
+            Square
           </div>
 
           <h2 className="text-2xl font-medium mb-1 text-[#222222]">{medicineData?.name}</h2>
-          <p className="text-[#6B6B6B] font-[400] text-[16px] mb-3"> Vitamin C </p>  
+          <p className="text-[#6B6B6B] font-[400] text-[16px] mb-3"> Vitamin C </p>
 
-          <p className="text-[#00B3CC] font-[400] text-[16px] mb-0.5"> Tablet </p> 
-          <p className="text-[#1854F9] font-[400] text-2xl mb-2"> €{medicineData?.sellingPrice} </p> 
+          <p className="text-[#00B3CC] font-[400] text-[16px] mb-0.5"> Tablet </p>
+          <p className="text-[#1854F9] font-[400] text-2xl mb-2"> €{medicinePrice * quantity} </p>
 
 
           <p className="text-[#999999] font-[400] text-[14px] mb-4">
@@ -104,39 +132,40 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
             <div>
               <div className="text-gray-600 mb-2">Dosage</div>
               <button className='px-4 py-1 font-[400] text-[16px] bg-primary text-white'>{medicineData?.dosage}</button>
-            </div> */} 
+            </div> */}
 
-            <div className="flex flex-col gap-2"> 
-              <p className="text-[#999999] ">Dosage</p> 
-              <div className='flex items-center gap-2'> 
-                {medicineData?.dosage?.map((size) => (
+            <div className="flex flex-col gap-2">
+              <p className="text-[#999999] ">Dosage</p>
+              <div className='flex items-center gap-2'>
+                {medicineData?.variations?.map((items: variationsType) => (
                   <div
-                    key={size}
-                    onClick={() => setDosage(size)} 
-                    className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${dosage === size ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
+                    key={items?._id}
+                    onClick={() => { setDosage(items?.dosage); setUnitPerBox(items?.units) }} 
+                    onChange={() => setUnitPerBox(items?.units)}
+                    className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${dosage === items?.dosage ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
                   >
-                    {size}
+                    {items?.dosage}
                   </div>
                 ))}
               </div>
-              </div>   
+            </div>
 
-            <div className="flex flex-col gap-2"> 
-              <p className="text-[#999999] ">Select Units per Box</p> 
-              <div className=' flex items-center gap-2'> 
+            <div className="flex flex-col gap-2">
+              <p className="text-[#999999] ">Select Units per Box</p>
+              <div className=' flex items-center gap-2'>
 
-                {medicineData?.unitPerBox?.map((size) => (
+                {unitPerBox?.map((items: unitType) => (
                   <div
-                    key={size}
-                    onClick={() => setPackSize(size)} 
-                    className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${packSize === size ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
+                    key={items?._id}
+                    onClick={() => {setPackSize(items?.unitPerBox); setMedicinePrice(items?.sellingPrice)}}
+                    className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${packSize === items?.unitPerBox ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
                   >
-                    {size} Pcs
+                    {items?.unitPerBox}
                   </div>
-                ))} 
+                ))}
 
               </div>
-              </div>   
+            </div>
 
 
           </div>
@@ -172,12 +201,12 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
             Select
           </button>
         </form>
-      </div> 
+      </div>
 
-      <p className=' text-[#999999] text-sm font-normal py-4'> Where your health is concerned, we believe you have the right to decide what to do with your body. That is why we offer you the opportunity to consult a licensed and registered EU   </p> 
+      <p className=' text-[#999999] text-sm font-normal py-4'> Where your health is concerned, we believe you have the right to decide what to do with your body. That is why we offer you the opportunity to consult a licensed and registered EU   </p>
 
-       <h2 className="text-[16px] font-medium mb-2 mt-2 text-[#0A2369]">Description</h2>  
-       <p className=' text-[#999999] text-sm font-normal'>this is description part . waiting for backend..</p>
+      <h2 className="text-[16px] font-medium mb-2 mt-2 text-[#0A2369]">Description</h2>
+      <p className=' text-[#999999] text-sm font-normal'>this is description part . waiting for backend..</p>
     </Modal>
   );
 };
