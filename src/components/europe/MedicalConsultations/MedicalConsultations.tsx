@@ -53,16 +53,21 @@ const MedicalConsultations = () => {
     const total = allMedicalQuestions?.length + 2
     const [form] = Form.useForm();
     const allSelectedMedicines = useSelector((state: RootState) => state.selectedMedicines);
-    const medicineLength = allSelectedMedicines?.length || 0;
-    console.log(medicalQuestions);
+    const medicineLength = allSelectedMedicines?.length || 0; 
+    const [discountCode, setDiscountCode] = useState<string | null>(null);
 
     useEffect(() => {
-        if (allSelectedMedicines?.length > 0) {
+        if (allSelectedMedicines?.length > 0) { 
+
             setSelectedMedicines(allSelectedMedicines);
             setMedicines(allSelectedMedicines.map((med: { _id: string; count: number; total: string }) => ({
-                _id: med._id,
+                medicineId: med._id, 
+                variationId: med.variationId,
+                unitId: med.unitId,
                 count: med.count,
-                total: med.total,
+                // total: med.total, 
+                // dosage: med.dosage,
+                // price: med.price,
             })));
         }
     }, [allSelectedMedicines]);
@@ -71,12 +76,13 @@ const MedicalConsultations = () => {
         "QNA": qnaData,
         "DinamicQNA": dynamicQnaData,
         "userId": userId,
-        "medicins": medicines,
+        "selectedMedicines": medicines,
         "category": category,
         "subCategory": SubCategory,
         "address": address,
         "forwardToPartner": forwardStatus,
-        "consultationType": consultationType,
+        "consultationType": consultationType, 
+        "discountCode": discountCode
     }
 
     console.log(data, "all data ");
@@ -212,7 +218,7 @@ const MedicalConsultations = () => {
         },
         {
             title: "",
-            content: <ConsultationCheckConfirm selectedMedicines={selectedMedicines} SubCategoryName={SubCategoryName} address={address} />,
+            content: <ConsultationCheckConfirm selectedMedicines={selectedMedicines} SubCategoryName={SubCategoryName} address={address} setDiscountCode={setDiscountCode} />,
             skippable: true,
         },
 

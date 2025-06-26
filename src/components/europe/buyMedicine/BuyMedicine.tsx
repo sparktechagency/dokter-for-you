@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //@ts-nocheck
 "use client";
@@ -22,8 +23,11 @@ const BuyMedicine = ({ SubCategoryName, subcategoryId, category }: { SubCategory
     const dispatch = useDispatch();
     const handleContinue = () => {
         dispatch(setAllSelectedMedicines(selectedMedicines));
-    }
-    console.log(medicines);
+    } 
+
+    console.log(selectedMedicines, "selectedMedicines in BuyMedicine component"); 
+    console.log(medicines, "medicines in BuyMedicine component");
+
     return (
         <div className="bg-white p-5">
 
@@ -66,7 +70,7 @@ const BuyMedicine = ({ SubCategoryName, subcategoryId, category }: { SubCategory
                                     </div>
                                     <div className="text-right ">
                                         <p className="text-sm text-[#999999] pb-1 font-medium">Price</p>
-                                        <p className="text-sm">€{medicine?.sellingPrice}</p>
+                                        <p className="text-sm">€{medicine?.price}</p>
                                     </div>
                                 </div>
                             ))

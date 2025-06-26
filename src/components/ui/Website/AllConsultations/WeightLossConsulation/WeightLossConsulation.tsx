@@ -52,7 +52,12 @@ useEffect(() => {
           {
             ...medicineById.data,
             count: medicineData.count || 1,
-            total: `${medicineData.count || 1} pcs`,
+            total: `${medicineData.count || 1} pcs`,  
+            price: medicineData?.price || 0,  
+            dosage: medicineData?.dosage || "", 
+            unitId: medicineData?.unitId || "", 
+            variationId: medicineData?.variationId || "",
+            //write there  total and 
           },
         ]);
       }
@@ -75,7 +80,11 @@ useEffect(() => {
       ...medicineData,
       _id: medData._id,
       count: medData.count,
-      total: medData.total,
+      total: medData.total, 
+      price: medData.price,
+      dosage: medData.dosage,
+      variationId: medData.variationId,
+      unitId: medData.unitId
     };
 
  
@@ -103,14 +112,14 @@ useEffect(() => {
       setSelectedMeds((prev) =>
         prev.map((med, index) =>
           index === existingMedIndex
-            ? { _id: medData._id, count: medData.count, total: medData.total }
+            ? { _id: medData._id, count: medData.count, total: medData.total, price: medData.price, dosage: medData.dosage, variationId: medData.variationId, unitId: medData.unitId }
             : med
         )
       );
     } else {
       setSelectedMeds((prev) => [
         ...prev,
-        { _id: medData._id, count: medData.count, total: medData.total },
+        { _id: medData._id, count: medData.count, total: medData.total , price: medData.price, dosage: medData.dosage , variationId: medData.variationId, unitId: medData.unitId },
       ]);
     }
 
@@ -173,8 +182,15 @@ useEffect(() => {
               className="h-36 mx-auto"
             />
             <h3 className="text-lg font-semibold mt-4 text-center">{med.name}</h3>
-            <p className="text-sm text-gray-500 text-center">
-              {`${med?.dosage}`}
+            <p className="text-sm text-gray-500 text-center flex items-center justify-center gap-2"> 
+              {
+                medicineData?.variations?.map((items: variationsType) => (
+                  <span key={items._id}>
+                    {items.dosage} 
+                  </span>
+              ))
+              }
+             
             </p>
             {isSelected(med._id) && (
               <p

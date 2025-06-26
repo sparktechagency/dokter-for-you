@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 
 'use client';
 
+import { useCreateConsultationMutation } from '@/redux/features/website/consultationSlice';
 import { FormInstance, message } from 'antd';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
@@ -45,7 +47,8 @@ interface Props {
         category: string | null;
         subCategory: string | null;
         address?: Address;
-        forwardToPartner?: string | null;
+        forwardToPartner?: string | null; 
+        consultationType?: string ;
     };
     allMedicalDynamicQuestions?: Qna[] | undefined;
     allAdditionalDynamicQuestions?: Qna[] | undefined;
@@ -55,7 +58,8 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
     const medicalQuestionsEnd = 4 + (allMedicalDynamicQuestions?.length || 0);
     // const [validationErrors, setValidationErrors] = useState<{ [key: number]: boolean }>({}); 
     const dynamicEnd = (medicalQuestionsEnd + 2) + (allAdditionalDynamicQuestions?.length || 0);
-    const route = useRouter();
+    const router = useRouter();
+    const [createConsultation] = useCreateConsultationMutation();
 
 
     const next = () => {
@@ -113,7 +117,7 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
                 return true;
             }
 
-            if (data?.forwardToPartner === "video" && current === medicalQuestionsEnd + 1) {
+            if (data?.consultationType === "video" && current === medicalQuestionsEnd + 1) {
                 if (!data.address) {
                     return false;
                 }
@@ -171,9 +175,18 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
         setCurrent((prev) => Math.max(prev - 1, 0));
     };
 
-    const handleSubmit = () => {
-        route.push('/profile');
-    }
+    const handleSubmit = async () => {
+        await createConsultation(data).then((res) => {
+            console.log('Response from createConsultation:', res);
+            if (res?.data?.success) {
+                router.push(res?.data?.data?.checkoutUrl || '/');
+            }else { 
+                //@ts-ignore 
+                message.error(res?.error?.data?.errorMessages?.map((err: { message: string }) => err?.message).join('<br />'));
+            }
+        });
+    };
+
 
     return (
         <div className="steps-action flex items-center justify-end gap-3 pb-5">
@@ -197,7 +210,7 @@ const StepsFooter = ({ current, setCurrent, steps, form, data, allMedicalDynamic
             )}
 
             {current === steps.length - 1 && (
-                <button className="mt-6 px-5 py-[10px] bg-primary text-white" onClick={() => handleSubmit()}>
+                <button onClick={() => { handleSubmit() }} className="mt-6 px-5 py-[10px] bg-primary text-white" >
                     Done
                 </button>
             )}

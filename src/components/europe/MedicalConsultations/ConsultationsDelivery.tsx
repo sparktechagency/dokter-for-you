@@ -12,7 +12,7 @@ const ConsultationsDelivery = ({ updateQNA, SubCategoryName, setForwardStatus, s
     setSelectedOption(option);
     setDeliveryType(option);
     setForwardStatus(option === 'forward' ? true : false);
-    setConsultationType(option === 'video' ? 'video' : null);
+    setConsultationType(option === 'video' ? 'video' : 'regular');
 
     const question = 'Delivery Prescription';
     const answer =

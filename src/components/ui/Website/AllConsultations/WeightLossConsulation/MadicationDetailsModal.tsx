@@ -26,7 +26,7 @@ interface MedicationModalProps {
     unitPerBox: string[];
     sellingPrice: number
   };
-  handleAddToSelected: (selectedItem: { _id: string; count: number; total: string }) => void;
+  handleAddToSelected: (selectedItem: { _id: string; count: number; total: string , dosage: string, price: number , variationId: string, unitId: string }) => void;
 }
 
 interface unitType {
@@ -45,24 +45,28 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
   const [packSize, setPackSize] = useState<string|null>('');
   const [dosage, setDosage] = useState('')
   const [unitPerBox, setUnitPerBox] = useState<unitType[]>([])  
-  const [medicinePrice, setMedicinePrice] = useState<number>(0)
-
-  console.log("medicineData", medicineData); 
+  const [medicinePrice, setMedicinePrice] = useState<number>(0) 
+  const [variationId , setVariationId] = useState<string>(''); 
+  const [unitId, setUnitId] = useState<string>('');
 
   useEffect(() => {
   if (medicineData?.variations?.length > 0) {
     const firstVariation = medicineData.variations[0];
     setDosage(firstVariation.dosage);
-    setUnitPerBox(firstVariation.units);
+    setUnitPerBox(firstVariation.units); 
+    setVariationId(firstVariation._id); 
+
 
     // Set default packSize and price if units exist
     if (firstVariation.units?.length > 0) {
-      setPackSize(firstVariation.units[0].unitPerBox);
+      setPackSize(firstVariation.units[0].unitPerBox); 
+      setUnitId(firstVariation.units[0]._id);
       setMedicinePrice(firstVariation.units[0].sellingPrice);
     }
   }
 }, [medicineData]); 
 
+const totalPrice = medicinePrice * quantity;
   const handleSubmit = () => {
 
     if (!packSize) {
@@ -73,13 +77,18 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
       _id: medicineData?._id,
       count: quantity,
       total: `${packSize} pcs`,
-
+      dosage: dosage,
+      price: totalPrice, 
+      variationId: variationId,
+      unitId: unitId
     })
 
     setQuantity(1);
     setPackSize('');
     setOpen(false);
-  };
+  }; 
+
+  
 
   return (
     <Modal
@@ -99,7 +108,7 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
               alt={medicineData?.name}
               width={600}
               height={400}
-              className="object-cover"
+              className="object-contain lg:h-[500px]"
             />
           </div>
         </div>
@@ -116,7 +125,7 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
           <p className="text-[#6B6B6B] font-[400] text-[16px] mb-3"> Vitamin C </p>
 
           <p className="text-[#00B3CC] font-[400] text-[16px] mb-0.5"> Tablet </p>
-          <p className="text-[#1854F9] font-[400] text-2xl mb-2"> €{medicinePrice * quantity} </p>
+          <p className="text-[#1854F9] font-[400] text-2xl mb-2"> €{totalPrice} </p>
 
 
           <p className="text-[#999999] font-[400] text-[14px] mb-4">
@@ -140,15 +149,15 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
                 {medicineData?.variations?.map((items: variationsType) => (
                   <div
                     key={items?._id}
-                    onClick={() => { setDosage(items?.dosage); setUnitPerBox(items?.units) }} 
+                    onClick={() => { setDosage(items?.dosage); setUnitPerBox(items?.units); setVariationId(items?._id); }} 
                     onChange={() => setUnitPerBox(items?.units)}
                     className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${dosage === items?.dosage ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
                   >
                     {items?.dosage}
                   </div>
                 ))}
+                </div>
               </div>
-            </div>
 
             <div className="flex flex-col gap-2">
               <p className="text-[#999999] ">Select Units per Box</p>
@@ -157,7 +166,7 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
                 {unitPerBox?.map((items: unitType) => (
                   <div
                     key={items?._id}
-                    onClick={() => {setPackSize(items?.unitPerBox); setMedicinePrice(items?.sellingPrice)}}
+                    onClick={() => {setPackSize(items?.unitPerBox); setMedicinePrice(items?.sellingPrice); setUnitId(items?._id); }}
                     className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${packSize === items?.unitPerBox ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
                   >
                     {items?.unitPerBox}
