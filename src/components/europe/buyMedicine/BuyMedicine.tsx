@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { setAllSelectedMedicines } from "@/redux/features/website/selectedMedicineSlice";
 
 
-const BuyMedicine = ({ SubCategoryName, subcategoryId, category }: { SubCategoryName: string | null, subcategoryId: string | null, category: string | null }) => {
+const MedicineHistory = ({ SubCategoryName, subcategoryId, category }: { SubCategoryName: string | null, subcategoryId: string | null, category: string | null }) => {
     const [medicines, setMedicines] = useState([])
     const [selectedMedicines, setSelectedMedicines] = useState([])
     const { data: profile } = useGetProfileQuery(undefined)
@@ -117,4 +117,4 @@ const BuyMedicine = ({ SubCategoryName, subcategoryId, category }: { SubCategory
     );
 };
 
-export default BuyMedicine;
+export default MedicineHistory;

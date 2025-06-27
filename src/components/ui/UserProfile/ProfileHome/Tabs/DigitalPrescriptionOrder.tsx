@@ -30,7 +30,9 @@ const DigitalPrescriptionOrder = () => {
 
   const DigitalPrescriptionOrderDetails = allConsultations?.data?.filter(
     (consultation:{ forwardToPartner: boolean; }) => consultation?.forwardToPartner === true   
-  ); 
+  );  
+
+
 
   const columns: ColumnsType<ConsultationData> = [
     {

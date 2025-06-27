@@ -13,7 +13,7 @@ import { imageUrl } from '@/redux/base/baseApi';
 import { useSearchParams } from 'next/navigation';
 import { message } from 'antd';
 import { useCountry } from '@/app/(website)/CountryContext';
-import BuyMedicineTab from '@/components/europe/ProfileForEurope/BuyMedicine/BuyMedicineTab';
+import MedicineHistoryTab from '@/components/europe/ProfileForEurope/MedicineHistoryTab/MedicineHistoryTab';
 
 
 
@@ -33,11 +33,10 @@ const ProfileHome = () => {
   { id: "1", label: "Profile Details", component: <ProfileDetails /> },
   { id: "2", label: "Dr. Consultation", component: <Consultation /> },
   { id: "3", label: "Digital Prescription Details", component: <DigitalPrescriptionDetails /> },
-  { id: "4", label: "Digital Prescription With Order", component: <DigitalPrescriptionOrder /> }, 
-  ...(country === "Netherlands" ? [] : [{ id: "6", label: "Buy Medicine", component: <BuyMedicineTab /> }] ),
+  ...(country === "Netherlands" ? [{ id: "4", label: "Digital Prescription With Order", component: <DigitalPrescriptionOrder /> }] : [{ id: "4", label:  "Medicine History", component: <MedicineHistoryTab /> }] ),
   { id: "5", label: "Change Password", component: <ChangePassword /> },
 ]; 
-
+  
 
   useEffect(() => { 
     if(isSuccess){

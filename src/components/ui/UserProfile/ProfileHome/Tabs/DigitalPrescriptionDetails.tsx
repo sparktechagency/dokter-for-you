@@ -31,7 +31,7 @@ const DigitalPrescriptionDetails = () => {
 
   const DigitalPrescriptionDetails = allConsultations?.data?.filter(
     (consultation) => consultation.consultationType === "regular" &&  consultation?.forwardToPartner === false   
-  ); 
+  );  
 
   // const DigitalPrescriptionDetails = allConsultations?.data?.filter(
   //   (consultation) => consultation?.suggestedMedicine?.length >= 1 || consultation?.opinion?.trim().length > 1
