@@ -16,14 +16,16 @@ const ConsultationCheckConfirm = ({ selectedMedicines, SubCategoryName, address 
 
  
     const handleSubmit = async () => { 
-        await createDiscount({ discountCode: code}).then((res: any) => { 
-            if (res?.data?.success) {
+        await createDiscount({ discountCode: code}).then((res: any) => {  
+            console.log("Discount response:", res);
+            if (res?.data?.success) { 
+                  message.success(res?.data?.message);
                 if (code !== null) {
-                    setDiscountCode(code);
+                    setDiscountCode(code);  
+                    setCode(null); 
                 }
-                message.success(res?.data?.message);
             } else { 
-                message.error(res?.error?.data?.errorMessages?.map((err: { message: string }) => err?.message).join('<br />'));
+                message.error(res?.error?.data?.message);
             }
         }).catch((error) => {
             console.error("Error applying discount code:", error);

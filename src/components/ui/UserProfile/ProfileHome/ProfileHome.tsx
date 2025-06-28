@@ -26,16 +26,17 @@ const ProfileHome = () => {
   const searchParams = useSearchParams(); 
   const isSuccess = searchParams.get('isSuccess');  
   const {country} = useCountry(); 
-  console.log(country); 
 
-
-  const tabs = [
+const tabs = [
   { id: "1", label: "Profile Details", component: <ProfileDetails /> },
   { id: "2", label: "Dr. Consultation", component: <Consultation /> },
   { id: "3", label: "Digital Prescription Details", component: <DigitalPrescriptionDetails /> },
-  ...(country === "Netherlands" ? [{ id: "4", label: "Digital Prescription With Order", component: <DigitalPrescriptionOrder /> }] : [{ id: "4", label:  "Medicine History", component: <MedicineHistoryTab /> }] ),
-  { id: "5", label: "Change Password", component: <ChangePassword /> },
-]; 
+  { id: "4", label: "Digital Prescription With Order", component: <DigitalPrescriptionOrder /> },
+  ...(country !== "Netherlands"
+    ? [{ id: "5", label: "Medicine History", component: <MedicineHistoryTab /> }]
+    : []),
+  { id: "6", label: "Change Password", component: <ChangePassword /> },
+];
   
 
   useEffect(() => { 

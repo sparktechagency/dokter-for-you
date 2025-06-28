@@ -8,19 +8,26 @@ import { SetLocalStorage } from "@/util/LocalStroage";
 import { Checkbox, ConfigProvider, Form, Input, Select } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation"; 
-import React from "react";
+import React, { useEffect } from "react";
 import Swal from 'sweetalert2'; 
 
 const Register = () => {
     const router = useRouter()   
     const [registerUser , { isLoading }] = useRegisterUserMutation() 
-      const { country } = useCountry(); 
-      console.log(country);
+      const { country } = useCountry();  
+      const [form] = Form.useForm();
+ 
+      useEffect(() => {
+        if (country) {
+            form.setFieldsValue({
+                country: country,
+            });
+        }
+      }, [country , form]); 
 
     const onFinish = async (values: any) => { 
         const totalData = {
           ...values,
-          country: country,
         };
        
         await registerUser(totalData).then((res) => {
@@ -69,7 +76,8 @@ const Register = () => {
                 initialValues={{
                     remember: true ,
                     gender: "MALE"
-                }}
+                }} 
+                form={form}
             >
 
                 <div className="grid grid-cols-2 gap-x-5">
@@ -184,8 +192,31 @@ const Register = () => {
                         </Form.Item>
                     </ConfigProvider>
 
-                </div>
+                </div> 
 
+                 <Form.Item
+                      name={"country"} 
+
+                      label={<p className="text-[#4E4E4E] text-[16px]">Country</p>}
+                      rules={[
+                        {
+                          required: true,
+                          message: `Please enter your country`,
+                        },
+                      ]}
+                    > 
+                      <Input
+                        placeholder={`Enter your country`}
+                        style={{
+                            height: 48,
+                            border: "1px solid #d9d9d9",
+                            outline: "none",
+                            boxShadow: "none",
+                            backgroundColor: "white",
+                          }} 
+                          readOnly
+                      /> 
+                    </Form.Item> 
                 <div className="flex items-center justify-between">
                     <Form.Item style={{ marginBottom: 0 }} name="agree" valuePropName="checked" rules={[{ required: true }]}>
                         <Checkbox>I agree with terms of service and privacy policy</Checkbox>

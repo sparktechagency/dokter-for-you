@@ -44,11 +44,8 @@ const BlogDetails = () => {
         </h1> 
         <p className="text-sm text-gray-500  mb-[52px]">{moment(article?.createdAt).format("MMM DD YYYY")}</p>
 
-        <div className="space-y-6 text-gray-700">
-    {article?.description}
+        <div className="space-y-6 text-gray-700" dangerouslySetInnerHTML={{ __html: article?.description }} />
 
-  
-        </div>
       </main>
     </div>
         </div>

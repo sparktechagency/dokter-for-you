@@ -4,20 +4,32 @@ import Cookies from "js-cookie";
 
 interface CountryContextProps {
   country: string | undefined;
+  setCountry: (value: string) => void;
 }
 
-const CountryContext = createContext<CountryContextProps>({ country: undefined });
+const CountryContext = createContext<CountryContextProps>({
+  country: undefined,
+  setCountry: () => {},
+});
 
 export const CountryProvider = ({ children }: { children: React.ReactNode }) => {
-  const [country, setCountry] = useState<string | undefined>(undefined);
+  const [country, setCountryState] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const storedCountry = Cookies.get("country");
-    setCountry(storedCountry);
+    if (storedCountry) {
+      setCountryState(storedCountry);
+    }
   }, []);
 
+
+  const setCountry = (value: string) => {
+    Cookies.set("country", value, { expires: 15, path: "/" });
+    setCountryState(value);
+  };
+ 
   return (
-    <CountryContext.Provider value={{ country }}>
+    <CountryContext.Provider value={{ country, setCountry }}>
       {children}
     </CountryContext.Provider>
   );

@@ -22,7 +22,6 @@ const SubCategoryDetails = () => {
   const profileData = profile?.data 
   const { country } = useCountry();
 
-  console.log(subCategoryData); 
 
   return (
     <div className=' bg-[#F7F7F7] pb-[64px]'>
@@ -43,7 +42,7 @@ const SubCategoryDetails = () => {
             alt="Weight scale with feet"
             height={332}
             width={1400}
-            className=" object-cover "
+            className=" object-cover h-[632px] "
           />
         </div>
 

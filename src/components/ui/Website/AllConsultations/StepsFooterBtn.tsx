@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
@@ -223,9 +224,12 @@ const StepsFooterBtn = ({ current, setCurrent, steps, data, hasPreference, medic
 
     const handleSubmit = async () => {
         await createConsultation(data).then((res) => { 
-          
+                      console.log('Response from createConsultation:', res);
             if (res?.data?.success) {
-                router.push(res?.data?.data);
+               router.push(res?.data?.data?.checkoutUrl || '/');
+            }else { 
+                //@ts-ignore 
+                message.error(res?.error?.data?.errorMessages?.map((err: { message: string }) => err?.message).join('<br />'));
             }
         });
     };

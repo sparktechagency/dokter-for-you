@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -7,69 +6,71 @@ import dynamic from "next/dynamic";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
 
-const ComposableMap = dynamic(
-  () => import("react-simple-maps").then((mod) => mod.ComposableMap),
-  { ssr: false }
-);
-
-const Geographies = dynamic(
-  () => import("react-simple-maps").then((mod) => mod.Geographies),
-  { ssr: false }
-);
-
-const Geography = dynamic(
-  () => import("react-simple-maps").then((mod) => mod.Geography),
-  { ssr: false }
-);
+const ComposableMap = dynamic(() => import("react-simple-maps").then((mod) => mod.ComposableMap), { ssr: false });
+const Geographies = dynamic(() => import("react-simple-maps").then((mod) => mod.Geographies), { ssr: false });
+const Geography = dynamic(() => import("react-simple-maps").then((mod) => mod.Geography), { ssr: false });
 
 const europeGeoUrl = "/geo/europe.json";
 
 const countries = [
-  { label: "Belgium", value: "Belgium" },         // Belgie/Belgique
-  { label: "Denmark", value: "Denmark" },         // Danmark
-  { label: "Germany", value: "Germany" },         // Deutschland
+  { label: "Belgium", value: "Belgium" },
+  { label: "Denmark", value: "Denmark" },
+  { label: "Germany", value: "Germany" },
   { label: "France", value: "France" },
-  { label: "Luxembourg", value: "Luxembourg" },   // Luxemburg/Luxembourg
-  { label: "Netherlands", value: "Netherlands" }, // nederland
-  { label: "Austria", value: "Austria" },         // Osterreich
-  { label: "Poland", value: "Poland" },           // Polska
+  { label: "Luxembourg", value: "Luxembourg" },
+  { label: "Netherlands", value: "Netherlands" },
+  { label: "Austria", value: "Austria" },
+  { label: "Poland", value: "Poland" },
   { label: "Portugal", value: "Portugal" },
   { label: "Romania", value: "Romania" },
-  { label: "Switzerland", value: "Switzerland" }, // Schweiz/Suisse
-  { label: "Finland", value: "Finland" },         // Suomi
-  { label: "Sweden", value: "Sweden" },           // Sverige
-  { label: "Lithuania", value: "Lithuania" },     // Lietuva
-  { label: "Spain", value: "Spain" }
+  { label: "Switzerland", value: "Switzerland" },
+  { label: "Finland", value: "Finland" },
+  { label: "Sweden", value: "Sweden" },
+  { label: "Lithuania", value: "Lithuania" },
+  { label: "Spain", value: "Spain" },
 ];
 
 interface Country {
-  value: string | undefined;
-  label: string | undefined;
+  value: string;
+  label: string;
 }
 
 const HomeMap = () => {
   const router = useRouter();
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [mounted, setMounted] = useState(false);
+  const { data: profile } = useGetProfileQuery(undefined);
+  const userCountry = profile?.data?.country;
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+
+    if (userCountry) {
+      const defaultCountry = countries.find((c) => c.value === userCountry);
+      setSelectedCountry(defaultCountry || null);
+      Cookies.set("country", userCountry, { expires: 15, path: "/" });
+    }
+  }, [userCountry]);
 
   const handleCountryChange = (value: string) => {
     const country = countries.find((c) => c.value === value);
     setSelectedCountry(country || null);
-  }; 
-
-  const handleCountryClick = () => { 
-
-    if (selectedCountry) {
-      Cookies.set("country", selectedCountry.value || "", { expires: 15, path: "/" });
-      router.push("/home");
-    } 
-
   };
+
+  const handleCountryClick = () => {
+    if (selectedCountry && !userCountry) {
+      Cookies.set("country", selectedCountry.value, { expires: 15, path: "/" });
+      router.push("/home");
+    } else if (userCountry) {
+      router.push("/home");
+    }
+  };
+
+  const disabledCountries = userCountry
+    ? countries.map((c) => ({ ...c, disabled: c.value !== userCountry }))
+    : countries;
 
   return (
     <div className="w-full lg:h-full h-[calc(90vh-20px)]">
@@ -83,7 +84,7 @@ const HomeMap = () => {
             <p>Select your country to continue</p>
           ) : (
             <p>
-              Your country "<span className="font-medium">{selectedCountry.label}</span>" is Selected
+              Your country &quot;<span className="font-medium">{selectedCountry.label}</span>&quot; is Selected
             </p>
           )}
         </div>
@@ -105,19 +106,22 @@ const HomeMap = () => {
             <Select
               placeholder="Select your country"
               onChange={handleCountryChange}
-              options={countries}
+              options={disabledCountries}
+              value={selectedCountry?.value}
               style={{ height: "48px" }}
               className="lg:w-[460px] w-full"
+              disabled={!!userCountry}
             />
           </ConfigProvider>
         </div>
 
         <div>
           <button
-            disabled={!selectedCountry} 
+            disabled={!selectedCountry}
             onClick={handleCountryClick}
-            className={`bg-[#007F91] text-white h-[48px] flex gap-1 items-center justify-center px-5 mb-2 ${!selectedCountry ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+            className={`bg-[#007F91] text-white h-[48px] flex gap-1 items-center justify-center px-5 mb-2 ${
+              !selectedCountry ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             <span>Go to Doktor For You</span>
             <span>
@@ -138,7 +142,8 @@ const HomeMap = () => {
               <Geographies geography={europeGeoUrl}>
                 {({ geographies }) =>
                   geographies.map((geo) => {
-                    const isSelected = selectedCountry && geo.properties.NAME === selectedCountry.label;
+                    const isSelected =
+                      selectedCountry && geo.properties.NAME === selectedCountry.label;
                     return (
                       <Geography
                         key={geo.rsmKey}

@@ -30,9 +30,7 @@ const About = () => {
                             {/* Content Section */}
                             <div className="lg:w-1/2 w-full">
                                 <Title className="pb-[24px]">{item?.title}</Title>
-                                <p className="text-gray-600">
-                                    {truncatedText} {hasMore && "..."}
-                                </p>
+                                <p className="text-gray-600" dangerouslySetInnerHTML={{ __html: `${truncatedText} ${hasMore && "..."}` }} />
                                 {hasMore && (
                                     <button
                                         className="mt-6 px-6 py-2 border border-primary text-primary hover:text-white hover:bg-primary"

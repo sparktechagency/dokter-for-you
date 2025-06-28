@@ -21,18 +21,16 @@ interface ConsultationData {
 const DigitalPrescriptionOrder = () => {
   const [selectedConsultation, setSelectedConsultation] = useState(null);
   // const name = "medication" 
-  const { data: allConsultations , isLoading } = useGetAllConsultationsQuery(undefined) 
-  if(isLoading){
+  const { data: allConsultations, isLoading } = useGetAllConsultationsQuery(undefined)
+  if (isLoading) {
     return <div>Loading...</div>
   }
 
 
 
   const DigitalPrescriptionOrderDetails = allConsultations?.data?.filter(
-    (consultation:{ forwardToPartner: boolean; }) => consultation?.forwardToPartner === true   
-  );  
-
-
+    (consultation: { forwardToPartner: boolean; }) => consultation?.forwardToPartner === true
+  );
 
   const columns: ColumnsType<ConsultationData> = [
     {
@@ -64,7 +62,7 @@ const DigitalPrescriptionOrder = () => {
       render: (_, record) => <div className='flex gap-1'>
         {record?.suggestedMedicine?.map((item: any, index: number) => (
           <div key={index}>
-            {item?._id?.name}
+            {item?.name}
           </div>
         ))}
       </div>,

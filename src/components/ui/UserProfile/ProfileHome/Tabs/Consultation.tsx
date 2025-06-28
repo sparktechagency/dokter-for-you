@@ -36,6 +36,8 @@ const Consultation = () => {
     (consultation) => consultation.consultationType === "video"
   );
 
+  console.log(consultationsData , "video consultationsData");
+
   const columns: ColumnsType<ConsultationData> = [
     {
       title: 'S. No.',

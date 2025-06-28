@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //@ts-nocheck
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Progress } from 'antd'
 import { Poppins } from 'next/font/google';
 import StepsFooterBtn from './StepsFooterBtn';
@@ -54,11 +54,27 @@ const AllConsultations = () => {
     const [form] = Form.useForm();
     const newConsultationType = consultationType ? consultationType === "video" ? "video" : "regular" : "regular" 
 
+    console.log(selectedMedicines, "medicines in AllConsultations"); 
+
+        useEffect(() => {
+            if (selectedMedicines?.length > 0) { 
+                setMedicines(selectedMedicines.map((med: { _id: string; count: number; total: string }) => ({
+                    medicineId: med._id, 
+                    variationId: med.variationId,
+                    unitId: med.unitId,
+                    count: med.count,
+                    // total: med.total, 
+                    // dosage: med.dosage,
+                    // price: med.price,
+                })));
+            }
+        }, [selectedMedicines]); 
+
     const data = {
         "QNA": qnaData ,  
         "DinamicQNA" : dynamicQnaData ,
         "userId":userId , 
-        "medicins": medicines ,
+        "selectedMedicines": medicines ,
         "category": category ,
         "subCategory": SubCategory ,
         "address" : address ,  
@@ -66,6 +82,7 @@ const AllConsultations = () => {
         "consultationType": newConsultationType,
     }   
 
+    console.log("AllConsultations data", data);
    
     const updateQNA = (question: string, answer: string) => {
         setQnaData((prev) => {

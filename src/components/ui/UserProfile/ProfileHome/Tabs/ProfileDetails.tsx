@@ -23,7 +23,8 @@ const ProfileDetails = () => {
                 contact: userData?.contact,
                 location: userData?.location,
                 city: userData?.city,
-                postcode: userData?.postcode,
+                postcode: userData?.postcode, 
+                country: userData?.country
             });
         }
     }, [userData, form]);
@@ -70,9 +71,7 @@ const ProfileDetails = () => {
 
             <h1 className=' font-medium text-[24px] text-primary py-3' >Personal Information </h1>
             <Form layout='vertical' className='w-full' form={form} onFinish={handleSubmit} 
-            initialValues={{
-                country: "Netherlands"
-            }}>
+          >
 
                 <div className=' grid lg:grid-cols-2 grid-cols-1 gap-x-7 pt-[6px]' >
                     <InputField name='firstName' label='First Name' />
