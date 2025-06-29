@@ -213,7 +213,7 @@ const MedicalConsultations = () => {
 
         {
             title: "",
-            content: <Address SubCategoryName={SubCategoryName} setAddress={setAddress} />,
+            content: <Address SubCategoryName={SubCategoryName} setAddress={setAddress} medicineLength={medicineLength} />,
             skippable: false,
         },
         {

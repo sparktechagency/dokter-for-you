@@ -7,7 +7,7 @@ import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
 import { Form, Radio, Checkbox, Input } from "antd";
 import { useEffect } from "react";
 
-const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | null, setAddress: (address: { firstname: string | null; lastname: string | null; streetAndHouseNo: string| null; postalCode: string|null; place: string|null; country: string|null; }) => void }) => {
+const Address = ({ SubCategoryName, setAddress , medicineLength }: { SubCategoryName: string | null, setAddress: (address: { firstname: string | null; lastname: string | null; streetAndHouseNo: string| null; postalCode: string|null; place: string|null; country: string|null; }) => void , medicineLength: number }) => {
   const [form] = Form.useForm(); 
   const { data } = useGetProfileQuery(undefined) 
   const userData = data?.data   
@@ -136,8 +136,9 @@ const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | nu
 
           </Form>
         </div>
-
-        <div className="bg-[#E8EEFE] p-4 mt-5">
+ 
+ <div className={` ${medicineLength > 0 ? 'hidden' : ''} `}> 
+   <div className="bg-[#E8EEFE] p-4 mt-5">
           <h3 className="font-medium text-gray-900 text-[16px]">Overview</h3>
           <div className="flex lg:flex-row flex-col justify-between items-center lg:text-[16px] text-[14px] gap-3">
             <div>
@@ -148,6 +149,9 @@ const Address = ({ SubCategoryName, setAddress }: { SubCategoryName: string | nu
             </div>
           </div>
         </div>
+ </div>
+
+     
 
         <div className="mt-6 flex items-center justify-between">
           <Form.Item className="mb-0">

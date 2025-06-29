@@ -43,6 +43,7 @@ const HomeMap = () => {
   const { data: profile } = useGetProfileQuery(undefined);
   const userCountry = profile?.data?.country;
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -62,9 +63,21 @@ const HomeMap = () => {
   const handleCountryClick = () => {
     if (selectedCountry && !userCountry) {
       Cookies.set("country", selectedCountry.value, { expires: 15, path: "/" });
-      router.push("/home");
+      setLoading(true);
+      window.location.href = "/home";
+
+      setTimeout(() => {
+        router.refresh();
+      }, 100);
+
     } else if (userCountry) {
-      router.push("/home");
+
+      window.location.href = "/home";
+
+      setTimeout(() => {
+        router.refresh();
+      }, 100);
+
     }
   };
 
@@ -72,6 +85,13 @@ const HomeMap = () => {
     ? countries.map((c) => ({ ...c, disabled: c.value !== userCountry }))
     : countries;
 
+    if(loading){
+    return (
+      <div className="flex items-center justify-center h-[calc(90vh-20px)]">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary"></div>
+      </div>
+    );
+    }
   return (
     <div className="w-full lg:h-full h-[calc(90vh-20px)]">
       <div className="flex flex-col items-center justify-center p-6 w-full">
@@ -119,9 +139,8 @@ const HomeMap = () => {
           <button
             disabled={!selectedCountry}
             onClick={handleCountryClick}
-            className={`bg-[#007F91] text-white h-[48px] flex gap-1 items-center justify-center px-5 mb-2 ${
-              !selectedCountry ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`bg-[#007F91] text-white h-[48px] flex gap-1 items-center justify-center px-5 mb-2 ${!selectedCountry ? "opacity-50 cursor-not-allowed" : ""
+              }`}
           >
             <span>Go to Doktor For You</span>
             <span>

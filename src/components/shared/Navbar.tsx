@@ -10,7 +10,7 @@ import { IoChevronDownOutline, IoNotificationsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 import { GoStar } from "react-icons/go";
 import { HiOutlineTranslate } from "react-icons/hi";
-import { Drawer } from "antd"; 
+import { Drawer } from "antd";
 import Cookies from "js-cookie";
 import AddReviewModal from "../ui/Website/home/AddReviewModal";
 import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
@@ -42,8 +42,8 @@ const Navbar: React.FC = () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   //language 
-  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false); 
-  const [selectedLanguage, setSelectedLanguage] = useState("") 
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [userData, setUserData] = useState<any>(null);
   const { data } = useGetProfileQuery(undefined)
@@ -51,9 +51,9 @@ const Navbar: React.FC = () => {
   const { data: category } = useGetAllCategoryQuery(undefined)
   const { data: notifications } = useGetAllNotificationQuery(undefined)
   const router = useRouter()
-  const totalNotifications = notifications?.data?.unreadCount 
-  const {country} = useCountry();
-console.log("Country from navbar", country);
+  const totalNotifications = notifications?.data?.unreadCount
+  const { country } = useCountry();
+  console.log("Country from navbar", country);
   const getProfileImageUrl = (profile: string): string => {
     return profile.startsWith("http") ? profile : `${imageUrl}${profile}`;
   };
@@ -111,7 +111,7 @@ console.log("Country from navbar", country);
     };
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     const storedLanguage = Cookies.get("currentLanguage");
     if (storedLanguage) {
       setSelectedLanguage(storedLanguage);
@@ -149,7 +149,7 @@ console.log("Country from navbar", country);
 
     // Reload the page to apply the translation
     window.location.reload();
-  }; 
+  };
 
   const navLinks = [
     { label: "Home", link: "/home" },
@@ -313,7 +313,7 @@ console.log("Country from navbar", country);
                   )}
                 </div>
               </div>
-            </Link> 
+            </Link>
 
             {/* language  */}
             <div className=" relative  ">
@@ -324,13 +324,13 @@ console.log("Country from navbar", country);
                 <span> <HiOutlineTranslate /> </span> <span><IoChevronDownOutline /> </span>
               </button>
               {isLanguageDropdownOpen && (
-                <div  ref={profileDropdownRef}  className="absolute -right-6 py-2  mt-2 w-[210px] bg-white border border-gray-300 rounded shadow-lg z-10">
+                <div ref={profileDropdownRef} className="absolute -right-6 py-2  mt-2 w-[210px] bg-white border border-gray-300 rounded shadow-lg z-10">
                   {languages.map((lang, index) => (
                     <div
                       key={index}
                       className={`px-4 py-2 h-10 hover:bg-[#e8eefe] cursor-pointer text-[#6B6B6B] ${selectedLanguage === lang?.value ? "bg-[#e8eefe] " : ""}`}
                       onClick={() => {
-                        setIsLanguageDropdownOpen(false); 
+                        setIsLanguageDropdownOpen(false);
                         switchLanguage(lang?.value);
                       }}
                     >

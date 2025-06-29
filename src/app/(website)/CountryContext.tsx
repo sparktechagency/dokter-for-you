@@ -13,20 +13,14 @@ const CountryContext = createContext<CountryContextProps>({
 });
 
 export const CountryProvider = ({ children }: { children: React.ReactNode }) => {
-  const [country, setCountryState] = useState<string | undefined>(undefined);
+  const [country, setCountry] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const storedCountry = Cookies.get("country");
     if (storedCountry) {
-      setCountryState(storedCountry);
+      setCountry(storedCountry);
     }
   }, []);
-
-
-  const setCountry = (value: string) => {
-    Cookies.set("country", value, { expires: 15, path: "/" });
-    setCountryState(value);
-  };
  
   return (
     <CountryContext.Provider value={{ country, setCountry }}>

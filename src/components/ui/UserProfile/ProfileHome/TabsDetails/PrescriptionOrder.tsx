@@ -56,7 +56,7 @@ const PrescriptionOrder = ({ consultationId, onClose }: ConsultationDetailsProps
     })
   }
 
-  const totalMedicinePrice = consultationId?.suggestedMedicine?.reduce((total, medication: { count: number;  totalPrice: string; unitPerBox: string[]; }) => {
+  const totalMedicinePrice = consultationId?.suggestedMedicine?.reduce((total, medication: { count: number; totalPrice: string; unitPerBox: string[]; }) => {
     const pricePerUnit = Number(medication?.totalPrice);
     return total + (pricePerUnit);
   }, 0);
@@ -106,7 +106,7 @@ const PrescriptionOrder = ({ consultationId, onClose }: ConsultationDetailsProps
           </div>
 
           {/* Prescription Report */}
-{/* 
+          {/* 
           <div className="p-6 pb-11 mb-6 bg-white flex flex-col gap-4">
             <h3 className="text-center font-medium text-2xl text-primary ">Prescription Report</h3>
             <p className="text-center text-green-600 text-sm font-medium ">
@@ -125,7 +125,7 @@ const PrescriptionOrder = ({ consultationId, onClose }: ConsultationDetailsProps
         </div>
 
         {/* Address Information */}
-        <div className="bg-[#E8EEFE] p-4 mt-6  grid lg:grid-cols-5 grid-cols-1 gap-4 mb-6">
+        <div className="bg-[#E8EEFE] p-4 mt-6  grid lg:grid-cols-4  grid-cols-1 gap-4 mb-6">
           <div>
             <p className="text-sm font-medium mb-2">Address:</p>
             <p className="text-sm text-[#6B6B6B]">
@@ -142,13 +142,13 @@ const PrescriptionOrder = ({ consultationId, onClose }: ConsultationDetailsProps
             </p>
           </div>
 
-          <div>
+          {/* <div>
             <p className="text-sm font-medium mb-2">Pharmacy Name</p>
             <p className="text-sm text-[#6B6B6B]">
               Apotheek Zaandam<br />
               Oost
             </p>
-          </div>
+          </div> */}
 
 
           <div className=''>
@@ -174,7 +174,7 @@ const PrescriptionOrder = ({ consultationId, onClose }: ConsultationDetailsProps
 
           <div className="  border-b border-gray-400 ">
             {
-              consultationId?.suggestedMedicine?.map((medication:  { image: string, name: string, medicineType: string, _id: string, totalPrice: number, sellingPrice: string, dosage:{dosage: string} , total:{unitPerBox: string , sellingPrice: string} , count: number }) => (
+              consultationId?.suggestedMedicine?.map((medication: { image: string, name: string, medicineType: string, _id: string, totalPrice: number, sellingPrice: string, dosage: { dosage: string }, total: { unitPerBox: string, sellingPrice: string }, count: number }) => (
                 <div className="flex lg:flex-row flex-col lg:items-center items-start justify-between lg:gap-0 gap-4 p-4 w-full " key={medication?._id}>
                   <div className="flex items-center gap-5">
                     <Image
@@ -194,12 +194,12 @@ const PrescriptionOrder = ({ consultationId, onClose }: ConsultationDetailsProps
                   <div className="text-sm">
                     <p className='text-[#999999] pb-1'>Dosage</p>
                     <p className='text-[#4E4E4E]'>{medication?.dosage?.dosage}</p>
-                  </div> 
+                  </div>
 
                   <div className="text-sm">
                     <p className='text-[#999999] pb-1'>Unit Per Box</p>
                     <p className='text-[#4E4E4E]'>{medication?.total?.unitPerBox}</p>
-                  </div> 
+                  </div>
 
                   <div className="text-sm">
                     <p className='text-[#999999] pb-1'>Medicine cost (€)</p>
