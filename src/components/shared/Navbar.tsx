@@ -18,7 +18,6 @@ import { imageUrl } from "@/redux/base/baseApi";
 import { useGetAllCategoryQuery } from "@/redux/features/website/categorySlice";
 import { useRouter } from "next/navigation";
 import { useGetAllNotificationQuery } from "@/redux/features/website/notificationSlice";
-import { useCountry } from "@/app/(website)/CountryContext";
 
 const languages = [
   { label: "English", value: "en" },
@@ -52,8 +51,7 @@ const Navbar: React.FC = () => {
   const { data: notifications } = useGetAllNotificationQuery(undefined)
   const router = useRouter()
   const totalNotifications = notifications?.data?.unreadCount
-  const { country } = useCountry();
-  console.log("Country from navbar", country);
+
   const getProfileImageUrl = (profile: string): string => {
     return profile.startsWith("http") ? profile : `${imageUrl}${profile}`;
   };

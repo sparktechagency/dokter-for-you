@@ -1,37 +1,57 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { useCountry } from '@/app/(website)/CountryContext';
 import { AddressType } from '@/components/europe/MedicalConsultations/MedicalConsultations';
 import { imageUrl } from '@/redux/base/baseApi';
 import { useCreateDiscountMutation } from '@/redux/features/europe/discountSlice';
+import { useGetShippingCostQuery } from '@/redux/features/europe/shippingCostSlice';
 import { useGetProfileQuery } from '@/redux/features/profile/getProfileSlice';
 import { Checkbox, ConfigProvider, Input, message } from 'antd';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-const ConsultationCheckConfirm = ({ selectedMedicines, SubCategoryName, address , setDiscountCode }: { selectedMedicines?: any, SubCategoryName: string | null, address: AddressType | null | undefined , setDiscountCode:(code: string)=>void }) => {
+const ConsultationCheckConfirm = ({ selectedMedicines, SubCategoryName, address, setDiscountCode }: { selectedMedicines?: any, SubCategoryName: string | null, address: AddressType | null | undefined, setDiscountCode: (code: string) => void }) => {
     const { data: userProfile } = useGetProfileQuery(undefined)
-    const profileData = userProfile?.data 
-    const [code , setCode]= useState<string | null>(null);
+    const profileData = userProfile?.data
+    const [code, setCode] = useState<string | null>(null);
     const [createDiscount] = useCreateDiscountMutation();
+    const { country } = useCountry();
+    const { data: shippingCost } = useGetShippingCostQuery(country);
+    const [discountPercentage, setDiscountPercentage] = useState<number>(0);
 
- 
-    const handleSubmit = async () => { 
-        await createDiscount({ discountCode: code}).then((res: any) => {  
-            console.log("Discount response:", res);
-            if (res?.data?.success) { 
-                  message.success(res?.data?.message);
+    const consultationFee = 25;
+
+    const medicinesSubtotal = selectedMedicines?.length
+        ? selectedMedicines.reduce((acc: number, item: any) => acc + item.price, 0)
+        : 0;
+
+    const subtotal = selectedMedicines?.length ? medicinesSubtotal : consultationFee;
+
+    const shipping = Number(shippingCost?.data || 0);
+
+    const discountAmount = (subtotal * discountPercentage) / 100;
+
+    const total = (subtotal + shipping - discountAmount).toFixed(2);
+
+    const handleSubmit = async () => {
+        await createDiscount({ discountCode: code }).then((res: any) => {
+    
+            if (res?.data?.success) {
+                message.success(res?.data?.message);
+                setDiscountPercentage(res?.data?.data?.discountPercent || 0);
                 if (code !== null) {
-                    setDiscountCode(code);  
-                    setCode(null); 
+                    setDiscountCode(code);
+                    setCode(null);
                 }
-            } else { 
+            } else {
                 message.error(res?.error?.data?.message);
             }
         }).catch((error) => {
             console.error("Error applying discount code:", error);
+            setDiscountPercentage(0);
             message.error("Failed to apply discount code");
         });
-     }
+    }
     return (
         <div>
             <div className="">
@@ -132,24 +152,28 @@ const ConsultationCheckConfirm = ({ selectedMedicines, SubCategoryName, address 
                                 },
                             }}>
                             <div>
-                                <Input  onChange={(e) => setCode(e.target.value)} className="w-full bg-primary text-white py-3  font-semibold " style={{ height: '50px', border: 'none', borderRadius: '8px' }} placeholder="Use discount code"
+                                <Input onChange={(e) => setCode(e.target.value)} className="w-full bg-primary text-white py-3  font-semibold " style={{ height: '50px', border: 'none', borderRadius: '8px' }} placeholder="Use discount code"
                                     suffix={<button type='submit' onClick={handleSubmit} className=' text-[16px] text-white font-medium bg-primary h-[37px] px-7 rounded-none'> Confirm </button>} />
 
                             </div>
                         </ConfigProvider>
 
-                        <div className=' px-5 '>
+                        <div className='px-5 '>
                             <div className="flex justify-between my-4 text-xl text-[#6B6B6B]">
                                 <span>Subtotal -</span>
-                                <span className="font-semibold">€25.00</span>
+                                <span className="font-semibold">€{subtotal.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between mb-4 text-xl text-[#6B6B6B]">
-                                <span>Shipping Cost  -</span>
-                                <span className="font-semibold">€10.00</span>
+                                <span>Shipping Cost -</span>
+                                <span className="font-semibold">€{shipping.toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between mb-4 text-xl text-[#6B6B6B]">
+                                <span>Discount -</span>
+                                <span className="font-semibold">{discountPercentage}%</span>
                             </div>
                             <div className="flex justify-between text-xl font-semibold text-primary mb-4">
                                 <span>Total -</span>
-                                <span className="">€25.00</span>
+                                <span className="">€{total}</span>
                             </div>
                         </div>
                     </div>

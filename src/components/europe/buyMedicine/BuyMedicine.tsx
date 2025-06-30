@@ -25,9 +25,6 @@ const MedicineHistory = ({ SubCategoryName, subcategoryId, category }: { SubCate
         dispatch(setAllSelectedMedicines(selectedMedicines));
     } 
 
-    console.log(selectedMedicines, "selectedMedicines in BuyMedicine component"); 
-    console.log(medicines, "medicines in BuyMedicine component");
-
     return (
         <div className="bg-white p-5">
 

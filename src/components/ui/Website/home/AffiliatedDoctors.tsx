@@ -5,7 +5,6 @@ import { useGetAffiliatedDoctorsQuery } from "@/redux/features/europe/affiliated
 
 const AffiliatedDoctors = () => {
     const { data: allAffiliatedDoctors } = useGetAffiliatedDoctorsQuery(undefined);
-    console.log(allAffiliatedDoctors);
 
     const data = allAffiliatedDoctors?.data?.filter((item: { active: boolean }) => item.active)?.map((item: { _id: string; image: string; name: string; specialization: string; active: boolean }) => ({
         id: item._id, 

@@ -26,7 +26,6 @@ const Consultation = () => {
 
   // const name = "video"  
   const { data: consultations, isLoading } = useGetAllConsultationsQuery()
-  console.log(consultations);
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -36,7 +35,6 @@ const Consultation = () => {
     (consultation) => consultation.consultationType === "video"
   );
 
-  console.log(consultationsData , "video consultationsData");
 
   const columns: ColumnsType<ConsultationData> = [
     {

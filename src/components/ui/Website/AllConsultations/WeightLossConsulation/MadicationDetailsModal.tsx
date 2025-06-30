@@ -5,6 +5,7 @@ import { Modal, InputNumber, Button, message } from 'antd';
 import Image from 'next/image';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { imageUrl } from '@/redux/base/baseApi';
+import { useCountry } from '@/app/(website)/CountryContext';
 
 interface MedicationModalProps {
   open: boolean;
@@ -15,7 +16,7 @@ interface MedicationModalProps {
     company: string;
     description: string;
     form: string;
-    dosage: string[]; 
+    dosage: string[];
     variations: variationsType[];
     image: string;
     medicineType: string;
@@ -24,9 +25,10 @@ interface MedicationModalProps {
     quantity: string | number | null;
     strength: string;
     unitPerBox: string[];
-    sellingPrice: number
+    sellingPrice: number;
+    subDescription: string;
   };
-  handleAddToSelected: (selectedItem: { _id: string; count: number; total: string , dosage: string, price: number , variationId: string, unitId: string }) => void;
+  handleAddToSelected: (selectedItem: { _id: string; count: number; total: string, dosage: string, price: number, variationId: string, unitId: string }) => void;
 }
 
 interface unitType {
@@ -42,31 +44,32 @@ interface variationsType {
 
 const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelected }: MedicationModalProps) => {
   const [quantity, setQuantity] = useState(1);
-  const [packSize, setPackSize] = useState<string|null>('');
+  const [packSize, setPackSize] = useState<string | null>('');
   const [dosage, setDosage] = useState('')
-  const [unitPerBox, setUnitPerBox] = useState<unitType[]>([])  
-  const [medicinePrice, setMedicinePrice] = useState<number>(0) 
-  const [variationId , setVariationId] = useState<string>(''); 
+  const [unitPerBox, setUnitPerBox] = useState<unitType[]>([])
+  const [medicinePrice, setMedicinePrice] = useState<number>(0)
+  const [variationId, setVariationId] = useState<string>('');
   const [unitId, setUnitId] = useState<string>('');
+  const { country } = useCountry(); 
 
   useEffect(() => {
-  if (medicineData?.variations?.length > 0) {
-    const firstVariation = medicineData.variations[0];
-    setDosage(firstVariation.dosage);
-    setUnitPerBox(firstVariation.units); 
-    setVariationId(firstVariation._id); 
+    if (medicineData?.variations?.length > 0) {
+      const firstVariation = medicineData.variations[0];
+      setDosage(firstVariation.dosage);
+      setUnitPerBox(firstVariation.units);
+      setVariationId(firstVariation._id);
 
 
-    // Set default packSize and price if units exist
-    if (firstVariation.units?.length > 0) {
-      setPackSize(firstVariation.units[0].unitPerBox); 
-      setUnitId(firstVariation.units[0]._id);
-      setMedicinePrice(firstVariation.units[0].sellingPrice);
+      // Set default packSize and price if units exist
+      if (firstVariation.units?.length > 0) {
+        setPackSize(firstVariation.units[0].unitPerBox);
+        setUnitId(firstVariation.units[0]._id);
+        setMedicinePrice(firstVariation.units[0].sellingPrice);
+      }
     }
-  }
-}, [medicineData]); 
+  }, [medicineData]);
 
-const totalPrice = medicinePrice * quantity;
+  const totalPrice = medicinePrice * quantity;
   const handleSubmit = () => {
 
     if (!packSize) {
@@ -78,7 +81,7 @@ const totalPrice = medicinePrice * quantity;
       count: quantity,
       total: `${packSize} pcs`,
       dosage: dosage,
-      price: totalPrice, 
+      price: totalPrice,
       variationId: variationId,
       unitId: unitId
     })
@@ -86,9 +89,8 @@ const totalPrice = medicinePrice * quantity;
     setQuantity(1);
     setPackSize('');
     setOpen(false);
-  }; 
+  };
 
-  
 
   return (
     <Modal
@@ -108,7 +110,7 @@ const totalPrice = medicinePrice * quantity;
               alt={medicineData?.name}
               width={600}
               height={400}
-              className="object-contain lg:h-[500px]"
+              className="object-contain "
             />
           </div>
         </div>
@@ -128,9 +130,8 @@ const totalPrice = medicinePrice * quantity;
           <p className="text-[#1854F9] font-[400] text-2xl mb-2"> €{totalPrice} </p>
 
 
-          <p className="text-[#999999] font-[400] text-[14px] mb-4">
-            {medicineData?.description === "undefined" ? "" : medicineData?.description}
-          </p>
+          <p className="text-[#999999] font-[400] text-[14px] mb-4" dangerouslySetInnerHTML={{ __html: ` ${medicineData?.description === "undefined" ? "" : medicineData?.description} ` }} />
+
 
           <div className="flex flex-col items-start gap-5 mb-4">
             {/* <div>
@@ -149,15 +150,15 @@ const totalPrice = medicinePrice * quantity;
                 {medicineData?.variations?.map((items: variationsType) => (
                   <div
                     key={items?._id}
-                    onClick={() => { setDosage(items?.dosage); setUnitPerBox(items?.units); setVariationId(items?._id); }} 
+                    onClick={() => { setDosage(items?.dosage); setUnitPerBox(items?.units); setVariationId(items?._id); }}
                     onChange={() => setUnitPerBox(items?.units)}
                     className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${dosage === items?.dosage ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
                   >
                     {items?.dosage}
                   </div>
                 ))}
-                </div>
               </div>
+            </div>
 
             <div className="flex flex-col gap-2">
               <p className="text-[#999999] ">Select Units per Box</p>
@@ -166,7 +167,7 @@ const totalPrice = medicinePrice * quantity;
                 {unitPerBox?.map((items: unitType) => (
                   <div
                     key={items?._id}
-                    onClick={() => {setPackSize(items?.unitPerBox); setMedicinePrice(items?.sellingPrice); setUnitId(items?._id); }}
+                    onClick={() => { setPackSize(items?.unitPerBox); setMedicinePrice(items?.sellingPrice); setUnitId(items?._id); }}
                     className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${packSize === items?.unitPerBox ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
                   >
                     {items?.unitPerBox}
@@ -214,8 +215,15 @@ const totalPrice = medicinePrice * quantity;
 
       <p className=' text-[#999999] text-sm font-normal py-4'> Where your health is concerned, we believe you have the right to decide what to do with your body. That is why we offer you the opportunity to consult a licensed and registered EU   </p>
 
-      <h2 className="text-[16px] font-medium mb-2 mt-2 text-[#0A2369]">Description</h2>
-      <p className=' text-[#999999] text-sm font-normal'>this is description part . waiting for backend..</p>
+      {
+        country !== "Netherlands" ? (
+          <div>
+            <h2 className="text-[16px] font-medium mb-2 mt-2 text-[#0A2369]">Description</h2>
+            <p className=' text-[#999999] text-sm font-normal' dangerouslySetInnerHTML={{ __html: medicineData?.subDescription }} />
+          </div>
+        ) : null
+      }
+
     </Modal>
   );
 };

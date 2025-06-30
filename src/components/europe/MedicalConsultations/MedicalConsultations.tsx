@@ -82,10 +82,10 @@ const MedicalConsultations = () => {
         "address": address,
         "forwardToPartner": forwardStatus,
         "consultationType": consultationType, 
-        "discountCode": discountCode
+        "discountCode": discountCode,
+        "isMedicine" : medicineLength > 0 ? true : false,
     }
 
-    console.log(data, "all data ");
 
     const updateQNA = (question: string, answer: string) => {
         setQnaData((prev) => {

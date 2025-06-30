@@ -54,8 +54,6 @@ const AllConsultations = () => {
     const [form] = Form.useForm();
     const newConsultationType = consultationType ? consultationType === "video" ? "video" : "regular" : "regular" 
 
-    console.log(selectedMedicines, "medicines in AllConsultations"); 
-
         useEffect(() => {
             if (selectedMedicines?.length > 0) { 
                 setMedicines(selectedMedicines.map((med: { _id: string; count: number; total: string }) => ({
@@ -80,9 +78,9 @@ const AllConsultations = () => {
         "address" : address ,  
         "forwardToPartner" : forwardStatus ,
         "consultationType": newConsultationType,
+        "isMedicine": false
     }   
 
-    console.log("AllConsultations data", data);
    
     const updateQNA = (question: string, answer: string) => {
         setQnaData((prev) => {
