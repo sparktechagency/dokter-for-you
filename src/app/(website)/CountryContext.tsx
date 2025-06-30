@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
 
 interface CountryContextProps {
   country: string | undefined;
@@ -14,14 +15,21 @@ const CountryContext = createContext<CountryContextProps>({
 
 export const CountryProvider = ({ children }: { children: React.ReactNode }) => {
   const [country, setCountry] = useState<string | undefined>(undefined);
+  const { data: profile } = useGetProfileQuery(undefined);
+  const userCountry = profile?.data?.country;
 
   useEffect(() => {
     const storedCountry = Cookies.get("country");
-    if (storedCountry) {
+
+    // Priority: Profile country > Cookie
+    if (userCountry) {
+      Cookies.set("country", userCountry, { expires: 15, path: "/" });
+      setCountry(userCountry);
+    } else if (storedCountry) {
       setCountry(storedCountry);
     }
-  }, []);
- 
+  }, [userCountry]);
+
   return (
     <CountryContext.Provider value={{ country, setCountry }}>
       {children}
