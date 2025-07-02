@@ -25,7 +25,7 @@ const AffiliatedDoctors = () => {
             }}>
             <div className=" container pt-10 ">
                 <Title className=""> Affiliated doctors </Title>
-                <p className=" w-[63%] pb-10 text-[#6B6B6B] text-[15px] pt-3"> You know perfectly well what&apos;s good and what isn&apos;t good for you. Nevertheless, making the right choice can be difficult. We are Doctoronline. We believe in self-management when it comes to your health.
+                <p className=" w-[63%] pb-10 text-[#6B6B6B] text-[15px] pt-3"> We believe that you know very well what the best choice is for your health. Yet it can be difficult to make the right choice. We help you to make a safe and correct choice. 
                 </p>
 
                 <div className=" grid grid-cols-4 gap-10 items-center">

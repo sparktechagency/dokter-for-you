@@ -83,7 +83,7 @@ const Support = () => {
                 </div>
               </div>
               <h3 className="text-center text-[24px] font-semibold text-blue-900 mt-4">
-               What&apos;s App
+               Chat with us
               </h3>
               <p className="text-center text-gray-600 mt-2">+31 (0)85-7605234</p> 
               <p className="text-center text-gray-600 mt-2 px-4"> Chat Available on Monday to Friday from 09:00h to 20:00h </p>

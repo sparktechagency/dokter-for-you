@@ -40,8 +40,8 @@ const ConsultationsDelivery = ({ updateQNA, SubCategoryName, setForwardStatus, s
         {/* Forward Prescription Option */}
         <label
           className={`relative flex flex-col p-4 py-7 border cursor-pointer transition-all duration-200 ${selectedOption === 'forward'
-              ? 'border-emerald-500 bg-emerald-50'
-              : 'border-gray-200 hover:border-gray-300 bg-[#f3f6ff]'
+            ? 'border-emerald-500 bg-emerald-50'
+            : 'border-gray-200 hover:border-gray-300 bg-[#f3f6ff]'
             }`}
         >
           <div className="flex items-start space-x-3">
@@ -74,8 +74,8 @@ const ConsultationsDelivery = ({ updateQNA, SubCategoryName, setForwardStatus, s
         {/* Video Consultation Option */}
         <label
           className={` ${(medicineLength ?? 0) >= 1 ? 'hidden' : ''} relative flex flex-col p-4 border py-7 cursor-pointer transition-all duration-200 ${selectedOption === 'video'
-              ? 'border-emerald-500 bg-emerald-50'
-              : 'border-gray-200 hover:border-gray-300 bg-[#f3f6ff]'
+            ? 'border-emerald-500 bg-emerald-50'
+            : 'border-gray-200 hover:border-gray-300 bg-[#f3f6ff]'
             }`}
         >
           <div className="flex items-start space-x-3">
@@ -91,7 +91,7 @@ const ConsultationsDelivery = ({ updateQNA, SubCategoryName, setForwardStatus, s
                 Video Consultation
               </span>
               <span className="mt-1 block text-[16px] text-[#999999]">
-                Your video call will connect you with a registered doctor who will assess your symptoms and prescribe the right treatment. The prescription will be sent to a registered pharmacy, and they will contact you about your medication.
+                A registered doctor will send you an appointment to provide a video call during which the doctor will assess your symptoms and prescribe the right treatment. The prescription will be sent to a registered pharmacy, and they will contact you about your medication.
               </span>
 
             </div>
@@ -102,8 +102,8 @@ const ConsultationsDelivery = ({ updateQNA, SubCategoryName, setForwardStatus, s
         {/* Digital Prescription Option */}
         <label
           className={`relative flex flex-col p-4 border py-7 cursor-pointer transition-all duration-200 ${selectedOption === 'digital'
-              ? 'border-emerald-500 bg-emerald-50'
-              : 'border-gray-200 hover:border-gray-300 bg-[#f3f6ff]'
+            ? 'border-emerald-500 bg-emerald-50'
+            : 'border-gray-200 hover:border-gray-300 bg-[#f3f6ff]'
             }`}
         >
           <div className="flex items-start space-x-3">

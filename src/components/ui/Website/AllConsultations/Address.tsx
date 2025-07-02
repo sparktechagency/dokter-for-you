@@ -18,7 +18,7 @@ const Address = ({ SubCategoryName, setAddress , medicineLength }: { SubCategory
       form.setFieldsValue({
         firstName: userData?.firstName,
         lastName: userData?.lastName,
-        gender: userData?.gender,
+        email: userData?.email,
         location: userData?.location,
         city: userData?.city,
         postcode: userData?.postcode, 
@@ -100,7 +100,7 @@ const Address = ({ SubCategoryName, setAddress , medicineLength }: { SubCategory
  
             <InputField name="city" label="City Name" /> 
       
-              <InputField name='gender' label='Gender' />  
+              <InputField name='email' label='Email' />  
 
 <div className="mt-8"> 
 

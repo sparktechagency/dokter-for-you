@@ -139,7 +139,7 @@ const ConsultationCheckConfirm = ({ selectedMedicines, SubCategoryName, address,
                     <div className="bg-green-50 py-7 px-[24px] ">
                         <h3 className="font-semibold mb-2">What happens after confirming this request? </h3>
                         <p className="text-sm">
-                            The doctor checks your request and writes your prescription. Your prescription will be forwarded to an affiliated pharmacy. After checking and approving the prescription, the affiliated pharmacy will send your medicine at home the next working day via express delivery.
+                           Depending on the choice you have made, the doctor will contact you or the doctor will write your prescription. Your prescription will be forwarded to an affiliated pharmacy. After checking and approving the prescription, the affiliated pharmacy will send your medicine at home the next working day via express delivery. 
                         </p>
                     </div>
                     <div className="bg-[#E8EEFE] p-4   shadow-sm">

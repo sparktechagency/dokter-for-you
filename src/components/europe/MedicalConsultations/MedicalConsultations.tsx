@@ -123,11 +123,11 @@ const MedicalConsultations = () => {
             title: "",
             content: <div>
                 <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                    Questions about your medical Questions
+                   Questions about your health
                 </h2>
 
                 <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
-                    We have some additional questions about the product you selected
+                   Your health is very important to us. Please take 3 minutes to answer the following questions. 
                 </h2>
             </div>,
             skippable: true,
@@ -172,11 +172,11 @@ const MedicalConsultations = () => {
                             medicineLength > 0 ? (
                                 <div>
                                     <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                                        Questions about your health
+                                        Additional questions regarding the medication you have chosen 
                                     </h2>
 
                                     <h2 className="text-[16px] font-[400] text-[#6B6B6B]">
-                                        Your health is very important to us. Please take 3 minutes to answer the following  questions.
+                                        Please answer for your health safety these last questions and your consultation will be sent to the doctor. 
                                     </h2>
                                 </div>
                             ) :

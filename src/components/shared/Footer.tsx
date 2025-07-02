@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const Footer = () => { 
-  const imagePath = [ "/visa.png", "/mastercard.png", "/pay.png", "/ideal.png"];
+  const imagePath = [ "/f1.png", "/f2.png", "/f3.png", "/f4.png", "/f5.png", "/f6.png"];
   return (
     <footer className="mt-auto">
       <div className="container mx-auto  py-[49px]">
@@ -71,7 +71,7 @@ const Footer = () => {
             <div className='flex gap-4 mt-4'> 
 {
   imagePath.map((image, index) => (
-    <img key={index} src={image} alt={`Image ${index}`} className="h-12 w-12 object-contain" />
+    <img key={index} src={image} alt={`Image ${index}`} className="h-8 w-12 object-contain " />
   ))
 }
             </div>
