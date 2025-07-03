@@ -1,14 +1,14 @@
 "use client"
 import Title from '@/components/shared/Title';
 import React from 'react'; 
-import { Collapse, Pagination, theme } from 'antd';
+import { Collapse, theme } from 'antd';
 import { Plus } from 'lucide-react';
 import { useGetAllFaqQuery } from '@/redux/features/website/faqSlice';
 
 const FAQ = () => { 
     const { token } = theme.useToken();  
-    const [page, setPage] = React.useState(1);
-    const { data: faqData } = useGetAllFaqQuery(page);    
+    // const [page, setPage] = React.useState(1); 
+    const { data: faqData } = useGetAllFaqQuery(undefined);    
     const allFaqData = faqData?.data || [];
 
     const panelStyle: React.CSSProperties = {
@@ -66,13 +66,12 @@ const FAQ = () => {
 
                 {allFaqData.length > 0 && (
                     <div>
-                        <Pagination
+                        {/* <Pagination
                             align="center"
-                            current={page}
+                            current={page} 
                             total={faqData?.pagination?.total || 0}
-                            pageSize={10}
                             onChange={(page) => setPage(page)} 
-                        />
+                        /> */}
                     </div>
                 )}
             </div>

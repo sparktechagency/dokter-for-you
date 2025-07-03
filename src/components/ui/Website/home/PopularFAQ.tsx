@@ -11,7 +11,7 @@ import { useGetAllFaqQuery } from '@/redux/features/website/faqSlice';
 
 const PopularFAQ = () => { 
     const { token } = theme.useToken();
-    const { data: faqData } = useGetAllFaqQuery(1); 
+    const { data: faqData } = useGetAllFaqQuery(undefined); 
     const faqList = faqData?.data?.slice(0, 7); 
 
     const panelStyle: React.CSSProperties = {
@@ -21,7 +21,7 @@ const PopularFAQ = () => {
     };   
 
     const getItems = (panelStyle: CSSProperties): CollapseProps['items'] => 
-        faqList?.map((faq:{ question: string, answer: string, _id: string }) => ({
+        faqList?.slice(0, 6)?.map((faq:{ question: string, answer: string, _id: string }) => ({
             key: faq._id,
             label: (
                 <p className="font-sans" style={{ color: '#4E4E4E', fontSize: '19px' }}>
@@ -76,7 +76,7 @@ const PopularFAQ = () => {
                         items={getItems(panelStyle)}
                     />
 
-                    <div className="text-end">
+                    <div className={`text-end ${faqList?.length <= 6 ? "hidden" : ""} `}>
                         <Link 
                             href="/faq"
                             className="inline-flex items-center text-[#2563EB] hover:text-blue-700 font-medium mt-1 text-[14px] underline"

@@ -89,7 +89,9 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
     setQuantity(1);
     setPackSize('');
     setOpen(false);
-  };
+  }; 
+
+  console.log(medicineData?.variations, "variations");
 
 
   return (
