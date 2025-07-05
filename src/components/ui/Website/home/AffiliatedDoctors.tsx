@@ -15,7 +15,7 @@ const AffiliatedDoctors = () => {
     }))
 
     return (
-        <div className=" h-[620px] w-full "
+        <div className=" lg:h-[620px] h-auto w-full "
             style={{
                 backgroundImage: `url('/AffiliatedDoctorBg.png')`,
                 backgroundSize: 'cover',
@@ -25,10 +25,10 @@ const AffiliatedDoctors = () => {
             }}>
             <div className=" container pt-10 ">
                 <Title className=""> Affiliated doctors </Title>
-                <p className=" w-[63%] pb-10 text-[#6B6B6B] text-[15px] pt-3"> We believe that you know very well what the best choice is for your health. Yet it can be difficult to make the right choice. We help you to make a safe and correct choice. 
+                <p className=" lg:w-[63%] w-full lg:pb-10 pb-5 text-[#6B6B6B] text-[15px] pt-3"> We believe that you know very well what the best choice is for your health. Yet it can be difficult to make the right choice. We help you to make a safe and correct choice. 
                 </p>
 
-                <div className=" grid grid-cols-4 gap-10 items-center">
+                <div className=" grid lg:grid-cols-4 grid-cols-1 gap-10 items-center">
                     {
                         data?.map((item:{ id: string; image: string; name: string; designation: string}) => (
                             <div key={item.id} className=" flex flex-col items-center gap-0">

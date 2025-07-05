@@ -6,6 +6,8 @@ import { imageUrl } from '@/redux/base/baseApi';
 import { useBuyNowMutation } from '@/redux/features/profile/pdfAndBuySlice';
 import { useRouter } from 'next/navigation';
 import { useGetProfileQuery } from '@/redux/features/profile/getProfileSlice';
+import { useCountry } from '@/app/(website)/CountryContext';
+import { useGetShippingCostQuery } from '@/redux/features/europe/shippingCostSlice';
 interface ConsultationDetailsProps {
   consultationId: {
     trackingNo: string;
@@ -46,7 +48,9 @@ const PrescriptionOrder = ({ consultationId, onClose }: ConsultationDetailsProps
   const [BuyNow] = useBuyNowMutation()
   const router = useRouter()
   const { data } = useGetProfileQuery(undefined)
-  const userData = data?.data
+  const userData = data?.data 
+      const { country } = useCountry();
+      const { data: shippingCost } = useGetShippingCostQuery(country);
 
   const handleBuyNow = async () => {
     await BuyNow(consultationId._id).then((res) => {
@@ -232,12 +236,12 @@ const PrescriptionOrder = ({ consultationId, onClose }: ConsultationDetailsProps
 
                 <div className='flex items-center justify-between gap-7'>
                   <p className='text-gray-600 font-medium'> Shipping Cost- </p>
-                  <p className='text-gray-600 font-medium'> € 20</p>
+                  <p className='text-gray-600 font-medium'> € {shippingCost || 0}</p>
                 </div>
 
                 <div className='flex items-center justify-between gap-7 '>
                   <p className='text-gray-600 font-medium'> total- </p>
-                  <p className='text-gray-600 font-medium'> € {Number(totalMedicinePrice) + 20}</p>
+                  <p className='text-gray-600 font-medium'> € {Number(totalMedicinePrice) + Number(shippingCost || 0)}</p>
                 </div>
               </div>
             </div>

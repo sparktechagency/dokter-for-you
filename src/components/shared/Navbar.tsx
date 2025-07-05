@@ -21,7 +21,7 @@ import { useGetAllNotificationQuery } from "@/redux/features/website/notificatio
 
 const languages = [
   { label: "English", value: "en" },
-  { label: "Dutch", value: "nl" },
+  { label: "Dutch", value: "nl" }, 
   { label: "German", value: "de" },
   { label: "French", value: "fr" },
   { label: "Polish", value: "pl" },
@@ -169,12 +169,12 @@ const Navbar: React.FC = () => {
     <>
       {/* Navbar */}
       <div className="fixed top-0 w-full bg-white/100 shadow z-50">
-        <div className="container mx-auto flex items-center justify-between h-[96px] px-4 lg:px-0">
+        <div className="container mx-auto flex items-center lg:justify-between h-[96px] px-4 lg:px-0">
 
           {/* Logo */}
-          <div className=" flex items-center justify-between w-full lg:w-auto  ">
+          <div className=" flex items-center lg:justify-between gap-6 lg:w-auto  ">
 
-            <div className="lg:hidden flex items-center space-x-4">
+            <div className="lg:hidden flex items-center ">
               <MenuOutlined
                 className="text-2xl cursor-pointer"
                 onClick={toggleDrawer}
@@ -182,63 +182,16 @@ const Navbar: React.FC = () => {
             </div>
 
 
-            <div className=" flex-shrink-0">
+            <div className=" lg:flex-shrink-0">
               <Link href="/home">
                 <img
                   src="/logo.png"
                   alt="Logo"
 
-                  className="mr-2  lg:h-[70px] h-[60px] lg:w-[200px] w-[190px]"
+                  className="mr-2  lg:h-[70px] h-[60px] lg:w-[200px] w-[150px] object-contain"
                 />
               </Link>
             </div>
-
-
-            {/* profile  */}
-            {/* <div className="relative lg:hidden">
-              <div 
-            
-                className="flex items-center space-x-2 cursor-pointer"
-                onClick={() =>
-                  setIsProfileDropdownOpen(!isProfileDropdownOpen)
-                }
-              >
-             { 
-             userData ? <Image src={imgURL} alt="" height={45} width={45} style={{ borderRadius: "100%", width: "45px", height: "45px" }} className="object-cover" /> :
-               <div><Link href={"/login"}><button className="bg-primary text-white px-6 py-3 rounded-lg text-[14px]">Login</button></Link></div>
-             }   
-
-              </div> 
-
-              {
-                 isProfileDropdownOpen && (
-                  <div   ref={profileDropdownRef} className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-[200px] z-50">
-                  <div className="p-4 flex flex-col gap-3 items-center">
-                    <Image src={imgURL} alt="" height={55} width={55} style={{ borderRadius: "100%", width: "55px", height: "55px" }} />
-                    <div className="font-bold">{userData?.firstName} {userData?.lastName}</div>
-                    <Link href="/profile">
-                      <button className="text-white bg-primary w-full px-6 py-2 rounded-lg text-[14px]" >
-                        Visit Your Profile
-                      </button>
-                    </Link>
-
-                  </div>
-                  <p className="flex items-center justify-start px-4 pb-2 w-full  gap-2  rounded-lg mt-2 text-[16px] text-gray-700 cursor-pointer" onClick={showModal}>
-                    <span> <GoStar size={16} /> </span>
-                    <span className="  text-[16px] font-medium"> Review </span>
-                  </p>
-                  <div className="border-t">
-                    <button className="px-4 py-3 text-primary hover:bg-gray-100 cursor-pointer flex items-center gap-2" onClick={handleLogout}>
-                      <IoIosLogOut size={24} />
-                      <p>Log Out</p>
-                    </button>
-                  </div>
-                </div>
-                )}
-              
-
-             
-            </div> */}
 
           </div>
 
@@ -294,7 +247,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Right Section */}
-          <div className=" lg:flex items-center space-x-4">
+          <div className=" flex items-center justify-between space-x-4">
             <Link href="/search" className="hidden lg:block">
               <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
                 <LuSearch size={24} color="#4E4E4E" />
@@ -322,7 +275,7 @@ const Navbar: React.FC = () => {
                 <span> <HiOutlineTranslate /> </span> <span><IoChevronDownOutline /> </span>
               </button>
               {isLanguageDropdownOpen && (
-                <div ref={profileDropdownRef} className="absolute -right-6 py-2  mt-2 w-[210px] bg-white border border-gray-300 rounded shadow-lg z-10">
+                <div ref={profileDropdownRef} className="absolute -right-6 py-2  mt-2 lg:w-[210px] w-[150px] bg-white border border-gray-300 rounded shadow-lg z-10">
                   {languages.map((lang, index) => (
                     <div
                       key={index}
@@ -386,8 +339,6 @@ const Navbar: React.FC = () => {
               )}
             </div>
           </div>
-
-
 
         </div>
       </div>
