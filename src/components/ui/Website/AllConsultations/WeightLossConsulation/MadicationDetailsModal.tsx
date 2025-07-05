@@ -50,7 +50,7 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
   const [medicinePrice, setMedicinePrice] = useState<number>(0)
   const [variationId, setVariationId] = useState<string>('');
   const [unitId, setUnitId] = useState<string>('');
-  const { country } = useCountry(); 
+  const { country } = useCountry();
 
   useEffect(() => {
     if (medicineData?.variations?.length > 0) {
@@ -91,8 +91,6 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
     setOpen(false);
   }; 
 
-  console.log(medicineData?.variations, "variations");
-
 
   return (
     <Modal
@@ -126,9 +124,8 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
           </div>
 
           <h2 className="text-2xl font-medium mb-1 text-[#222222]">{medicineData?.name}</h2>
-          <p className="text-[#6B6B6B] font-[400] text-[16px] mb-3"> Vitamin C </p>
 
-          <p className="text-[#00B3CC] font-[400] text-[16px] mb-0.5"> Tablet </p>
+          <p className="text-[#00B3CC] font-[400] text-[16px] mb-0.5"> {medicineData?.form} </p>
           <p className="text-[#1854F9] font-[400] text-2xl mb-2"> €{totalPrice} </p>
 
 

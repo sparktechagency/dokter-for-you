@@ -14,7 +14,6 @@ import { useCountry } from '@/app/(website)/CountryContext';
 const HomePage = () => { 
  const { country } = useCountry();  
 
- console.log(country, "country in HomePage");
     return (
         <div>
             <Banner />
