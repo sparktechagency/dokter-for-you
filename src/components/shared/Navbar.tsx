@@ -130,17 +130,17 @@ const Navbar: React.FC = () => {
       "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
 
     // after add domain 
-    // document.cookie =
-    //   "googtrans=; domain=.1plus1dating.com; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;"; // Replace with your actual domain
+    document.cookie =
+      "googtrans=; domain=.dokterforyou.com/; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;"; 
 
     // Now, set the new "googtrans" cookie
     document.cookie = `googtrans=${googleTransValue}; path=/; max-age=${30 * 24 * 60 * 60
       }`;
 
     // for domain 
-    // document.cookie = `googtrans=${googleTransValue}; domain=.1plus1dating.com; path=/; max-age=${
-    //   30 * 24 * 60 * 60
-    // };`;
+    document.cookie = `googtrans=${googleTransValue}; domain=.dokterforyou.com/; path=/; max-age=${
+      30 * 24 * 60 * 60
+    };`;
 
     // Update state
     setSelectedLanguage(lang);
