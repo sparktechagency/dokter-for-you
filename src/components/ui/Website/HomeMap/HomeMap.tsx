@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ConfigProvider, Select } from "antd";
 import dynamic from "next/dynamic";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
 
@@ -38,19 +38,20 @@ interface Country {
 }
 
 const HomeMap = () => {
-  const router = useRouter();
+  // const router = useRouter(); 
   const [mounted, setMounted] = useState(false);
   const { data: profile } = useGetProfileQuery(undefined);
   const userCountry = profile?.data?.country;
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
-  const [loading, setLoading] = useState(false);
 
+  // Set selected country from profile or cookie
   useEffect(() => {
     setMounted(true);
 
     if (userCountry) {
       const defaultCountry = countries.find((c) => c.value === userCountry);
       setSelectedCountry(defaultCountry || null);
+
       Cookies.set("country", userCountry, { expires: 15, path: "/" });
     }
   }, [userCountry]);
@@ -61,39 +62,26 @@ const HomeMap = () => {
   };
 
   const handleCountryClick = () => {
-    if (selectedCountry && !userCountry) {
-      Cookies.set("country", selectedCountry.value, { expires: 15, path: "/" });
-      setLoading(true);
-      window.location.href = "/home";
+    if (!selectedCountry) return;
 
-      setTimeout(() => {
-        router.refresh();
-      }, 100);
+    Cookies.set("country", selectedCountry.value, { expires: 15, path: "/" });
+    sessionStorage.setItem("hasRedirected", "true");
 
-    } else if (userCountry) {
-
-      window.location.href = "/home";
-
-      setTimeout(() => {
-        router.refresh();
-      }, 100);
-
-    }
-  }; 
-
-  console.log(loading, "loading");
+    window.location.href = "/home";
+  };
 
   const disabledCountries = userCountry
     ? countries.map((c) => ({ ...c, disabled: c.value !== userCountry }))
     : countries;
 
-    if(loading){
-    return (
-      <div className="flex items-center justify-center h-[calc(90vh-20px)]">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary"></div>
-      </div>
-    );
-    }
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center h-[calc(90vh-20px)]">
+  //       <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary"></div>
+  //     </div>
+  //   );
+  // }
+
   return (
     <div className="w-full lg:h-full h-[calc(90vh-20px)]">
       <div className="flex flex-col items-center justify-center p-6 w-full">
@@ -145,9 +133,7 @@ const HomeMap = () => {
               }`}
           >
             <span>Go to Doktor For You</span>
-            <span>
-              <MdOutlineKeyboardArrowRight size={22} />
-            </span>
+            <MdOutlineKeyboardArrowRight size={22} />
           </button>
         </div>
 
@@ -163,8 +149,7 @@ const HomeMap = () => {
               <Geographies geography={europeGeoUrl}>
                 {({ geographies }) =>
                   geographies.map((geo) => {
-                    const isSelected =
-                      selectedCountry && geo.properties.NAME === selectedCountry.label;
+                    const isSelected = selectedCountry?.label === geo.properties.NAME;
                     return (
                       <Geography
                         key={geo.rsmKey}

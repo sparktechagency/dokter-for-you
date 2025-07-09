@@ -40,7 +40,6 @@ const Navbar: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  //language 
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -56,7 +55,7 @@ const Navbar: React.FC = () => {
     return profile.startsWith("http") ? profile : `${imageUrl}${profile}`;
   };
 
-
+console.log(selectedLanguage, "selectedLanguage");
   useEffect(() => {
     if (data?.data) {
       setUserData(data?.data);
