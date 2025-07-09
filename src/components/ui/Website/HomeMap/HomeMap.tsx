@@ -79,7 +79,9 @@ const HomeMap = () => {
       }, 100);
 
     }
-  };
+  }; 
+
+  console.log(loading, "loading");
 
   const disabledCountries = userCountry
     ? countries.map((c) => ({ ...c, disabled: c.value !== userCountry }))
