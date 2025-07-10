@@ -118,7 +118,6 @@ const Navbar: React.FC = () => {
 
   // Switch Language Function
 const switchLanguage = (lang: string) => {
-  // Store selected language in Cookies
   Cookies.set("currentLanguage", lang, {
     expires: 30,
     domain: "www.dokterforyou.com", 
@@ -126,12 +125,13 @@ const switchLanguage = (lang: string) => {
     sameSite: "Lax",
   });
 
-
-  // Update state
   setSelectedLanguage(lang);
 
-  // Force reload with Google Translate URL hash
-  window.location.href = `${window.location.pathname}#googtrans/en/${lang}`;
+  window.location.hash = `#googtrans/en/${lang}`;
+
+  setTimeout(() => {
+    window.location.reload();
+  }, 100);
 };
 
   const navLinks = [
