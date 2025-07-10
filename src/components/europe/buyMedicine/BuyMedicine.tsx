@@ -49,7 +49,7 @@ const MedicineHistory = ({ SubCategoryName, subcategoryId, category }: { SubCate
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <p className="text-sm text-[#999999] pb-1 font-medium">From</p>
+                                        <p className="text-sm text-[#999999] pb-1 font-medium">Form</p>
                                         <p className="text-sm">{medicine?.form}</p>
                                     </div>
 

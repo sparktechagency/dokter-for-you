@@ -117,36 +117,24 @@ console.log(selectedLanguage, "selectedLanguage");
 
 
   // Switch Language Function
-  const switchLanguage = (lang: string) => {
-    // Store selected language in cookies
-    Cookies.set("currentLanguage", lang, { expires: 30 });
+const switchLanguage = (lang: string) => {
+  const googleTransValue = `/en/${lang}`;
 
-    // Correctly set the Google Translate cookie (googtrans)
-    const googleTransValue = `/en/${lang}`;
+  // Clear existing googtrans cookie
+  document.cookie = `googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.dokterforyou.com;`;
 
-    // Remove any existing "googtrans" cookies before setting a new one
-    document.cookie =
-      "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+  // Set new googtrans cookie
+  document.cookie = `googtrans=${googleTransValue}; path=/; domain=.dokterforyou.com; max-age=${30 * 24 * 60 * 60};`;
 
-    // after add domain 
-    document.cookie =
-      "googtrans=; domain=.dokterforyou.com/; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;"; 
+  // Store selected language in Cookies
+  Cookies.set("currentLanguage", lang, { expires: 30, domain: ".dokterforyou.com" });
 
-    // Now, set the new "googtrans" cookie
-    document.cookie = `googtrans=${googleTransValue}; path=/; max-age=${30 * 24 * 60 * 60
-      }`;
+  // Update state
+  setSelectedLanguage(lang);
 
-    // for domain 
-    document.cookie = `googtrans=${googleTransValue}; domain=.dokterforyou.com/; path=/; max-age=${
-      30 * 24 * 60 * 60
-    };`;
-
-    // Update state
-    setSelectedLanguage(lang);
-
-    // Reload the page to apply the translation
-    window.location.reload();
-  };
+  // Reload the page
+  window.location.reload();
+};
 
   const navLinks = [
     { label: "Home", link: "/home" },

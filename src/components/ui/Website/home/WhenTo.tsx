@@ -18,7 +18,7 @@ const WhenTo = () => {
 
         <p className=" text-gray-600" dangerouslySetInnerHTML={{ __html: item?.description?.length > 250 ? `${item?.description?.slice(0, 850)}...` : item?.description }} />
       
-        <button className={ `mt-6 px-6 py-2  border border-primary text-primary hover:text-white  hover:bg-primary ${item?.description?.length > 850 && "hidden"}`} onClick={() => router.push(`/about/${item._id}`)}>
+        <button className={ `mt-6 px-6 py-2  border border-primary text-primary hover:text-white  hover:bg-primary`} onClick={() => router.push(`/about/${item._id}`)}>
           Learn More
         </button>
       </div>
