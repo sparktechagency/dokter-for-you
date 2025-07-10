@@ -121,15 +121,15 @@ const Navbar: React.FC = () => {
   const googleTransValue = `/en/${lang}`;
 
   // Clear existing googtrans cookie
-  document.cookie = `googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.dokterforyou.com;`;
+  document.cookie = `googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=www.dokterforyou.com;`;
 
   // Set new googtrans cookie with Secure and SameSite attributes
-  document.cookie = `googtrans=${googleTransValue}; path=/; domain=.dokterforyou.com; max-age=${30 * 24 * 60 * 60}; Secure; SameSite=Lax;`;
+  document.cookie = `googtrans=${googleTransValue}; path=/; domain=www.dokterforyou.com; max-age=${30 * 24 * 60 * 60}; Secure; SameSite=Lax;`;
 
   // Store selected language in Cookies
   Cookies.set("currentLanguage", lang, {
     expires: 30,
-    domain: ".dokterforyou.com",
+    domain: "www.dokterforyou.com",
     secure: true,
     sameSite: "Lax",
   });
