@@ -117,28 +117,21 @@ const Navbar: React.FC = () => {
 
 
   // Switch Language Function
- const switchLanguage = (lang: string) => {
-  const googleTransValue = `/en/${lang}`;
-
-  // Clear existing googtrans cookie
-  document.cookie = `googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=www.dokterforyou.com;`;
-
-  // Set new googtrans cookie with Secure and SameSite attributes
-  document.cookie = `googtrans=${googleTransValue}; path=/; domain=www.dokterforyou.com; max-age=${30 * 24 * 60 * 60}; Secure; SameSite=Lax;`;
-
+const switchLanguage = (lang: string) => {
   // Store selected language in Cookies
   Cookies.set("currentLanguage", lang, {
     expires: 30,
-    domain: "www.dokterforyou.com",
+    domain: "www.dokterforyou.com", 
     secure: true,
     sameSite: "Lax",
   });
 
+
   // Update state
   setSelectedLanguage(lang);
 
-  // Force reload with cache-busting query parameter
-  window.location.href = `${window.location.pathname}?lang=${lang}`;
+  // Force reload with Google Translate URL hash
+  window.location.href = `${window.location.pathname}#googtrans/en/${lang}`;
 };
 
   const navLinks = [

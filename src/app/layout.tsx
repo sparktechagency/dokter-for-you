@@ -13,16 +13,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en"> 
-
-          <head>
-        {/* Google Translate Meta */}
+    <html lang="en">
+      <head>
         <meta
           name="google-translate-customization"
           content="9f841e7780177523-3214ceb76f765f38-gc38c6fe6f9d06436-c"
         />
-
-        {/* Google Translate Script */}
         <Script
           strategy="afterInteractive"
           src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
@@ -33,6 +29,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               function googleTranslateElementInit() {
+                console.log("Initializing Google Translate");
                 new google.translate.TranslateElement(
                   {
                     pageLanguage: 'en',
@@ -45,14 +42,11 @@ export default function RootLayout({
             `,
           }}
         />
-      </head> 
-
+      </head>
       <body className="antialiased">
-        <ReduxProvider> 
-            <CountryProvider> 
-          <AntdRegistry>
-            {children}      
-          </AntdRegistry> 
+        <ReduxProvider>
+          <CountryProvider>
+            <AntdRegistry>{children}</AntdRegistry>
           </CountryProvider>
         </ReduxProvider>
       </body>
