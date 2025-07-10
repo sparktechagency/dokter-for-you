@@ -21,7 +21,7 @@ import { useGetAllNotificationQuery } from "@/redux/features/website/notificatio
 
 const languages = [
   { label: "English", value: "en" },
-  { label: "Dutch", value: "nl" }, 
+  { label: "Dutch", value: "nl" },
   { label: "German", value: "de" },
   { label: "French", value: "fr" },
   { label: "Polish", value: "pl" },
@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
     return profile.startsWith("http") ? profile : `${imageUrl}${profile}`;
   };
 
-console.log(selectedLanguage, "selectedLanguage");
+  console.log(selectedLanguage, "selectedLanguage");
   useEffect(() => {
     if (data?.data) {
       setUserData(data?.data);
@@ -117,23 +117,28 @@ console.log(selectedLanguage, "selectedLanguage");
 
 
   // Switch Language Function
-const switchLanguage = (lang: string) => {
+ const switchLanguage = (lang: string) => {
   const googleTransValue = `/en/${lang}`;
 
   // Clear existing googtrans cookie
   document.cookie = `googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.dokterforyou.com;`;
 
-  // Set new googtrans cookie
-  document.cookie = `googtrans=${googleTransValue}; path=/; domain=.dokterforyou.com; max-age=${30 * 24 * 60 * 60};`;
+  // Set new googtrans cookie with Secure and SameSite attributes
+  document.cookie = `googtrans=${googleTransValue}; path=/; domain=.dokterforyou.com; max-age=${30 * 24 * 60 * 60}; Secure; SameSite=Lax;`;
 
   // Store selected language in Cookies
-  Cookies.set("currentLanguage", lang, { expires: 30, domain: ".dokterforyou.com" });
+  Cookies.set("currentLanguage", lang, {
+    expires: 30,
+    domain: ".dokterforyou.com",
+    secure: true,
+    sameSite: "Lax",
+  });
 
   // Update state
   setSelectedLanguage(lang);
 
-  // Reload the page
-  window.location.reload();
+  // Force reload with cache-busting query parameter
+  window.location.href = `${window.location.pathname}?lang=${lang}`;
 };
 
   const navLinks = [
