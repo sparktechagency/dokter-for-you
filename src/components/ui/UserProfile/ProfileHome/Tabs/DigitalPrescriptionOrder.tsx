@@ -15,7 +15,7 @@ interface ConsultationData {
   medication: string;
   dateTime: string;
   price: string;
-  suggestedMedicine: { dosage: string; }[] 
+  suggestedMedicine: { dosage: string; }[]
   isMedicine: boolean;
 }
 
@@ -23,12 +23,14 @@ const DigitalPrescriptionOrder = () => {
   const [selectedConsultation, setSelectedConsultation] = useState(null);
   // const name = "medication" 
   const { data: allConsultations, isLoading } = useGetAllConsultationsQuery(undefined)
+
   if (isLoading) {
     return <div>Loading...</div>
   }
 
+  console.log("sdfgdsf", allConsultations);
   const DigitalPrescriptionOrderDetails = allConsultations?.data?.filter(
-    (consultation: { forwardToPartner: boolean; isMedicine: boolean; }) => consultation?.forwardToPartner === true &&  consultation?.isMedicine === false 
+    (consultation: { forwardToPartner: boolean; isMedicine: boolean; }) => consultation?.forwardToPartner === true && consultation?.isMedicine === false
   );
 
   const columns: ColumnsType<ConsultationData> = [
@@ -58,25 +60,29 @@ const DigitalPrescriptionOrder = () => {
       dataIndex: 'suggestedMedicine',
       key: 'medication',
       width: 250,
-      render: (_, record) => <div className='flex gap-1'>
-        {record?.suggestedMedicine?.map((item: any, index: number) => (
-          <div  key={`${item.name}-${index}`}>
-            {item?.name}
-          </div>
-        ))}
-      </div>,
+      render: (_, record) => (
+        <div className="flex gap-1">
+          {record?.suggestedMedicine?.map((item: any, index: number) => (
+            <span key={index}>
+              {item?.name}
+              {index < record.suggestedMedicine.length - 1 && ','}
+            </span>
+          ))}
+        </div>
+      )
     },
     {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
       width: 120,
-      render: () => {
-        return (
-          <div>
-            {"€25.00"}
-          </div>
-        )
+      render: (_, record) => {
+        const total = record?.suggestedMedicine?.reduce(
+          (sum: number, item: any) => sum + (item?.totalPrice || 0),
+          0
+        );
+
+        return <span> €{total}</span>;
       }
     },
     {
