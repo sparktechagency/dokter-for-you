@@ -48,9 +48,10 @@ const PrescriptionOrder = ({ consultationId, onClose }: ConsultationDetailsProps
   const [BuyNow] = useBuyNowMutation()
   const router = useRouter()
   const { data } = useGetProfileQuery(undefined)
-  const userData = data?.data 
-      const { country } = useCountry();
-      const { data: shippingCost } = useGetShippingCostQuery(country);
+  const userData = data?.data
+  const { country } = useCountry();
+  const { data: shippingCost } = useGetShippingCostQuery(country); 
+
 
   const handleBuyNow = async () => {
     await BuyNow(consultationId._id).then((res) => {

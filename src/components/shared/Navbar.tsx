@@ -55,7 +55,6 @@ const Navbar: React.FC = () => {
     return profile.startsWith("http") ? profile : `${imageUrl}${profile}`;
   };
 
-  console.log(selectedLanguage, "selectedLanguage");
   useEffect(() => {
     if (data?.data) {
       setUserData(data?.data);

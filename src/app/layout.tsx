@@ -29,7 +29,6 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               function googleTranslateElementInit() {
-                console.log("Initializing Google Translate");
                 new google.translate.TranslateElement(
                   {
                     pageLanguage: 'en',
