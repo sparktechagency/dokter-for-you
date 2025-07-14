@@ -182,7 +182,7 @@ useEffect(() => {
               className="h-36 mx-auto"
             />
             <h3 className="text-lg font-semibold mt-4 text-center">{med.name}</h3>
-            <p className="text-sm text-gray-500 text-center flex items-center justify-center gap-2"> 
+            {/* <p className="text-sm text-gray-500 text-center flex items-center justify-center gap-2"> 
               {
                 medicineData?.variations?.map((items: variationsType) => (
                   <span key={items._id}>
@@ -191,7 +191,7 @@ useEffect(() => {
               ))
               }
              
-            </p>
+            </p> */}
             {isSelected(med._id) && (
               <p
                 onClick={(e) => handleRemove(med._id, e)}

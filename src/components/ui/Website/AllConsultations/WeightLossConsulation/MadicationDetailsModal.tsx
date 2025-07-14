@@ -45,9 +45,9 @@ interface variationsType {
 const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelected }: MedicationModalProps) => {
   const [quantity, setQuantity] = useState(1);
   const [packSize, setPackSize] = useState<string | null>('');
-  const [dosage, setDosage] = useState('')
-  const [unitPerBox, setUnitPerBox] = useState<unitType[]>([])
-  const [medicinePrice, setMedicinePrice] = useState<number>(0)
+  const [dosage, setDosage] = useState('');
+  const [unitPerBox, setUnitPerBox] = useState<unitType[]>([]);
+  const [medicinePrice, setMedicinePrice] = useState<number>(0);
   const [variationId, setVariationId] = useState<string>('');
   const [unitId, setUnitId] = useState<string>('');
   const { country } = useCountry();
@@ -59,8 +59,7 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
       setUnitPerBox(firstVariation.units);
       setVariationId(firstVariation._id);
 
-
-      // Set default packSize and price if units exist
+      // Set default packSize, price, and unitId if units exist
       if (firstVariation.units?.length > 0) {
         setPackSize(firstVariation.units[0].unitPerBox);
         setUnitId(firstVariation.units[0]._id);
@@ -69,9 +68,27 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
     }
   }, [medicineData]);
 
-  const totalPrice = medicinePrice * quantity;
-  const handleSubmit = () => {
+  const handleDosageChange = (variation: variationsType) => {
+    setDosage(variation.dosage);
+    setUnitPerBox(variation.units);
+    setVariationId(variation._id);
 
+    // Reset packSize, medicinePrice, and unitId to the first unit of the new variation
+    if (variation.units?.length > 0) {
+      setPackSize(variation.units[0].unitPerBox);
+      setMedicinePrice(variation.units[0].sellingPrice);
+      setUnitId(variation.units[0]._id);
+    } else {
+      // Handle case where no units are available
+      setPackSize(null);
+      setMedicinePrice(0);
+      setUnitId('');
+    }
+  };
+
+  const totalPrice = medicinePrice * quantity;
+
+  const handleSubmit = () => {
     if (!packSize) {
       return message.error("Please select a pcs before proceeding.");
     }
@@ -84,13 +101,12 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
       price: totalPrice,
       variationId: variationId,
       unitId: unitId
-    })
+    });
 
     setQuantity(1);
     setPackSize('');
     setOpen(false);
-  }; 
-
+  };
 
   return (
     <Modal
@@ -128,29 +144,16 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
           <p className="text-[#00B3CC] font-[400] text-[16px] mb-0.5"> {medicineData?.form} </p>
           <p className="text-[#1854F9] font-[400] text-2xl mb-2"> €{totalPrice} </p>
 
-
           <p className="text-[#999999] font-[400] text-[14px] mb-4" dangerouslySetInnerHTML={{ __html: ` ${medicineData?.description === "undefined" ? "" : medicineData?.description} ` }} />
 
-
           <div className="flex flex-col items-start gap-5 mb-4">
-            {/* <div>
-              <div className="text-gray-600 mb-2">Form</div>
-              <button className='px-4 py-1 font-[400] text-[16px] bg-primary text-white'>{medicineData?.form}</button>
-            </div>
-
-            <div>
-              <div className="text-gray-600 mb-2">Dosage</div>
-              <button className='px-4 py-1 font-[400] text-[16px] bg-primary text-white'>{medicineData?.dosage}</button>
-            </div> */}
-
             <div className="flex flex-col gap-2">
               <p className="text-[#999999] ">Dosage</p>
               <div className='flex items-center gap-2'>
                 {medicineData?.variations?.map((items: variationsType) => (
                   <div
                     key={items?._id}
-                    onClick={() => { setDosage(items?.dosage); setUnitPerBox(items?.units); setVariationId(items?._id); }}
-                    onChange={() => setUnitPerBox(items?.units)}
+                    onClick={() => handleDosageChange(items)}
                     className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${dosage === items?.dosage ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
                   >
                     {items?.dosage}
@@ -161,22 +164,22 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
 
             <div className="flex flex-col gap-2">
               <p className="text-[#999999] ">Select Units per Box</p>
-              <div className=' flex items-center gap-2'>
-
+              <div className='flex items-center gap-2'>
                 {unitPerBox?.map((items: unitType) => (
                   <div
                     key={items?._id}
-                    onClick={() => { setPackSize(items?.unitPerBox); setMedicinePrice(items?.sellingPrice); setUnitId(items?._id); }}
+                    onClick={() => {
+                      setPackSize(items?.unitPerBox);
+                      setMedicinePrice(items?.sellingPrice);
+                      setUnitId(items?._id);
+                    }}
                     className={`px-3 py-2 text-[12px] font-[400] cursor-pointer ${packSize === items?.unitPerBox ? 'bg-primary text-white' : 'bg-gray-200 text-black'} shadow-sm border-none`}
                   >
                     {items?.unitPerBox}
                   </div>
                 ))}
-
               </div>
             </div>
-
-
           </div>
 
           <div className="mb-6">
@@ -212,19 +215,18 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
         </form>
       </div>
 
-      <p className=' text-[#999999] text-sm font-normal py-4'> Where your health is concerned, we believe you have the right to decide what to do with your body. That is why we offer you the opportunity to consult a licensed and registered EU   </p>
+      <p className='text-[#999999] text-sm font-normal py-4'>
+        Where your health is concerned, we believe you have the right to decide what to do with your body. That is why we offer you the opportunity to consult a licensed and registered EU
+      </p>
 
-      {
-        country !== "Netherlands" ? (
-          <div>
-            <h2 className="text-[16px] font-medium mb-2 mt-2 text-[#0A2369]">Description</h2>
-            <p className=' text-[#999999] text-sm font-normal' dangerouslySetInnerHTML={{ __html: medicineData?.subDescription }} />
-          </div>
-        ) : null
-      }
-
+      {country !== "Netherlands" ? (
+        <div>
+          <h2 className="text-[16px] font-medium mb-2 mt-2 text-[#0A2369]">Description</h2>
+          <p className='text-[#999999] text-sm font-normal' dangerouslySetInnerHTML={{ __html: medicineData?.subDescription }} />
+        </div>
+      ) : null}
     </Modal>
   );
 };
 
-export default MadicationDetailsModal
+export default MadicationDetailsModal;
