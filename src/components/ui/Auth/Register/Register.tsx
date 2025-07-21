@@ -84,7 +84,7 @@ const Register = () => {
 
                     <InputField name={"firstName"} label={"First Name"} />
                     <InputField name={"lastName"} label={"Last Name"} />
-                    <InputField name={"location"} label={"Location"} />
+                    <InputField name={"location"} label={"Address"} />
 
                     <ConfigProvider
                         theme={{
