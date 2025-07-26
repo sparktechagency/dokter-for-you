@@ -50,13 +50,14 @@ const PrescriptionOrder = ({ consultationId, onClose }: ConsultationDetailsProps
   const { data } = useGetProfileQuery(undefined)
   const userData = data?.data
   const { country } = useCountry();
-  const { data: shippingCost } = useGetShippingCostQuery(country); 
+  const { data: shippingCost } = useGetShippingCostQuery(country);  
+  // const [disabled, setDisabled] = React.useState(false);
 
 
   const handleBuyNow = async () => {
     await BuyNow(consultationId._id).then((res) => {
       if (res?.data?.success) {
-        router.push(res?.data?.data)
+        router.push(res?.data?.data) 
       }
     })
   }
@@ -266,7 +267,7 @@ const PrescriptionOrder = ({ consultationId, onClose }: ConsultationDetailsProps
                   </div>
                 ) : (
                   <div onClick={handleBuyNow}>
-                    <button className="bg-[#1a237e] px-6 h-[48px] text-white">Buy Now</button>
+                    <button className="bg-[#1a237e] px-6 h-[48px] text-white" >Buy Now</button>
                   </div>
                 )
               }

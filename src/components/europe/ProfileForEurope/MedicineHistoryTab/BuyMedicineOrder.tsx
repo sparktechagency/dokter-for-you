@@ -55,7 +55,6 @@ const BuyMedicineOrder = ({ consultationId, onClose }: ConsultationDetailsProps)
 
     const handleBuyNow = async () => {
         await BuyNow(consultationId._id).then((res) => {
-
             if (res?.data?.success) {
                 router.push(res?.data?.data)
             }
@@ -207,7 +206,7 @@ const BuyMedicineOrder = ({ consultationId, onClose }: ConsultationDetailsProps)
                                     </div>
                                 ) : consultationId?.status === "delivered" ? (
                                     <div  >
-                                        <div className="bg-green-700 px-6 py-[13px] text-white text-center">Delivered</div>
+                                        <div className="bg-green-700 px-6 py-[13px] text-white text-center ">Delivered</div>
                                     </div>
                                 ) : (
                                     <div onClick={handleBuyNow}>

@@ -37,7 +37,7 @@ const BannerCards: React.FC = () => {
   ];
 
   return (
-    <section className="-mt-24 z-20 mb-[94px]">
+    <section className="lg:-mt-24 -mt-16 z-20 mb-[94px]">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
         {datas.map((data, index) => (
           <div

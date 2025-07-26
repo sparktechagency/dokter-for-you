@@ -14,24 +14,24 @@ const Banner = () => {
         <div 
             className="  background-container z-0" >  
 
-            <div className="container  flex flex-col  gap-0 pt-[150px] items-center lg:items-start text-center  lg:h-full h-32">
+            <div className="container  flex flex-col  gap-0 lg:pt-[150px] pt-[100px] items-center lg:items-start text-center  lg:h-full h-32">
              
-                <h1 className={` lg:text-[53px] text-[40px] font-[600]  tracking-wider uppercase  text-[#11D279] ${poppins.className}`}>
+                <h1 className={` lg:text-[53px] text-[36px] font-[600]  tracking-wider uppercase  text-[#11D279] ${poppins.className}`}>
                 COMPLETE 
               
                 </h1> 
 
-                <h1 className={` lg:text-[53px] text-[36px] font-[600]  tracking-wider uppercase text-primary ${poppins.className}`}>
+                <h1 className={` lg:text-[53px] text-[32px] font-[600] lg:break-normal break-all  tracking-wider uppercase text-primary ${poppins.className}`}>
                 HEALTH SOLUTION
                 </h1>
                 
         
-                <p className={`mt-3 lg:px-0 px-2 lg:text-[24px] text-[20px] font-[400] ${poppins.className} tracking-wide lg:text-start lg:w-[488px]  text-[#4E4E4E] ` }>
+                <p className={`mt-3 lg:px-0 px-2 lg:text-[24px] text-lg font-[400] ${poppins.className} lg:tracking-wide lg:text-start lg:w-[488px]  text-[#4E4E4E] ` }>
                 We provide you the best consultation and fastest delivery of your medicine
                 </p> 
 
                 <Link href="/consultation-category" className=' w-full lg:block flex items-center justify-center  ' >
-                    <CommonBtn className={`mt-10 flex gap-1 items-center justify-center px-6  h-[56px]  ${poppins.className}`}>
+                    <CommonBtn className={`lg:mt-10 mt-5 flex gap-1 items-center justify-center px-6  h-[56px]  ${poppins.className}`}>
                         <span>Start Your Consultation</span>
                         <span><MdOutlineKeyboardArrowRight size={22} /></span>
                     </CommonBtn> 
