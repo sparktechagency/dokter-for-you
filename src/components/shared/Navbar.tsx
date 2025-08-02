@@ -9,7 +9,6 @@ import { LuSearch } from "react-icons/lu";
 import { IoChevronDownOutline, IoNotificationsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 import { GoStar } from "react-icons/go";
-import { HiOutlineTranslate } from "react-icons/hi";
 import { Drawer } from "antd";
 import Cookies from "js-cookie";
 import AddReviewModal from "../ui/Website/home/AddReviewModal";
@@ -18,6 +17,7 @@ import { imageUrl } from "@/redux/base/baseApi";
 import { useGetAllCategoryQuery } from "@/redux/features/website/categorySlice";
 import { useRouter } from "next/navigation";
 import { useGetAllNotificationQuery } from "@/redux/features/website/notificationSlice";
+import { Globe } from "lucide-react";
 
 const languages = [
   { label: "English", value: "en" },
@@ -84,8 +84,11 @@ const Navbar: React.FC = () => {
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
 
   // Handle click outside dropdowns
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+ useEffect(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (typeof window === "undefined") return;
+
+    try {
       if (
         profileDropdownRef.current &&
         !profileDropdownRef.current.contains(event.target as Node)
@@ -99,13 +102,17 @@ const Navbar: React.FC = () => {
       ) {
         setOpenDropdown(null);
       }
-    };
+    } catch (err) {
+      console.warn("Dropdown error ignored:", err);
+    }
+  };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
 
   useEffect(() => {
     const storedLanguage = Cookies.get("currentLanguage");
@@ -116,22 +123,22 @@ const Navbar: React.FC = () => {
 
 
   // Switch Language Function
-const switchLanguage = (lang: string) => {
-  Cookies.set("currentLanguage", lang, {
-    expires: 30,
-    domain: "www.dokterforyou.com", 
-    secure: true,
-    sameSite: "Lax",
-  });
+  const switchLanguage = (lang: string) => {
+    Cookies.set("currentLanguage", lang, {
+      expires: 30,
+      domain: "www.dokterforyou.com",
+      secure: true,
+      sameSite: "Lax",
+    });
 
-  setSelectedLanguage(lang);
+    setSelectedLanguage(lang);
 
-  window.location.hash = `#googtrans/en/${lang}`;
+    window.location.hash = `#googtrans/en/${lang}`;
 
-  setTimeout(() => {
-    window.location.reload();
-  }, 100);
-};
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
+  };
 
   const navLinks = [
     { label: "Home", link: "/home" },
@@ -256,7 +263,7 @@ const switchLanguage = (lang: string) => {
                 onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
                 className="w-12 h-12 bg-transparent  text-xl cursor-pointer flex items-center justify-center gap-0"
               >
-                <span> <HiOutlineTranslate /> </span> <span><IoChevronDownOutline /> </span>
+                <span> <Globe color="#4E4E4E" size={26} /> </span> <span><IoChevronDownOutline color="#4E4E4E" /> </span>
               </button>
               {isLanguageDropdownOpen && (
                 <div ref={profileDropdownRef} className="absolute -right-6 py-2  mt-2 lg:w-[210px] w-[150px] bg-white border border-gray-300 rounded shadow-lg z-10">

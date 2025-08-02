@@ -7,60 +7,60 @@ import { useRegisterUserMutation } from "@/redux/features/auth/authApi";
 import { SetLocalStorage } from "@/util/LocalStroage";
 import { Checkbox, ConfigProvider, Form, Input, Select } from "antd";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-import Swal from 'sweetalert2'; 
+import Swal from 'sweetalert2';
 
 const Register = () => {
-    const router = useRouter()   
-    const [registerUser , { isLoading }] = useRegisterUserMutation() 
-      const { country } = useCountry();  
-      const [form] = Form.useForm();
- 
-      useEffect(() => {
+    const router = useRouter()
+    const [registerUser, { isLoading }] = useRegisterUserMutation()
+    const { country } = useCountry();
+    const [form] = Form.useForm();
+
+    useEffect(() => {
         if (country) {
             form.setFieldsValue({
                 country: country,
             });
         }
-      }, [country , form]); 
+    }, [country, form]);
 
-    const onFinish = async (values: any) => { 
+    const onFinish = async (values: any) => {
         const totalData = {
-          ...values,
+            ...values,
         };
-       
+
         await registerUser(totalData).then((res) => {
-    
+
             if (res?.data?.success) {
-              Swal.fire({
-                text: res?.data?.message,
-                icon: "success",
-                showConfirmButton: false,
-                timer: 1500,
-              }).then(() => { 
-                const value = {
-                  userType: "registerUser",
-                  email: values?.email
-                }
-                if (values?.email) {
-                  SetLocalStorage("userInfo", value)
-                } 
-                router.push("/verify-otp")
-              
-              });
+                Swal.fire({
+                    text: res?.data?.message,
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500,
+                }).then(() => {
+                    const value = {
+                        userType: "registerUser",
+                        email: values?.email
+                    }
+                    if (values?.email) {
+                        SetLocalStorage("userInfo", value)
+                    }
+                    router.push("/verify-otp")
+
+                });
             } else {
-              Swal.fire({
-                title: "Oops",
-                //@ts-ignore
-                text: res?.error?.data?.message,
-                icon: "error",
-                timer: 1500,
-                showConfirmButton: false,
-              });
-      
+                Swal.fire({
+                    title: "Oops",
+                    //@ts-ignore
+                    text: res?.error?.data?.message,
+                    icon: "error",
+                    timer: 1500,
+                    showConfirmButton: false,
+                });
+
             }
-          }) 
+        })
     };
 
     return (
@@ -72,11 +72,11 @@ const Register = () => {
             </div>
             <Form
                 onFinish={onFinish}
-                layout="vertical" 
+                layout="vertical"
                 initialValues={{
-                    remember: true ,
+                    remember: true,
                     gender: "MALE"
-                }} 
+                }}
                 form={form}
             >
 
@@ -102,7 +102,7 @@ const Register = () => {
                     >
                         <Form.Item name="gender" label={<p className='text-[#4E4E4E] text-[16px]'>Gender</p>}>
                             <Select
-                             
+
                                 style={{ width: "100%", height: "48px" }}
                                 options={[
                                     { value: 'MALE', label: 'Male' },
@@ -131,7 +131,7 @@ const Register = () => {
                                 {
                                     required: true,
                                     message: "Please confirm your password!",
-                                }, 
+                                },
                                 {
                                     min: 8,
                                     message: "Password must be at least 8 characters",
@@ -192,31 +192,32 @@ const Register = () => {
                         </Form.Item>
                     </ConfigProvider>
 
-                </div> 
+                    <Form.Item
+                        name={"country"}
 
-                 <Form.Item
-                      name={"country"} 
+                        label={<p className="text-[#4E4E4E] text-[16px]">Country</p>}
+                        rules={[
+                            {
+                                required: true,
+                                message: `Please enter your country`,
+                            },
+                        ]}
+                    >
+                        <Input
+                            placeholder={`Enter your country`}
+                            style={{
+                                height: 48,
+                                border: "1px solid #d9d9d9",
+                                outline: "none",
+                                boxShadow: "none",
+                                backgroundColor: "white",
+                            }}
+                            readOnly
+                        />
+                    </Form.Item>
+                    <InputField name='dateOfBirth' label='Date of Birth' />
+                </div>
 
-                      label={<p className="text-[#4E4E4E] text-[16px]">Country</p>}
-                      rules={[
-                        {
-                          required: true,
-                          message: `Please enter your country`,
-                        },
-                      ]}
-                    > 
-                      <Input
-                        placeholder={`Enter your country`}
-                        style={{
-                            height: 48,
-                            border: "1px solid #d9d9d9",
-                            outline: "none",
-                            boxShadow: "none",
-                            backgroundColor: "white",
-                          }} 
-                          readOnly
-                      /> 
-                    </Form.Item> 
                 <div className="flex items-center justify-between">
                     <Form.Item style={{ marginBottom: 0 }} name="agree" valuePropName="checked" rules={[{ required: true }]}>
                         <Checkbox>I agree with terms of service and privacy policy</Checkbox>
@@ -239,7 +240,7 @@ const Register = () => {
                         }}
                         className="flex items-center justify-center bg-primary rounded-lg"
                     >
-                    {isLoading ? "Please wait..." : "Sign up "}    
+                        {isLoading ? "Please wait..." : "Sign up "}
                     </button>
                 </Form.Item>
 
