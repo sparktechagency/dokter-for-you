@@ -50,7 +50,6 @@ const Navbar: React.FC = () => {
   const { data: notifications } = useGetAllNotificationQuery(undefined)
   const router = useRouter()
   const totalNotifications = notifications?.data?.unreadCount
-
   const getProfileImageUrl = (profile: string): string => {
     return profile.startsWith("http") ? profile : `${imageUrl}${profile}`;
   };
@@ -144,7 +143,7 @@ const Navbar: React.FC = () => {
     { label: "Home", link: "/home" },
     {
       label: "All Consultation",
-      subOptions: category?.data?.map((item: { name: string; _id: string }) => ({
+      subOptions: category?.data?.categories?.map((item: { name: string; _id: string }) => ({
         label: item?.name,
         value: item?._id,
       })),
