@@ -143,7 +143,7 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
           <h2 className="text-2xl font-medium mb-1 text-[#222222]">{medicineData?.name}</h2>
 
           <p className="text-[#00B3CC] font-[400] text-[16px] mb-0.5"> {medicineData?.form} </p>
-          <p className={`text-[#1854F9] font-[400] text-2xl mb-2 ${country === "Netherlands"?"hidden":"block"}`}> €{totalPrice} </p>
+          <p className={`text-[#1854F9] font-[400] text-2xl mb-2 ${country === "Netherlands"?"hidden":"block"}`}> €{totalPrice?.toFixed(2)} </p>
 
           <p className="text-[#999999] font-[400] text-[14px] mb-4" dangerouslySetInnerHTML={{ __html: ` ${medicineData?.description === "undefined" ? "" : medicineData?.description} ` }} />
 

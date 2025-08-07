@@ -23,7 +23,7 @@ const MedicineHistory = ({ SubCategoryName, subcategoryId, category }: { SubCate
     const dispatch = useDispatch();
     const handleContinue = () => {
         dispatch(setAllSelectedMedicines(selectedMedicines));
-    } 
+    }
 
     return (
         <div className="bg-white p-5">
@@ -67,7 +67,7 @@ const MedicineHistory = ({ SubCategoryName, subcategoryId, category }: { SubCate
                                     </div>
                                     <div className="text-right ">
                                         <p className="text-sm text-[#999999] pb-1 font-medium">Price</p>
-                                        <p className="text-sm">€{medicine?.price}</p>
+                                        <p className="text-sm">€{Number(medicine?.price).toFixed(2)}</p>
                                     </div>
                                 </div>
                             ))
@@ -89,18 +89,18 @@ const MedicineHistory = ({ SubCategoryName, subcategoryId, category }: { SubCate
 
                     <div>
 
-                        <Link  
-                        href={`${profileData ? `/medical-consultations?category=${category}&subcategory=${subcategoryId}&name=${SubCategoryName}` : "/login"}`}   
-                        
-                        className={` ${selectedMedicines?.length >= 1 ? "" : "cursor-not-allowed opacity-75"} w-full `}   
+                        <Link
+                            href={`${profileData ? `/medical-consultations?category=${category}&subcategory=${subcategoryId}&name=${SubCategoryName}` : "/login"}`}
 
-                        onClick={(e) => {
-                            if (selectedMedicines?.length < 1) {
-                                e.preventDefault();
-                                return;
-                            }
-                            handleContinue();
-                        }} >
+                            className={` ${selectedMedicines?.length >= 1 ? "" : "cursor-not-allowed opacity-75"} w-full `}
+
+                            onClick={(e) => {
+                                if (selectedMedicines?.length < 1) {
+                                    e.preventDefault();
+                                    return;
+                                }
+                                handleContinue();
+                            }} >
                             <CommonBtn className={` flex gap-1 items-center justify-center px-6  h-[56px]  ${selectedMedicines?.length >= 1 ? "" : "cursor-not-allowed opacity-75"}`}>
                                 <span> Continue to Buy </span>
                                 <span><MdOutlineKeyboardArrowRight size={22} /></span>
