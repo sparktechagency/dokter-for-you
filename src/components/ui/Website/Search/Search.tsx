@@ -16,7 +16,7 @@ const Search = () => {
   const { country } = useCountry();
   const AllCategory = allCategories?.data?.categories;
   const AllMedicines = allCategories?.data?.medicines || []; 
-  // dfsdaf
+
 
   const handleSeeMore = () => {
     if (medLimit === 20) {
