@@ -14,31 +14,33 @@ const About = () => {
     return (
         <div className="pt-[60px] bg-[#f7f7f7] min-h-screen">
             <div className="container">
-                {aboutData?.data?.map((item:{ _id: string, title: string, description: string, image: string}, index:number) => {
-                    const wordLimit = 74;
-                    const words = item?.description?.split(" ") || [];
-                    const truncatedText = words.slice(0, wordLimit).join(" ");
-                    const hasMore = words.length > wordLimit;             
-
+                {aboutData?.data?.map((item: { _id: string, title: string, description: string, image: string }, index: number) => {
                     return (
                         <div
                             key={item._id}
-                            className={`mb-[94px] w-full container flex flex-col lg:flex-row items-center gap-10 ${
-                                index % 2 !== 0 ? "lg:flex-row-reverse" : ""
-                            }`}
+                            className={`pb-[94px] w-full container flex flex-col lg:flex-row items-center gap-10 ${index % 2 !== 0 ? "lg:flex-row-reverse" : ""
+                                }`}
                         >
                             {/* Content Section */}
                             <div className="lg:w-1/2 w-full">
                                 <Title className="pb-[24px]">{item?.title}</Title>
-                                <p className="text-gray-600" dangerouslySetInnerHTML={{ __html: `${truncatedText} ${hasMore && "..."}` }} />
-                                {hasMore && (
-                                    <button
-                                        className="mt-6 px-6 py-2 border border-primary text-primary hover:text-white hover:bg-primary"
-                                        onClick={() => router.push(`/about/${item._id}`)}
-                                    >
-                                        View More
-                                    </button>
-                                )}
+                                <p
+                                    className="text-gray-600 line-clamp-6"
+                                    dangerouslySetInnerHTML={{
+                                        __html: item?.description
+                                            .replace(/<p>/g, "<span>")
+                                            .replace(/<\/p>/g, "</span>")
+                                            .replace(/<br\s*\/?>/g, " ")
+                                    }}
+                                />
+
+                                <button
+                                    className="mt-6 px-6 py-2 border border-primary text-primary hover:text-white hover:bg-primary"
+                                    onClick={() => router.push(`/about/${item._id}`)}
+                                >
+                                    View More
+                                </button>
+
                             </div>
 
                             {/* Image Section */}

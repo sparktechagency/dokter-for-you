@@ -143,7 +143,7 @@ const Navbar: React.FC = () => {
     { label: "Home", link: "/home" },
     {
       label: "All Consultation",
-      subOptions: category?.data?.categories?.map((item: { name: string; _id: string }) => ({
+      subOptions: category?.data?.map((item: { name: string; _id: string }) => ({
         label: item?.name,
         value: item?._id,
       })),

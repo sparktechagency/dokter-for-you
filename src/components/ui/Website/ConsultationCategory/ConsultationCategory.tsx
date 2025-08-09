@@ -10,7 +10,7 @@ import { imageUrl } from '@/redux/base/baseApi';
 
 const ConsultationCategory = () => {
   const { data: category } = useGetAllCategoryQuery(undefined)
-  const categories = category?.data?.categories
+  const categories = category?.data
 
   return (
     <div className='bg-[#F7F7F7]'>

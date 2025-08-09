@@ -51,7 +51,6 @@ const MadicationDetailsModal = ({ open, setOpen, medicineData, handleAddToSelect
   const [variationId, setVariationId] = useState<string>('');
   const [unitId, setUnitId] = useState<string>('');
   const { country } = useCountry(); 
-  console.log(country);
 
   useEffect(() => {
     if (medicineData?.variations?.length > 0) {

@@ -136,7 +136,6 @@ useEffect(() => {
     med.name.toLowerCase().includes(search.toLowerCase())
   ); 
 
-  console.log("medications" ,medications);
 
   const isSelected = (id) =>
     detailedSelectedMeds.some((selectedMed) => selectedMed?._id === id);

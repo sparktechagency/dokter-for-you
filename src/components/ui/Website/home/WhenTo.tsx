@@ -9,16 +9,24 @@ import React from 'react';
 const WhenTo = () => {
   const router = useRouter()
   const { data: aboutData } = useGetAllAboutQuery(undefined);
-  const item = aboutData?.data[0]
+  const item = aboutData?.data?.[0]
   return (
     <div className=' mb-[64px] w-full container flex flex-col lg:flex-row items-center gap-10'>
-      <div className=" lg:w-1/2 w-full  "> 
-      
-        <Title className=" pb-[40px]">{item?.title}</Title> 
+      <div className=" lg:w-1/2 w-full  ">
 
-        <p className=" text-gray-600" dangerouslySetInnerHTML={{ __html: item?.description?.length > 250 ? `${item?.description?.slice(0, 850)}...` : item?.description }} />
-      
-        <button className={ `mt-6 px-6 py-2  border border-primary text-primary hover:text-white  hover:bg-primary`} onClick={() => router.push(`/about/${item._id}`)}>
+        <Title className=" pb-[40px]">{item?.title}</Title>
+
+        <p
+          className="text-gray-600 line-clamp-6"
+          dangerouslySetInnerHTML={{
+            __html: item?.description
+              .replace(/<p>/g, "<span>")
+              .replace(/<\/p>/g, "</span>")
+              .replace(/<br\s*\/?>/g, " ")
+          }}
+        />
+
+        <button className={`mt-6 px-6 py-2  border border-primary text-primary hover:text-white  hover:bg-primary`} onClick={() => router.push(`/about/${item._id}`)}>
           Learn More
         </button>
       </div>

@@ -181,12 +181,12 @@ const BuyMedicineOrder = ({ consultationId, onClose }: ConsultationDetailsProps)
 
                                 <div className='flex items-center justify-between gap-7'>
                                     <p className='text-gray-600 font-medium'> Shipping Cost- </p>
-                                    <p className='text-gray-600 font-medium'> € {shippingCost}</p>
+                                    <p className='text-gray-600 font-medium'> € {shippingCost?.data}</p>
                                 </div>
 
                                 <div className='flex items-center justify-between gap-7 '>
                                     <p className='text-gray-600 font-medium'> total- </p>
-                                    <p className='text-gray-600 font-medium'> € {Number(totalMedicinePrice) + Number(shippingCost)}</p>
+                                    <p className='text-gray-600 font-medium'> € {Number(totalMedicinePrice) + Number(shippingCost?.data)}</p>
                                 </div>
                             </div>
                         </div>
