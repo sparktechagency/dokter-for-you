@@ -15,7 +15,8 @@ const Search = () => {
   const { data: allCategories } = useGetCategoryWithMedicineQuery(search);
   const { country } = useCountry();
   const AllCategory = allCategories?.data?.categories;
-  const AllMedicines = allCategories?.data?.medicines || [];
+  const AllMedicines = allCategories?.data?.medicines || []; 
+  // dfsdaf
 
   const handleSeeMore = () => {
     if (medLimit === 20) {
