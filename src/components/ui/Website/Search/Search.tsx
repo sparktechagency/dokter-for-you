@@ -104,8 +104,8 @@ const Search = () => {
         AllMedicines.length > 0 ? (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 container pb-14">
-              {AllMedicines.slice(0, medLimit).map((med: { _id: string, name: string, image: string, summary: string }, index: number) => (
-                <Link href={`/subcategory?category=${med?._id}`} key={index}>
+              {AllMedicines.slice(0, medLimit).map((med: { _id: string, name: string, image: string, summary: string , subCategory?:{name:string , _id:string , category:{name:string}} }, index: number) => (
+                <Link href={`/subcategory-details?category=${med?.subCategory?.category?.name}&&subcategory=${med?.subCategory?._id}`} key={index}>
                   <div className="border bg-white relative rounded-lg p-4 shadow hover:shadow-lg cursor-pointer">
                     <img
                       src={med?.image?.startsWith("http") ? med?.image : `${imageUrl}${med?.image}`}
