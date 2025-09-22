@@ -1,27 +1,27 @@
-import { baseApi } from "../../base/baseApi"; 
+import { baseApi } from "../../base/baseApi";
 import { GetLocalStorage } from "@/util/LocalStroage";
-const resetToken = GetLocalStorage("resetToken")  
+const resetToken = GetLocalStorage("resetToken")
 
 
 const authApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({ 
+  endpoints: (build) => ({
 
-    registerUser:build.mutation({
+    registerUser: build.mutation({
       query: (data) => ({
         url: "/user",
         method: "POST",
         body: data,
       })
-    }) , 
+    }),
 
     loginUser: build.mutation({
       query: (data) => ({
         url: "/auth/login",
         method: "POST",
         body: data,
-      }), 
+      }),
       invalidatesTags: ["profile"],
-    }), 
+    }),
 
     verifyEmail: build.mutation({
       query: (data) => ({
@@ -29,7 +29,7 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-    }), 
+    }),
 
     forgetPassword: build.mutation({
       query: (data) => ({
@@ -37,19 +37,19 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-    }), 
+    }),
 
     resetPasswords: build.mutation({
-      query:(value)=>({
-          url:"/auth/reset-password" ,
-          headers: {
-            // "Content-Type": "application/json", 
-            authorization: `Bearer ${resetToken}`,
-          },
-          method:"POST" ,
-          body: value
+      query: (value) => ({
+        url: "/auth/reset-password",
+        headers: {
+          // "Content-Type": "application/json", 
+          authorization: `Bearer ${resetToken}`,
+        },
+        method: "POST",
+        body: value
       })
-  }) ,  
+    }),
 
     changePassword: build.mutation({
       query: (data) => ({
@@ -57,16 +57,28 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-    }), 
+    }),
+
+    deleteAccount: build.mutation({
+      query: ({ payload }) => {
+        return {
+          url: `/user/soft-delete`,
+          method: 'DELETE',
+          body: payload,
+        };
+      },
+    }),
+
 
   }),
 });
 
-export const { 
+export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useChangePasswordMutation,
   useForgetPasswordMutation,
   useResetPasswordsMutation,
-  useVerifyEmailMutation,
+  useVerifyEmailMutation, 
+  useDeleteAccountMutation
 } = authApi;
