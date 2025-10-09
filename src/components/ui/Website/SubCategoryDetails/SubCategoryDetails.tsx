@@ -19,9 +19,8 @@ const SubCategoryDetails = () => {
   const { data: subCategory } = useGetSubCategoryByIdQuery(SubCategory)
   const subCategoryData = subCategory?.data
   const { data: profile } = useGetProfileQuery(undefined)
-  const profileData = profile?.data 
+  const profileData = profile?.data
   const { country } = useCountry();
-
 
   return (
     <div className=' bg-[#F7F7F7] pb-[64px]'>
@@ -56,22 +55,22 @@ const SubCategoryDetails = () => {
 
           <div className="pt-4 pb-10 border-b border-[#D1D1D1]">
             <p className="font-medium mb-4">Do you need help with selecting the right Consultation?</p>
-            <Link href={`${profileData ?  country !== "Netherlands"? `/medical-consultations?category=${subCategoryData?.category}&subcategory=${subCategoryData?._id}&name=${subCategoryData?.name}` :`/consultations?category=${subCategoryData?.category}&subcategory=${subCategoryData?._id}&name=${subCategoryData?.name}` : "/login"}`} className=' w-full ' >
+            <Link href={`${profileData ? country !== "Netherlands" ? `/medical-consultations?category=${subCategoryData?.category}&subcategory=${subCategoryData?._id}&name=${subCategoryData?.name}` : `/consultations?category=${subCategoryData?.category}&subcategory=${subCategoryData?._id}&name=${subCategoryData?.name}` : "/login"}`} className=' w-full ' >
               <CommonBtn className={` flex gap-1 items-center justify-center px-6  h-[56px] `}>
                 <span>Start Your Consultation</span>
                 <span><MdOutlineKeyboardArrowRight size={22} /></span>
               </CommonBtn>
             </Link>
-          </div> 
+          </div>
 
-{
-  country !== "Netherlands" &&  <BuyMedicine  subcategoryId={subCategoryData?._id} SubCategoryName={subCategoryData?.name}  
-  category={subCategoryData?.category}  />
-}
-         
+          {
+            country !== "Netherlands" && <BuyMedicine subcategoryId={subCategoryData?._id} SubCategoryName={subCategoryData?.name}
+              category={subCategoryData?.category} />
+          }
 
-          <div className=' text-[#6B6B6B] text-[16px] pt-6'> 
-            <div dangerouslySetInnerHTML={{ __html: subCategoryData?.introduction }} /> 
+
+          <div className=' text-[#6B6B6B] text-[16px] pt-6'>
+            <div dangerouslySetInnerHTML={{ __html: subCategoryData?.subDetails }} />
           </div>
         </div>
       </div>
