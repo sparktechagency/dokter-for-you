@@ -86,7 +86,7 @@ const HomeMap = () => {
     <div className="w-full lg:h-full h-[calc(90vh-20px)]">
       <div className="flex flex-col items-center justify-center p-6 w-full">
         <h1 className="lg:text-[32px] text-[26px] font-semibold text-[#007F91] mb-3">
-          Welcome to Doktor For You
+          Go to Dokter For You
         </h1>
 
         <div className="lg:text-[24px] text-[20px] font-[400] mb-4">
