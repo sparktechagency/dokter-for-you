@@ -86,7 +86,7 @@ const HomeMap = () => {
     <div className="w-full lg:h-full h-[calc(90vh-20px)]">
       <div className="flex flex-col items-center justify-center p-6 w-full">
         <h1 className="lg:text-[32px] text-[26px] font-semibold text-[#007F91] mb-3">
-          Go to Dokter For You
+          Welcome to Dokter For You
         </h1>
 
         <div className="lg:text-[24px] text-[20px] font-[400] mb-4">
@@ -132,7 +132,7 @@ const HomeMap = () => {
             className={`bg-[#007F91] text-white h-[48px] flex gap-1 items-center justify-center px-5 mb-2 ${!selectedCountry ? "opacity-50 cursor-not-allowed" : ""
               }`}
           >
-            <span>Go to Doktor For You</span>
+            <span>Go to Dokter For You</span>
             <MdOutlineKeyboardArrowRight size={22} />
           </button>
         </div>
