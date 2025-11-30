@@ -29,7 +29,7 @@ const ResetPassword = () => {
         });
       }
     }
-    if (isError) {
+    if (isError) { 
       Swal.fire({
        //@ts-ignore
         text: error?.data?.message,  

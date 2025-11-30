@@ -26,14 +26,11 @@ const Login = () => {
          timer: 1500,
          showConfirmButton: false
        }).then( () => {
-
          if (data) {
            SetLocalStorage("DokterToken", data?.data); 
            router.push("/home");
            refetch();
          }
-       
-
        });
      }
 

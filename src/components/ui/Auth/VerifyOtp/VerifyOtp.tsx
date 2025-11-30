@@ -74,8 +74,6 @@ const VerifyOtp = () => {
             SetLocalStorage("resetToken", res?.data?.data); 
             router.push("/reset-password")
           } 
-
-    
         });
       } else {
         Swal.fire({
