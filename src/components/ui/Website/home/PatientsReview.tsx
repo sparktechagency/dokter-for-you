@@ -19,8 +19,8 @@ export interface Root {
 export interface User {
   _id: string
   email: string
-  profile: string 
-  firstName: string 
+  profile: string
+  firstName: string
   location: string
 }
 
@@ -32,7 +32,7 @@ export default function PatientsReview() {
     skipSnaps: false,
   });
 
-  const {data:allReviews} = useGetAllReviewQuery(undefined); 
+  const { data: allReviews } = useGetAllReviewQuery(undefined);
   useEffect(() => {
     if (emblaApi) {
       const autoplay = setInterval(() => {
@@ -53,45 +53,45 @@ export default function PatientsReview() {
           </Title>
         </div>
 
-        <div className="embla overflow-hidden" ref={emblaRef}>
-          <div className="embla__container flex  ">
-            {allReviews?.data?.map((testimonial:Root) => (
-              <div
-                key={testimonial._id}
-                className="embla__slide flex-[0_0_80%] min-w-0 bg-[#FDFDFD]  shadow-lg me-4"
-              >
-                <div className="p-8">
-                  <div className="flex items-center gap-4">
-                    <Image
-                      src={testimonial?.user?.profile?.startsWith("https") ?
-                         testimonial?.user?.profile : `${imageUrl}${testimonial?.user?.profile}`}
-                      alt={testimonial?.user?.firstName}
-                      width={70}
-                      height={70} 
-                      style={{ borderRadius: "100%", width: "70px", height: "70px" }}
-                      className="rounded-full border-2 p-1 border-[#E6E6E6]"
-                    />
-                    <div className="flex flex-col">
-                      <h3 className="text-xl font-semibold">{testimonial?.user?.firstName}</h3>
-                      <p className="text-[#6B6B6B]">{testimonial?.user?.location}</p>
+          <div className="embla overflow-hidden" ref={emblaRef} >
+            <div className="embla__container flex  " >
+              {allReviews?.data?.map((testimonial: Root) => (
+                <div
+                  key={testimonial._id}
+                  className="embla__slide flex-[0_0_80%] min-w-0 bg-[#FDFDFD]  shadow-lg me-4" 
+                >
+                  <div className="p-8">
+                    <div className="flex items-center gap-4">
+                      <Image
+                        src={testimonial?.user?.profile?.startsWith("https") ?
+                          testimonial?.user?.profile : `${imageUrl}${testimonial?.user?.profile}`}
+                        alt={testimonial?.user?.firstName}
+                        width={70}
+                        height={70}
+                        style={{ borderRadius: "100%", width: "70px", height: "70px" }}
+                        className="rounded-full border-2 p-1 border-[#E6E6E6]"
+                      />
+                      <div className="flex flex-col">
+                        <h3 className="text-xl font-semibold">{testimonial?.user?.firstName}</h3>
+                        <p className="text-[#6B6B6B]">{testimonial?.user?.location}</p>
+                      </div>
                     </div>
+                    <p className="text-[#6B6B6B] leading-relaxed py-2">{testimonial?.description}</p>
                   </div>
-                  <p className="text-[#6B6B6B] leading-relaxed py-2">{testimonial?.description}</p>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <div className="flex justify-center gap-2 mt-6">
-            {allReviews?.data?.map((_: any, index:number) => (
-              <button
-                key={index}
-                className="w-2.5 h-2.5 rounded-full bg-primary/20 transition-all duration-300 hover:bg-primary/50"
-                onClick={() => emblaApi?.scrollTo(index)}
-              />
-            ))}
+            <div className="flex justify-center gap-2 mt-6">
+              {allReviews?.data?.map((_: any, index: number) => (
+                <button
+                  key={index}
+                  className="w-2.5 h-2.5 rounded-full bg-primary/20 transition-all duration-300 hover:bg-primary/50"
+                  onClick={() => emblaApi?.scrollTo(index)}
+                />
+              ))}
+            </div>
           </div>
-        </div>
       </div>
     </section>
   );

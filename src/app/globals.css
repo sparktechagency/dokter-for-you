@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 body {
   color: var(--foreground);
   background: var(--background);
@@ -90,4 +88,8 @@ body {
   color: white !important;
 } */
 
-/* finish there  */
+/* finish there  */ 
+
+.notranslate {
+  translate: no;
+} 

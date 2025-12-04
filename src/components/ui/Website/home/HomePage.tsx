@@ -5,9 +5,9 @@ import BannerCards from './BannerCards';
 import WhenTo from './WhenTo';
 import LatestArticals from './LatestArticals';
 import PopularFAQ from './PopularFAQ';
-import PatientsReview from './PatientsReview';
 import AffiliatedDoctors from './AffiliatedDoctors';
 import { useCountry } from '@/app/(website)/CountryContext';
+import PatientsReview from './PatientsReview';
 
 
 
@@ -25,7 +25,7 @@ const HomePage = () => {
           
             <LatestArticals />
             <PopularFAQ />
-            <PatientsReview />
+            <PatientsReview /> 
 
         </div>
     );

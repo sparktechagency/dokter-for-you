@@ -9,7 +9,6 @@ import { LuSearch } from "react-icons/lu";
 import { IoChevronDownOutline, IoNotificationsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 import { GoStar } from "react-icons/go";
-import { Drawer } from "antd";
 import Cookies from "js-cookie";
 import AddReviewModal from "../ui/Website/home/AddReviewModal";
 import { useGetProfileQuery } from "@/redux/features/profile/getProfileSlice";
@@ -18,6 +17,8 @@ import { useGetAllCategoryQuery } from "@/redux/features/website/categorySlice";
 import { useRouter } from "next/navigation";
 import { useGetAllNotificationQuery } from "@/redux/features/website/notificationSlice";
 import { Globe } from "lucide-react";
+// import { languages } from "@/constants/nav-data";
+import MobileNav from "./MobileNav";
 
 const languages = [
   { label: "English", value: "en" },
@@ -33,7 +34,7 @@ const languages = [
   { label: "Finnish", value: "fi" },
   { label: "Lithuanian", value: "lt" },
   { label: "Arabic", value: "ar" },
-];
+];  
 
 const Navbar: React.FC = () => {
   const [activeLink, setActiveLink] = useState("");
@@ -83,46 +84,49 @@ const Navbar: React.FC = () => {
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
 
   // Handle click outside dropdowns
- useEffect(() => {
-  const handleClickOutside = (event: MouseEvent) => {
-    if (typeof window === "undefined") return;
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (typeof window === "undefined") return;
 
-    try {
-      if (
-        profileDropdownRef.current &&
-        !profileDropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsProfileDropdownOpen(false);
+      try {
+        if (
+          profileDropdownRef.current &&
+          !profileDropdownRef.current.contains(event.target as Node)
+        ) {
+          setIsProfileDropdownOpen(false);
+        }
+
+        if (
+          categoryDropdownRef.current &&
+          !categoryDropdownRef.current.contains(event.target as Node)
+        ) {
+          setOpenDropdown(null);
+        }
+      } catch (err) {
+        console.warn("Dropdown error ignored:", err);
       }
+    };
 
-      if (
-        categoryDropdownRef.current &&
-        !categoryDropdownRef.current.contains(event.target as Node)
-      ) {
-        setOpenDropdown(null);
-      }
-    } catch (err) {
-      console.warn("Dropdown error ignored:", err);
-    }
-  };
-
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, []);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
 
   useEffect(() => {
-    const storedLanguage = Cookies.get("currentLanguage");
+    const storedLanguage = Cookies.get("currentLanguage"); 
     if (storedLanguage) {
       setSelectedLanguage(storedLanguage);
     }
   }, []);
-
+ 
 
   // Switch Language Function
   const switchLanguage = (lang: string) => {
+
+    if (typeof window === "undefined") return;
+
     Cookies.set("currentLanguage", lang, {
       expires: 30,
       domain: "www.dokterforyou.com",
@@ -130,13 +134,15 @@ const Navbar: React.FC = () => {
       sameSite: "Lax",
     });
 
-    setSelectedLanguage(lang);
-
-    window.location.hash = `#googtrans/en/${lang}`;
-
-    setTimeout(() => {
+    if (typeof window !== "undefined") {
+      setSelectedLanguage(lang);
+      window.location.hash = `#googtrans/en/${lang}`;
       window.location.reload();
-    }, 100);
+    }
+
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 100);
   };
 
   const navLinks = [
@@ -154,13 +160,11 @@ const Navbar: React.FC = () => {
   ];
 
 
-
   return (
     <>
       {/* Navbar */}
       <div className="fixed top-0 w-full bg-white/100 shadow z-50">
         <div className="container mx-auto flex items-center lg:justify-between h-[96px] px-4 lg:px-0">
-
           {/* Logo */}
           <div className=" flex items-center lg:justify-between gap-6 lg:w-auto  ">
 
@@ -188,25 +192,25 @@ const Navbar: React.FC = () => {
           {/* Large Device Navigation */}
           <div className="hidden lg:flex items-center space-x-12">
             <div className="flex space-x-10">
-              {navLinks.map((navItem, index) => (
+              {navLinks?.map((navItem, index) => (
                 <div key={index} className="relative group">
                   <div
 
-                    className={`flex items-center cursor-pointer text-[#4E4E4E] hover:text-primary font-[400px] ${activeLink === navItem.label
+                    className={`flex items-center cursor-pointer text-[#4E4E4E] hover:text-primary font-[400px] ${activeLink === navItem?.label
                       ? "text-primary font-medium"
                       : ""
                       }`}
                     onClick={() => {
                       setActiveLink(navItem.label);
-                      if (navItem.subOptions) handleDropdown(index);
+                      if (navItem?.subOptions) handleDropdown(index);
                     }}
                   >
                     {navItem.link ? (
-                      <Link href={navItem.link}>{navItem.label}</Link>
+                      <Link href={navItem?.link}>{navItem?.label}</Link>
                     ) : (
-                      navItem.label
+                      navItem?.label
                     )}
-                    {navItem.subOptions && (
+                    {navItem?.subOptions && (
                       <DownOutlined
                         className={`ml-2 text-sm transition-transform ${openDropdown === index ? "rotate-180" : "rotate-0"
                           }`}
@@ -214,18 +218,18 @@ const Navbar: React.FC = () => {
                     )}
                   </div>
 
-                  {navItem.subOptions && openDropdown === index && (
+                  {navItem?.subOptions && openDropdown === index && (
                     <div ref={categoryDropdownRef} className="absolute left-0 mt-2 w-[200px] bg-white shadow-lg border rounded-md z-10">
-                      {navItem.subOptions.map((option: { label: string, value: string }, subIndex: number) => (
-                        <Link key={subIndex} href={`/subcategory?category=${option.value}`}>
+                      {navItem?.subOptions?.map((option: { label: string, value: string }, subIndex: number) => (
+                        <Link key={subIndex} href={`/subcategory?category=${option?.value}`}>
                           <p
-                            className={`py-2 px-4 text-sm text-[#4E4E4E] cursor-pointer hover:bg-primary hover:text-white rounded ${activeLink === option.value
+                            className={`py-2 px-4 text-sm text-[#4E4E4E] cursor-pointer hover:bg-primary hover:text-white rounded ${activeLink === option?.value
                               ? "bg-primary text-white"
                               : ""
                               }`}
-                            onClick={() => setActiveLink(option.value)}
+                            onClick={() => setActiveLink(option?.value)}
                           >
-                            {option.label}
+                            {option?.label}
                           </p>
                         </Link>
                       ))}
@@ -266,7 +270,7 @@ const Navbar: React.FC = () => {
               </button>
               {isLanguageDropdownOpen && (
                 <div ref={profileDropdownRef} className="absolute -right-6 py-2  mt-2 lg:w-[210px] w-[150px] bg-white border border-gray-300 rounded shadow-lg z-10">
-                  {languages.map((lang, index) => (
+                  {languages?.map((lang, index) => (
                     <div
                       key={index}
                       className={`px-4 py-2 h-10 hover:bg-[#e8eefe] cursor-pointer text-[#6B6B6B] ${selectedLanguage === lang?.value ? "bg-[#e8eefe] " : ""}`}
@@ -334,63 +338,8 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Drawer */}
-      <Drawer
-        placement="right"
-        closable={true}
-        onClose={toggleDrawer}
-        open={isDrawerVisible}
-      >
-        <div className="flex flex-col space-y-4">
-          {navLinks.map((navItem, index) => (
-            <div key={index}>
-              {navItem.link ? (
-                <Link href={navItem.link} onClick={toggleDrawer}>
-                  <p className="text-[#4E4E4E] hover:text-primary font-medium text-[20px]">
-                    {navItem.label}
-                  </p>
-                </Link>
-              ) : (
-                <p className="text-[#4E4E4E] hover:text-primary font-medium text-[20px]">
-                  {navItem.label}
-                </p>
-              )}
-              {navItem.subOptions && (
-                <div className="pl-2 pt-3">
-                  {navItem.subOptions.map((option: { value: string, label: string }, subIndex: number) => (
-                    <Link key={subIndex} href={`/subcategory?category=${option.value}`} onClick={toggleDrawer}>
-                      <p className=" text-[#4E4E4E] hover:text-primary pb-2 text-[18px] font-[400]">
-                        {option.label}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-
-          <div className=" flex items-center gap-3">
-            <Link href="/search">
-              <div className="text-[#4E4E4E] text-lg cursor-pointer bg-[#E8EEFE] w-[48px] h-[48px] rounded-full flex items-center justify-center">
-                <LuSearch size={24} color="#4E4E4E" />
-              </div>
-            </Link>
-            <Link href="/notifications">
-              <div className="relative bg-[#E8EEFE]  w-[48px] h-[48px] rounded-full flex items-center justify-center">
-                <div className="text-[#4E4E4E] text-lg cursor-pointer ">
-                  <IoNotificationsOutline size={24} color="#4E4E4E" />
-                  {totalNotifications > 0 && (
-                    <span className="absolute -top-2 -right-1 bg-red-500 text-white text-[10px] font-bold w-[26px] h-[26px] rounded-full flex items-center justify-center">
-                      {totalNotifications > 9 ? "9+" : totalNotifications}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </Link>
-          </div>
-
-        </div>
-
-      </Drawer>
+      <MobileNav navLinks={navLinks} isDrawerVisible={isDrawerVisible} toggleDrawer={toggleDrawer}
+        totalNotifications={totalNotifications} />
 
       <AddReviewModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 
