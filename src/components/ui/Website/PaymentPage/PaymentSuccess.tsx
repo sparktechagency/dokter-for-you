@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 const PaymentSuccess = () => {
   const [countdown, setCountdown] = useState<number>(5);
   const deepLinkURL = 'paymentSuccess://payment/success';
-  const fallbackURL = 'https://yourwebsite.com/download-app';
+  const fallbackURL = 'https://www.dokterforyou.com/';
   const router = useRouter();
 
   // Inline styles (unchanged to preserve design)
