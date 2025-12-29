@@ -8,24 +8,26 @@ import PopularFAQ from './PopularFAQ';
 import AffiliatedDoctors from './AffiliatedDoctors';
 import { useCountry } from '@/app/(website)/CountryContext';
 import PatientsReview from './PatientsReview';
+import AppBanner from './AppBanner';
 
 
 
-const HomePage = () => { 
- const { country } = useCountry();  
+const HomePage = () => {
+    const { country } = useCountry();
 
     return (
         <div>
             <Banner />
             <BannerCards />
-            <WhenTo />   
+            <WhenTo />
             {
-                country !== "Netherlands" ?   <AffiliatedDoctors /> : ""
+                country !== "Netherlands" ? <AffiliatedDoctors /> : ""
             }
-          
+            <AppBanner />
             <LatestArticals />
             <PopularFAQ />
-            <PatientsReview /> 
+
+            <PatientsReview />
 
         </div>
     );
