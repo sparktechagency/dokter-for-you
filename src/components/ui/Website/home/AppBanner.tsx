@@ -15,7 +15,7 @@ const AppBanner = () => {
                             Dokter For You App: Organize your health anywhere.
                         </h2>
                         <p className="text-gray-600 text-sm md:text-[16px]  leading-relaxed">
-                            The dokter for you app is now available for android and iOS. Thanks to its new, clear, and user-friendly layout, you can navigate effortlessly and find what you're looking for faster.Discreet service, no waiting times and delivery directly to your home. All within 24 hours! Try now.
+                            The dokter for you app is now available for android and iOS. Thanks to its new, clear, and user-friendly layout, you can navigate effortlessly and find what you&apos;re looking for faster.Discreet service, no waiting times and delivery directly to your home. All within 24 hours! Try now.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 mt-4">
